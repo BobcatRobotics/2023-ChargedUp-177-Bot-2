@@ -22,7 +22,7 @@ public class RunIntake extends CommandBase {
   double time;
   boolean isTimed = false;
   Joystick gp;
-  BlinkinLEDs leds;
+  //BlinkinLEDs leds;
 
   Timer timer;
 
@@ -37,11 +37,11 @@ public class RunIntake extends CommandBase {
     isTimed = true;
     addRequirements(i);
   }
-  public RunIntake(Intake i, Joystick gp, BlinkinLEDs l){
+  public RunIntake(Intake i, Joystick gp){
     this.i = i;
     this.in = in;
     this.gp = gp;
-    this.leds = l;
+    //this.leds = l;
     timer = new Timer();
     addRequirements(i);
   }

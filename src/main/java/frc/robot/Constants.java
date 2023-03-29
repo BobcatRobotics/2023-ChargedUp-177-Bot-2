@@ -19,8 +19,10 @@ import java.util.Hashtable;
 
 public final class Constants {
     public static final int intakeMotorID = 11; //TODO: assign correct values
+    public static final int wristMotorID = 12;
+    public static final int wristCanCoderID = 14;
+    public static final int armCanCoderID = 13;
     public static final int wristSolenoidID = 0;
-    public static final int wristMotorID = 0;
     public static final int pHubID = 1;
     public static final int compressorID = 1;
     public static final double stickDeadband = 0.05;
@@ -163,7 +165,7 @@ public final class Constants {
             public static final int driveMotorID = 1;
             public static final int angleMotorID = 2;
             public static final int canCoderID = 1;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(173.671875);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(110.654296875);
             
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
@@ -175,7 +177,7 @@ public final class Constants {
             public static final int driveMotorID = 3;
             public static final int angleMotorID = 4;
             public static final int canCoderID = 2;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(188.525390625);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(215.15625);
 
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
@@ -187,7 +189,7 @@ public final class Constants {
             public static final int driveMotorID = 5;
             public static final int angleMotorID = 6;
             public static final int canCoderID = 3;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(54.755859375);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(203.37890625);
 
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
@@ -199,7 +201,7 @@ public final class Constants {
             public static final int driveMotorID = 7;
             public static final int angleMotorID = 8;
             public static final int canCoderID = 4;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(105.380859375);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(52.646484375);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
@@ -275,18 +277,11 @@ public final class Constants {
         public static final int armMotorPort = 10; 
         public static final int stowedLimitSwitch = 2;
 
-        // TODO: Change!
-        public static final int pos0 = 0; // done
-        public static final int pos1 = 16710; // done
-        public static final int pos2 = 25658; // done
-        public static final int minNonCollidingExtention = pos1-900;
-        public static final int bottomPickup = 43664 - 300;
-
-        public static final double bottomLimit = 0.0;
-        public static final double constrictedBottomLimit = 4096;
-        public static final double topLimit = 8192;
-
-        //public static final int armlimitport = 2;
+        public static final double armOffset = 205; // 5 degrees at start
+        public static final double startingArmPos = 1; // in box
+        public static final double groundPickupArm = 86.5; // ground intake
+        public static final double chuteArmPos = 33;
+        public static final double trueArmMaxExtension = 200; // TODO: change!
 
         public static int armState = 0;
     }
@@ -307,5 +302,13 @@ public final class Constants {
     public static final class LEDConstants {
         public static final int ledPort = 0; // placeholder
     }
+
+    public static final class WristConstants {
+        public static final double wristOffset = 160.66; // 5 degrees at start
+        public static final double globalWristMaxAngleUp = -100.66; // chute wrist position as well
+        public static final double globalWristMaxAngleDown = -3.34;
+        public static final double groundPickupWrist = -85.34; // ground intake
+        public static final double startingPosWrist = -37.44; // in box
+    }  
 
 }

@@ -35,10 +35,9 @@ public class Swerve extends SubsystemBase {
 
     public double rot;
     public PhotonVision photonCam;
-    public Limelight limelight;
 
 
-    public Swerve(Limelight limelight) {
+    public Swerve() {
         gyro = new Pigeon2(Constants.Swerve.pigeonID, Constants.Swerve.CANivore);
         gyro.configFactoryDefault();
         zeroGyro();
@@ -60,7 +59,6 @@ public class Swerve extends SubsystemBase {
         // for(SwerveModule mod : mSwerveMods){
         //     System.out.println("CANcoder on Module " + mod.moduleNumber + " took " + mod.CANcoderInitTime + " ms to be ready.");
         // }
-        this.limelight = limelight;
 
         // this.poseEstimator = new PoseEstimator(
         //     this::getYaw, 

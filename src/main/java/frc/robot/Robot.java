@@ -93,9 +93,9 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
-    SmartDashboard.putNumber("poseEstimatorX", RobotContainer.swervePoseEstimator.getCurrentPose().getX());
-    SmartDashboard.putNumber("poseEstimatorY", RobotContainer.swervePoseEstimator.getCurrentPose().getY());
-    SmartDashboard.putNumber("poseEstimatorRotation", RobotContainer.swervePoseEstimator.getCurrentPose().getRotation().getDegrees());
+    // SmartDashboard.putNumber("poseEstimatorX", RobotContainer.swervePoseEstimator.getCurrentPose().getX());
+    // SmartDashboard.putNumber("poseEstimatorY", RobotContainer.swervePoseEstimator.getCurrentPose().getY());
+    // SmartDashboard.putNumber("poseEstimatorRotation", RobotContainer.swervePoseEstimator.getCurrentPose().getRotation().getDegrees());
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -103,7 +103,7 @@ public class Robot extends TimedRobot {
   public void disabledInit() {
 
     CommandScheduler.getInstance().cancelAll();
-    m_robotContainer.turnOffLeds();
+    //m_robotContainer.turnOffLeds();
     for (int i = 0; i < 10; i++) {
       m_robotContainer.resetToAbsolute();
     }
@@ -150,16 +150,16 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
 
-    if (
-      m_robotContainer.getAutoChooserResult().equals(RobotContainer.buildAuto(PathPlanner.loadPathGroup("NoMoveScore1High", new PathConstraints(0, 0)))) || 
-      m_robotContainer.getAutoChooserResult().equals(RobotContainer.buildAuto(PathPlanner.loadPathGroup("NoTurnScore1HighCenterBalance", new PathConstraints(4, 3)))) ||
-      m_robotContainer.getAutoChooserResult().equals(RobotContainer.buildAuto(PathPlanner.loadPathGroup("ScoreHighCubeDirtyNoBalance", new PathConstraints(4.5, 3)))) ||
-      m_robotContainer.getAutoChooserResult().equals(RobotContainer.buildAuto(PathPlanner.loadPathGroup("2PieceBalance", new PathConstraints(4.5, 3))))
-    ) {
-      m_robotContainer.reverseZeroGyro();
-    } else {
-      m_robotContainer.zeroGyro();
-    }
+    // if (
+    //   m_robotContainer.getAutoChooserResult().equals(RobotContainer.buildAuto(PathPlanner.loadPathGroup("NoMoveScore1High", new PathConstraints(0, 0)))) || 
+    //   m_robotContainer.getAutoChooserResult().equals(RobotContainer.buildAuto(PathPlanner.loadPathGroup("NoTurnScore1HighCenterBalance", new PathConstraints(4, 3)))) ||
+    //   m_robotContainer.getAutoChooserResult().equals(RobotContainer.buildAuto(PathPlanner.loadPathGroup("ScoreHighCubeDirtyNoBalance", new PathConstraints(4.5, 3)))) ||
+    //   m_robotContainer.getAutoChooserResult().equals(RobotContainer.buildAuto(PathPlanner.loadPathGroup("2PieceBalance", new PathConstraints(4.5, 3))))
+    // ) {
+    //   m_robotContainer.reverseZeroGyro();
+    // } else {
+    //   m_robotContainer.zeroGyro();
+    // }
 
     SmartDashboard.putNumber("PID Value", 0);
     // m_robotContainer.resetToAbsolute();

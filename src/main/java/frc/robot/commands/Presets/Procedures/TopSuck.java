@@ -6,7 +6,7 @@ package frc.robot.commands.Presets.Procedures;
 import frc.robot.commands.Presets.RunIntake;
 import frc.robot.commands.Presets.SetArm;
 import frc.robot.commands.Presets.SetElevator;
-import frc.robot.commands.Presets.SetWrist;
+//import frc.robot.commands.Presets.RunWrist;
 import frc.robot.commands.Presets.SetElevator;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Elevator;
@@ -24,7 +24,7 @@ public class TopSuck extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     //always set the wrist to false for everything 
     addCommands(
-      Commands.parallel(new SetElevator(e,1),new SetArm(a,2), new SetWrist(W, false))
+      Commands.parallel(new SetElevator(e,1),new SetArm(a,2)) //new RunWrist(W, false))
     );
   }
 }

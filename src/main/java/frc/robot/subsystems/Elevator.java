@@ -42,7 +42,7 @@ public class Elevator extends SubsystemBase {
     elevatorMotor.configPeakOutputForward(1, 20);
     elevatorMotor.configPeakOutputReverse(-1, 20);//TODO: needs to be changes for comp
     elevatorMotor.configAllowableClosedloopError(0, 0, 20);
-    elevatorMotor.config_kF(0, 0, 20);
+    //elevatorMotor.config_kF(0, 0, 20);
     elevatorMotor.config_kP(0, 0.25, 20);
     elevatorMotor.config_kI(0, 0, 20);
     elevatorMotor.config_kD(0, 0, 20);
@@ -58,14 +58,15 @@ public class Elevator extends SubsystemBase {
     //elevatorMotor.configAllowableClosedloopError()
     elevatorMotor.configMotionCruiseVelocity(100000, 20); //needs to be tuned to robot
     elevatorMotor.configMotionAcceleration(90000, 20);
-    elevatorMotor.configMotionSCurveStrength(-20);
+    //elevatorMotor.configMotionSCurveStrength(-20);
 
     holdPosValue = elevatorMotor.getSelectedSensorPosition();
   }
 
   public void elevate(double speed) {
     if(speed == 0 && !getBottomLimits()) {
-      elevatorMotor.set(ControlMode.PercentOutput, speed, DemandType.ArbitraryFeedForward, -0.03);
+      //elevatorMotor.set(ControlMode.PercentOutput, speed, DemandType.ArbitraryFeedForward, -0.03);
+      elevatorMotor.set(ControlMode.PercentOutput, 0);
     } else if(speed == 0 && getBottomLimits()) {
       elevatorMotor.set(ControlMode.PercentOutput, 0);
     } else{
@@ -161,7 +162,8 @@ public class Elevator extends SubsystemBase {
     if (getBottomLimits()){
       resetEncoderPos();
       holdPosValue = 0;
-      elevatorMotor.set(ControlMode.PercentOutput, 0, DemandType.ArbitraryFeedForward, 0.06);
+      //elevatorMotor.set(ControlMode.PercentOutput, 0, DemandType.ArbitraryFeedForward, 0.06);
+      elevatorMotor.set(ControlMode.PercentOutput, 0);
     }
     // This method will be called once per scheduler run
   }

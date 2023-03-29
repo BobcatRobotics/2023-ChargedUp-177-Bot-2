@@ -55,33 +55,33 @@ public class SetArm extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     SmartDashboard.putBoolean("arm interrupted", interrupted);
-    if(arm.isAtBottomLimit()){
-      arm.resetEncoder();
-    }
+    // if(arm.isAtBottomLimit()){
+    //   arm.resetEncoder();
+    // }
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (state == 0) {
-      pos = Constants.ArmConstants.pos0;
-    } else if (state == 1) {
-      pos = Constants.ArmConstants.pos1;
-    } else if (state == 2) {
-      pos = Constants.ArmConstants.pos2;
-    } else if (state == 3) {
-      pos = Constants.ArmConstants.bottomPickup;
-    }
+    // if (state == 0) {
+    //   pos = Constants.ArmConstants.pos0;
+    // } else if (state == 1) {
+    //   pos = Constants.ArmConstants.pos1;
+    // } else if (state == 2) {
+    //   pos = Constants.ArmConstants.pos2;
+    // } else if (state == 3) {
+    //   pos = Constants.ArmConstants.bottomPickup;
+    // }
     // if(arm.getState() == state){
     //   return true;
     // }
     // return false;
-    if (arm.getPos() >= pos-200 && arm.getPos() <= pos) {
+    // if (arm.getPos() >= pos-200 && arm.getPos() <= pos) {
 
-      // SmartDashboard.putBoolean("elevator timer finished", timer.hasElapsed(5));
+    //   // SmartDashboard.putBoolean("elevator timer finished", timer.hasElapsed(5));
 
-      return true;
-    }
+    //   return true;
+    // }
     return false;
   }
 }

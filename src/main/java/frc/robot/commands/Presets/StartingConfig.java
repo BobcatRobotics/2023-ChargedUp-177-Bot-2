@@ -25,8 +25,8 @@ public class StartingConfig extends SequentialCommandGroup {
       new SequentialCommandGroup(
       new SetArm(a, 4),  
       new ParallelCommandGroup( 
-          new SetElevator(e,0),
-          new SetWrist(w, true)
+          new SetElevator(e,0)
+          //new SetWrist(w, true)
           )
         ),
         new SetArm(a,0)

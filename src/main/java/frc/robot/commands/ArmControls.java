@@ -72,11 +72,11 @@ public class ArmControls extends CommandBase {
     
     if (arm.isAtCurrentLimit()) {
       arm.setSpeed(0);
-    } else if (arm.isAtStowedLimit() && gamepad.getRawAxis(1) < 0.0) {
+    } else if (arm.isAtMaxTuck() && gamepad.getRawAxis(1) < 0.0) {
       arm.setSpeed(0);
-    } else if(arm.getPos() <= Constants.ArmConstants.minNonCollidingExtention-200 && gamepad.getRawAxis(1) < 0 && elevator.getEncoderPos() < -750){
-      arm.setSpeed(0); 
-    }else if(arm.getPos() >= Constants.ArmConstants.bottomPickup && gamepad.getRawAxis(1) > 0){
+    // } else if(arm.getPos() <= Constants.ArmConstants.minNonCollidingExtention-200 && gamepad.getRawAxis(1) < 0 && elevator.getEncoderPos() < -750){
+    //   arm.setSpeed(0); 
+    } else if(arm.isAtMaxExtension() && gamepad.getRawAxis(1) > 0){
       arm.setSpeed(0);
     } else {
       arm.setSpeed(gamepad.getRawAxis(1)/5);
@@ -85,7 +85,6 @@ public class ArmControls extends CommandBase {
     //else if (elevator.getEncoderPos() >= Constants.ElevatorConstants.pos1 && arm.getPos() <= Constants.ArmConstants.pos1 && gamepad.getRawAxis(1) > 0){
       //arm.setSpeed(0); 
     //}
-    SmartDashboard.putNumber("arm encoder pos", arm.getPos());
     SmartDashboard.putBoolean("arm stowed", arm.isAtStowedLimit());
     //SmartDashboard.putNumber("arm abs encoder pos", arm.absoluteEncoderVal());
   }

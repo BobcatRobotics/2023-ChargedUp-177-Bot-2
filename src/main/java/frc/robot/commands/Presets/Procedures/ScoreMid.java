@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.Presets.RunIntake;
 import frc.robot.commands.Presets.SetArm;
 import frc.robot.commands.Presets.SetElevator;
-import frc.robot.commands.Presets.SetWrist;
+//import frc.robot.commands.Presets.RunWrist;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
@@ -23,7 +23,7 @@ public class ScoreMid extends SequentialCommandGroup {
     addCommands(
       new SequentialCommandGroup(
       new SetArm(a,1),
-      Commands.parallel(new SetElevator(e,1), new SetWrist(w, false))
+      Commands.parallel(new SetElevator(e,1)) //new RunWrist(w, false))
      )
     );
   }

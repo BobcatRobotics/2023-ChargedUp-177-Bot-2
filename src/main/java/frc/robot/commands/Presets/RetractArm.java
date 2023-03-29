@@ -45,6 +45,7 @@ public class RetractArm extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return a.isAtBottomLimit();
+    //return a.isAtBottomLimit();
+    return false;
   }
 }

@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import frc.robot.commands.Presets.RunIntake;
 import frc.robot.commands.Presets.SetArm;
 import frc.robot.commands.Presets.SetElevator;
-import frc.robot.commands.Presets.SetWrist;
+//import frc.robot.commands.Presets.RunWrist;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Wrist;
@@ -27,7 +27,7 @@ public class ScoreHigh extends SequentialCommandGroup {
 
     addCommands(//will not work because we need to create the set elevator and arm commands
       new SetArm(a,1),//set arm to pos 1      
-      Commands.parallel(new SetElevator(e,2), new SetWrist(w,false )),
+      Commands.parallel(new SetElevator(e,2)),//new RunWrist(w,false )),
       new SetArm(a,2)
     );
   }
