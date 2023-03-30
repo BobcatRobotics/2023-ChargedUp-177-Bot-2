@@ -278,10 +278,13 @@ public final class Constants {
         public static final int stowedLimitSwitch = 2;
 
         public static final double armOffset = 205; // 5 degrees at start
-        public static final double startingArmPos = 1; // in box
+        public static final double startingArmPos = 10; // in box
         public static final double groundPickupArm = 86.5; // ground intake
-        public static final double chuteArmPos = 33;
+        public static final double chuteArmPos = 33; // pickup from hp chute
         public static final double trueArmMaxExtension = 200; // TODO: change!
+        public static final double minNonCollidingExtention = 30; // limit for arm so it doesn't crash into the elevator
+        public static final double midScoringPos = 35;
+        public static final double highScoringPos = 57;
 
         public static int armState = 0;
     }
@@ -291,9 +294,13 @@ public final class Constants {
         public static final int topLimitPort = 1;
         public static final int bottomLimitPort = 0;
 
-        public static final int pos0 = 20; // done
-        public static final int pos1 = -65138; // dpne; old = -126256; 
-        public static final int pos2 = -107809; // done; old = -226710; 
+        public static final int bottomPos = 20;
+        public static final int midPos = -62256;
+        public static final int highPos = -92114;
+
+        // public static final int pos0 = 20; // done
+        // public static final int pos1 = -65138; // dpne; old = -126256; 
+        // public static final int pos2 = -107809; // done; old = -226710; 
         // public static final double topLimit = -236710;
 
         public static int elevatorState = 0;
@@ -305,10 +312,11 @@ public final class Constants {
 
     public static final class WristConstants {
         public static final double wristOffset = 160.66; // 5 degrees at start
-        public static final double globalWristMaxAngleUp = -100.66; // chute wrist position as well
-        public static final double globalWristMaxAngleDown = -3.34;
-        public static final double groundPickupWrist = -85.34; // ground intake
-        public static final double startingPosWrist = -37.44; // in box
+        public static final double globalWristMaxAngleUp = 260; // chute wrist position as well
+        public static final double globalWristMaxAngleDown = 355; 
+        public static final double groundPickupWrist = 275; // ground intake
+        public static final double startingPosWrist = 320; // in box
+        public static final double highScorePos = 304;
     }  
 
 }

@@ -65,8 +65,8 @@ public class Elevator extends SubsystemBase {
 
   public void elevate(double speed) {
     if(speed == 0 && !getBottomLimits()) {
-      //elevatorMotor.set(ControlMode.PercentOutput, speed, DemandType.ArbitraryFeedForward, -0.03);
-      elevatorMotor.set(ControlMode.PercentOutput, 0);
+      elevatorMotor.set(ControlMode.PercentOutput, speed, DemandType.ArbitraryFeedForward, -0.03);
+      // elevatorMotor.set(ControlMode.PercentOutput, 0);
     } else if(speed == 0 && getBottomLimits()) {
       elevatorMotor.set(ControlMode.PercentOutput, 0);
     } else{
@@ -121,28 +121,28 @@ public class Elevator extends SubsystemBase {
 
   public void setState(int state) {
     if (state == 0) {
-      elevatorMotor.set(ControlMode.MotionMagic, ElevatorConstants.pos0);
+      elevatorMotor.set(ControlMode.MotionMagic, ElevatorConstants.bottomPos);
       // holdPosValue = ElevatorConstants.pos0;
       // holdPosition();
       SmartDashboard.putString("elevator error", "State: " + state + ", Error: " + getPIDError());
     } else if (state == 1) {
-      elevatorMotor.set(ControlMode.MotionMagic, ElevatorConstants.pos1);
+      elevatorMotor.set(ControlMode.MotionMagic, ElevatorConstants.midPos);
       // holdPosValue = ElevatorConstants.pos1;
       // holdPosition();
       SmartDashboard.putString("elevator error", "State: " + state + ", Error: " + getPIDError());
     } else if (state == 2) {
-      elevatorMotor.set(ControlMode.MotionMagic, ElevatorConstants.pos2);
+      elevatorMotor.set(ControlMode.MotionMagic, ElevatorConstants.highPos);
       // holdPosValue = ElevatorConstants.pos2;
       // holdPosition();
       SmartDashboard.putString("elevator error", "State: " + state + ", Error: " + getPIDError());
     }
   }
 
-  public int getState() {
-    double pos = elevatorMotor.getSelectedSensorPosition();
-    if (pos <= 256) pos = 0;
-    return (int) Math.ceil(pos/4096);
-  }
+  // public int getState() {
+  //   double pos = elevatorMotor.getSelectedSensorPosition();
+  //   if (pos <= 256) pos = 0;
+  //   return (int) Math.ceil(pos/4096);
+  // }
 
   public double getEncoder() {
     return elevatorMotor.getSelectedSensorPosition();

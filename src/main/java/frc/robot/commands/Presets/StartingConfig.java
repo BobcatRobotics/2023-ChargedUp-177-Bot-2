@@ -4,10 +4,13 @@
 
 package frc.robot.commands.Presets;
 
+import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
+import frc.robot.Constants.ArmConstants;
+import frc.robot.Constants.WristConstants;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Wrist;
@@ -22,14 +25,17 @@ public class StartingConfig extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new SequentialCommandGroup(
-      new SetArm(a, 4),  
-      new ParallelCommandGroup( 
-          new SetElevator(e,0)
-          //new SetWrist(w, true)
-          )
-        ),
-        new SetArm(a,0)
-        );
+      // new SequentialCommandGroup(
+      // new SetArm(a, 4),  
+      // new ParallelCommandGroup( 
+      //     new SetElevator(e,0)
+      //     //new SetWrist(w, true)
+      //     )
+      //   ),
+      //   new SetArm(a,0)
+      new SetArm(a, ArmConstants.minNonCollidingExtention),
+      Commands.parallel(new SetElevator(e, 0), new SetWrist(w, WristConstants.startingPosWrist)),
+      new SetArm(a, ArmConstants.startingArmPos)
+    );
   }
 }

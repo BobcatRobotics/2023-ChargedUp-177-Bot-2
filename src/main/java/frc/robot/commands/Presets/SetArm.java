@@ -8,15 +8,16 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
+import frc.robot.Constants.ArmConstants;
 import frc.robot.subsystems.Arm;
 
 public class SetArm extends CommandBase {
   /** Creates a new SetArm. */
   Arm arm;
-  int state;
+  double state;
   Timer timer;
-  int pos;
-  public SetArm(Arm a, int state_g) {
+  double pos;
+  public SetArm(Arm a, double state_g) {
     state = state_g;
     arm = a;
     // Use addRequirements() here to declare subsystem dependencies.
@@ -32,22 +33,22 @@ public class SetArm extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (arm.isAtStowedLimit() && state == 0) {
+    if (arm.isAtStowedLimit() && state == ArmConstants.startingArmPos) {
       arm.setSpeed(0);
     }
     
-    if (state == 0){
-      arm.setState(0);
-    }
-    else if(state == 1){
-      arm.setState(1);
-    }
-    else if(state == 2){
-      arm.setState(2);
-    } else if (state == 3) {
-      arm.setState(3);
-    } else if(state == 4){
-      arm.setState(4);
+    if (state == ArmConstants.startingArmPos){
+      arm.setPos((int) ArmConstants.startingArmPos);
+    } else if(state == ArmConstants.groundPickupArm){
+      arm.setPos((int) ArmConstants.groundPickupArm);
+    } else if(state == ArmConstants.chuteArmPos){
+      arm.setPos((int) ArmConstants.chuteArmPos);
+    } else if(state == ArmConstants.minNonCollidingExtention) {
+      arm.setPos((int) ArmConstants.minNonCollidingExtention);
+    } else if(state == ArmConstants.midScoringPos){
+      arm.setPos((int) ArmConstants.midScoringPos);
+    } else if(state == ArmConstants.highScoringPos){
+      arm.setPos((int) ArmConstants.highScoringPos);
     }
   }
 
@@ -82,6 +83,6 @@ public class SetArm extends CommandBase {
 
     //   return true;
     // }
-    return false;
+    return arm.isAtSetpoint();
   }
 }

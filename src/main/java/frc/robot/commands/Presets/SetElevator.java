@@ -34,13 +34,13 @@ public class SetElevator extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (state == 0) {
-      pos = Constants.ElevatorConstants.pos0;
-    } else if (state == 1) {
-      pos = Constants.ElevatorConstants.pos1;
-    } else if (state == 2) {
-      pos = Constants.ElevatorConstants.pos2;
-    }
+    // if (state == 0) {
+    //   pos = Constants.ElevatorConstants.pos0;
+    // } else if (state == 1) {
+    //   pos = Constants.ElevatorConstants.pos1;
+    // } else if (state == 2) {
+    //   pos = Constants.ElevatorConstants.pos2;
+    // }
     
     if (elevator.getBottomLimits() && state == 0) {
       elevator.elevate(0);

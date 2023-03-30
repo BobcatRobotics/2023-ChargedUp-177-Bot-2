@@ -8,9 +8,12 @@ import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.Elevator;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
+import frc.robot.Constants.ArmConstants;
+import frc.robot.Constants.WristConstants;
 import frc.robot.commands.Presets.RunIntake;
 import frc.robot.commands.Presets.SetArm;
 import frc.robot.commands.Presets.SetElevator;
+import frc.robot.commands.Presets.SetWrist;
 //import frc.robot.commands.Presets.RunWrist;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Intake;
@@ -26,9 +29,12 @@ public class ScoreHigh extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
 
     addCommands(//will not work because we need to create the set elevator and arm commands
-      new SetArm(a,1),//set arm to pos 1      
-      Commands.parallel(new SetElevator(e,2)),//new RunWrist(w,false )),
-      new SetArm(a,2)
+      // new SetArm(a,1),//set arm to pos 1      
+      // Commands.parallel(new SetElevator(e,2)),//new RunWrist(w,false )),
+      // new SetArm(a,2)
+      new SetArm(a, ArmConstants.minNonCollidingExtention),
+      new SetElevator(e, 2),
+      Commands.parallel(new SetArm(a, ArmConstants.highScoringPos), new SetWrist(w, WristConstants.highScorePos))
     );
   }
 }

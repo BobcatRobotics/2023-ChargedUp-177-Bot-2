@@ -6,9 +6,12 @@ package frc.robot.commands.Presets.Procedures;
 
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
+import frc.robot.Constants.ArmConstants;
+import frc.robot.Constants.WristConstants;
 import frc.robot.commands.Presets.RunIntake;
 import frc.robot.commands.Presets.SetArm;
 import frc.robot.commands.Presets.SetElevator;
+import frc.robot.commands.Presets.SetWrist;
 //import frc.robot.commands.Presets.RunWrist;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Elevator;
@@ -21,10 +24,12 @@ public class ScoreMid extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new SequentialCommandGroup(
-      new SetArm(a,1),
-      Commands.parallel(new SetElevator(e,1)) //new RunWrist(w, false))
-     )
+      // new SequentialCommandGroup(
+      //   new SetArm(a,1),
+      //   Commands.parallel(new SetElevator(e,1)) //new RunWrist(w, false))
+      // )
+      new SetArm(a, ArmConstants.midScoringPos),
+      Commands.parallel(new SetElevator(e, 1), new SetWrist(w, WristConstants.globalWristMaxAngleDown))
     );
   }
 }

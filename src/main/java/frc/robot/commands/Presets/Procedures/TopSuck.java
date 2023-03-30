@@ -3,9 +3,12 @@
 // the WPILib BSD license file in the root directory of this project.
 
 package frc.robot.commands.Presets.Procedures;
+import frc.robot.Constants.ArmConstants;
+import frc.robot.Constants.WristConstants;
 import frc.robot.commands.Presets.RunIntake;
 import frc.robot.commands.Presets.SetArm;
 import frc.robot.commands.Presets.SetElevator;
+import frc.robot.commands.Presets.SetWrist;
 //import frc.robot.commands.Presets.RunWrist;
 import frc.robot.commands.Presets.SetElevator;
 import frc.robot.subsystems.Arm;
@@ -24,7 +27,8 @@ public class TopSuck extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     //always set the wrist to false for everything 
     addCommands(
-      Commands.parallel(new SetElevator(e,1),new SetArm(a,2)) //new RunWrist(W, false))
+      // Commands.parallel(new SetElevator(e,1),new SetArm(a,2)) //new RunWrist(W, false))
+      Commands.parallel(new SetElevator(e, 1), new SetArm(a, ArmConstants.groundPickupArm), new SetWrist(W, WristConstants.groundPickupWrist))
     );
   }
 }
