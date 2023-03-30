@@ -16,10 +16,11 @@ import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Wrist;
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 
 
-public class TopSuck extends SequentialCommandGroup {
+public class TopSuck extends ParallelCommandGroup {
   // elevator down, arm down, wrist up, intake untill hard stop
 
   public TopSuck(Elevator e, Arm a, Intake i, Wrist W) {
@@ -28,7 +29,8 @@ public class TopSuck extends SequentialCommandGroup {
     //always set the wrist to false for everything 
     addCommands(
       // Commands.parallel(new SetElevator(e,1),new SetArm(a,2)) //new RunWrist(W, false))
-      Commands.parallel(new SetElevator(e, 1), new SetArm(a, ArmConstants.groundPickupArm), new SetWrist(W, WristConstants.groundPickupWrist))
+      
+      new SetElevator(e, 0),new SetWrist(W, WristConstants.groundPickupWrist), new SetArm(a, ArmConstants.groundPickupArm)
     );
   }
 }

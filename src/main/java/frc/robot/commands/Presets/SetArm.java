@@ -56,6 +56,7 @@ public class SetArm extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     SmartDashboard.putBoolean("arm interrupted", interrupted);
+    arm.setClosedLoopSpeed(0);
     // if(arm.isAtBottomLimit()){
     //   arm.resetEncoder();
     // }

@@ -52,8 +52,6 @@ public class Elevator extends SubsystemBase {
     elevatorMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, 20);
     elevatorMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, 20);
     elevatorMotor.configAllowableClosedloopError(0, 400, 20);
-
-
     // motion magic trapezoid configuration
     //elevatorMotor.configAllowableClosedloopError()
     elevatorMotor.configMotionCruiseVelocity(100000, 20); //needs to be tuned to robot
@@ -159,12 +157,16 @@ public class Elevator extends SubsystemBase {
 
   @Override
   public void periodic() {
-    if (getBottomLimits()){
-      resetEncoderPos();
-      holdPosValue = 0;
-      //elevatorMotor.set(ControlMode.PercentOutput, 0, DemandType.ArbitraryFeedForward, 0.06);
-      elevatorMotor.set(ControlMode.PercentOutput, 0);
-    }
+    // if (getBottomLimits()){
+    //   resetEncoderPos();
+    //   holdPosValue = 0;
+    //   //elevatorMotor.set(ControlMode.PercentOutput, 0, DemandType.ArbitraryFeedForward, 0.06);
+    //   elevatorMotor.set(ControlMode.PercentOutput, 0);
+    // }
     // This method will be called once per scheduler run
+    SmartDashboard.putBoolean("bottom limits", getBottomLimits());
+    SmartDashboard.putBoolean("top limits", topLimitSwitch());
+    SmartDashboard.putNumber("elevator encoder", getEncoder());
+    SmartDashboard.putBoolean("top limits", topLimitSwitch());
   }
 }

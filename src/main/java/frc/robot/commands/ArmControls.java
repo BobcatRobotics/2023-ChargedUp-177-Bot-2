@@ -78,6 +78,8 @@ public class ArmControls extends CommandBase {
     //   arm.setSpeed(0); 
     } else if(arm.isAtMaxExtension() && gamepad.getRawAxis(1) > 0){
       arm.setSpeed(0);
+    }else if (Math.abs(gamepad.getRawAxis(1)) < 0.02) {
+      arm.setSpeed(0);
     } else {
       arm.setSpeed(gamepad.getRawAxis(1)/5);
     }

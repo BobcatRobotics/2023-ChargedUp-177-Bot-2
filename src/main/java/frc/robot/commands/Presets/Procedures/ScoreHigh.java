@@ -5,6 +5,7 @@
 package frc.robot.commands.Presets.Procedures;
 
 import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.Elevator;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
@@ -34,7 +35,7 @@ public class ScoreHigh extends SequentialCommandGroup {
       // new SetArm(a,2)
       new SetArm(a, ArmConstants.minNonCollidingExtention),
       new SetElevator(e, 2),
-      Commands.parallel(new SetArm(a, ArmConstants.highScoringPos), new SetWrist(w, WristConstants.highScorePos))
+      new ParallelCommandGroup(new SetArm(a, ArmConstants.highScoringPos), new SetWrist(w, WristConstants.highScorePos))
     );
   }
 }

@@ -34,18 +34,18 @@ public class SetElevator extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // if (state == 0) {
-    //   pos = Constants.ElevatorConstants.pos0;
-    // } else if (state == 1) {
-    //   pos = Constants.ElevatorConstants.pos1;
-    // } else if (state == 2) {
-    //   pos = Constants.ElevatorConstants.pos2;
-    // }
+    if (state == 0) {
+      pos = Constants.ElevatorConstants.bottomPos;
+    } else if (state == 1) {
+      pos = Constants.ElevatorConstants.midPos;
+    } else if (state == 2) {
+      pos = Constants.ElevatorConstants.highPos;
+    }
     
     if (elevator.getBottomLimits() && state == 0) {
       elevator.elevate(0);
       return;
-    } else if (elevator.topLimitSwitch() && state == 3) { // TODO: wtf!
+    } else if (elevator.topLimitSwitch()) { // TODO: wtf!
       elevator.elevate(0);
       return;
     }
@@ -87,7 +87,7 @@ public class SetElevator extends CommandBase {
     //   return true;
     // }
     // return false;
-
+    //return elevator.isAtSetpoint();
     if (elevator.getEncoderPos() >= pos-200 && elevator.getEncoderPos() <= pos+200) {
       SmartDashboard.putBoolean("setElevator finished", true);
       return true;

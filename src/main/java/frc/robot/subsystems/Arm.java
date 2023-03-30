@@ -60,7 +60,7 @@ public class Arm extends SubsystemBase {
         armMotor.configPeakOutputReverse(-0.25, 20);
         armMotor.configAllowableClosedloopError(0, 0, 20);
         armMotor.config_kF(0, 0, 20);
-        armMotor.config_kP(0, 0.5, 20); // 0.275
+        armMotor.config_kP(0, 0.1, 20); // 0.275
         armMotor.config_kI(0, 0, 20);
         armMotor.config_kD(0, 0, 20);
         armMotor.setInverted(true);
@@ -72,7 +72,7 @@ public class Arm extends SubsystemBase {
         armMotor.configMotionAcceleration(24000, 20);
         armMotor.configAllowableClosedloopError(0, 200, 20);
 
-        pid = new PIDController(0.03, 0, 0);
+        pid = new PIDController(0.035, 0.0035, 0);
         pid.setTolerance(2);
         // holdPosValue = armMotor.getSelectedSensorPosition();
         Timer.delay(1);
@@ -130,6 +130,10 @@ public class Arm extends SubsystemBase {
     public boolean isAtStowedLimit() {
         //return !armLimit.get();
         return isAtMaxTuck();
+    }
+
+    public void setClosedLoopSpeed(int speed) {
+        armMotor.set(ControlMode.Velocity, speed);
     }
 
     // public int getState() {

@@ -63,7 +63,7 @@ public class Wrist extends SubsystemBase {
     motor.config_kP(0, 0);
     motor.config_kI(0, 0);
     motor.config_kD(0, 0);
-    motor.configPeakOutputForward(0.1, 20);
+    motor.configPeakOutputForward(0.175, 20);
     motor.configPeakOutputReverse(-0.1, 20);
     motor.setNeutralMode(NeutralMode.Brake);
     motor.setStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0, 20);
