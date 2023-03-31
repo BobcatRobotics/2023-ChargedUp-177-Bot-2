@@ -40,6 +40,8 @@ public class SetElevator extends CommandBase {
       pos = Constants.ElevatorConstants.midPos;
     } else if (state == 2) {
       pos = Constants.ElevatorConstants.highPos;
+    } else if (state == 3) {
+      pos = Constants.ElevatorConstants.shelfPos;
     }
     
     if (elevator.getBottomLimits() && state == 0) {
@@ -58,6 +60,9 @@ public class SetElevator extends CommandBase {
     }
     else if(state == 2){
       elevator.setState(2);
+    }
+    else if(state == 3){
+      elevator.setState(3);
     }
 
 
@@ -88,7 +93,7 @@ public class SetElevator extends CommandBase {
     // }
     // return false;
     //return elevator.isAtSetpoint();
-    if (elevator.getEncoderPos() >= pos-200 && elevator.getEncoderPos() <= pos+200) {
+    if (elevator.getEncoderPos() >= pos-150 && elevator.getEncoderPos() <= pos+150) {
       SmartDashboard.putBoolean("setElevator finished", true);
       return true;
     }

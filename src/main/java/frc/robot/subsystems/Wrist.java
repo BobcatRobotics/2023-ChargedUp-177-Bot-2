@@ -145,6 +145,9 @@ public class Wrist extends SubsystemBase {
     // compressor.enableAnalog(80, 115);//TODO: check limits
     // SmartDashboard.putNumber("compressor psi", compressor.getPressure());
     //motor.setSelectedSensorPosition(getEncoderPos());
+    if (wristEncoder.getPosition() <= 5 && wristEncoder.getPosition() >= 0) {
+      wristEncoder.setPosition(360);
+    }
     if (isAtCurrentLimit()) {
       motor.set(ControlMode.PercentOutput, 0);
     }

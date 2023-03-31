@@ -49,6 +49,8 @@ import frc.robot.commands.Presets.SetElevator;
 import frc.robot.commands.Presets.StartingConfig;
 import frc.robot.commands.Presets.ZeroElevator;
 import frc.robot.commands.Presets.intakeStop;
+import frc.robot.commands.Presets.Procedures.GrabFromHPChute;
+import frc.robot.commands.Presets.Procedures.GrabFromHPShelf;
 import frc.robot.commands.Presets.Procedures.ScoreHigh;
 import frc.robot.commands.Presets.Procedures.ScoreMid;
 import frc.robot.commands.Presets.Procedures.TopSuck;
@@ -117,6 +119,7 @@ public class RobotContainer {
    private final POVButton DUp = new POVButton(driver, 0);
    private final POVButton DLeft = new POVButton(driver, 270);
    private final POVButton DDown = new POVButton(driver, 180);
+   private final POVButton DRight = new POVButton(driver, 90);
     /* Subsystems */
 
 
@@ -350,8 +353,11 @@ public class RobotContainer {
         // }
         DLeft.onTrue(new ScoreMid(m_Elevator, m_Arm, m_Wrist).until(this::anythingPressed));
 
+        b.onTrue(new GrabFromHPChute(m_Elevator, m_Arm, m_Wrist).until(this::anythingPressed)); // chute
+
         //a.onTrue(new ForwardSuck(m_Elevator, m_Arm, m_Wrist).until(this::anythingPressed));
-        b.onTrue(new TopSuck(m_Elevator, m_Arm, m_Intake, m_Wrist).until(this::anythingPressed));
+        a.onTrue(new TopSuck(m_Elevator, m_Arm, m_Intake, m_Wrist).until(this::anythingPressed));
+        y.onTrue(new GrabFromHPShelf(m_Elevator, m_Arm, m_Wrist).until(this::anythingPressed));
 
         //x.onTrue(new InstantCommand(m_LEDs::setPurple));
         //y.onTrue(new InstantCommand(m_LEDs::setYellow));

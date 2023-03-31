@@ -281,6 +281,7 @@ public final class Constants {
         public static final double startingArmPos = 10; // in box
         public static final double groundPickupArm = 86.5; // ground intake
         public static final double chuteArmPos = 33; // pickup from hp chute
+        public static final double shelfArmPos = 9;
         public static final double trueArmMaxExtension = 200; // TODO: change!
         public static final double minNonCollidingExtention = 33; // limit for arm so it doesn't crash into the elevator
         public static final double midScoringPos = 35;
@@ -297,6 +298,7 @@ public final class Constants {
         public static final int bottomPos = 0;
         public static final int midPos = -62256;
         public static final int highPos = -104446;
+        public static final int shelfPos = -77000;
 
         // public static final int pos0 = 20; // done
         // public static final int pos1 = -65138; // dpne; old = -126256; 
@@ -317,6 +319,7 @@ public final class Constants {
         public static final double groundPickupWrist = 275; // ground intake
         public static final double startingPosWrist = 320; // in box
         public static final double highScorePos = 308.58;
+        public static final double shelfPickupPos = 359;
     }  
 
 }
