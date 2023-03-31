@@ -56,8 +56,8 @@ public class Arm extends SubsystemBase {
         armMotor.setSensorPhase(true);
         armMotor.configNominalOutputForward(0, 20);
         armMotor.configNominalOutputReverse(0, 20);
-        armMotor.configPeakOutputForward(0.25, 20);
-        armMotor.configPeakOutputReverse(-0.25, 20);
+        armMotor.configPeakOutputForward(0.5, 20);
+        armMotor.configPeakOutputReverse(-0.5, 20);
         armMotor.configAllowableClosedloopError(0, 0, 20);
         armMotor.config_kF(0, 0, 20);
         armMotor.config_kP(0, 0.1, 20); // 0.275
@@ -72,7 +72,7 @@ public class Arm extends SubsystemBase {
         armMotor.configMotionAcceleration(24000, 20);
         armMotor.configAllowableClosedloopError(0, 200, 20);
 
-        pid = new PIDController(0.035, 0.0035, 0);
+        pid = new PIDController(0.0375, 0.00375, 0);
         pid.setTolerance(2);
         // holdPosValue = armMotor.getSelectedSensorPosition();
         Timer.delay(1);

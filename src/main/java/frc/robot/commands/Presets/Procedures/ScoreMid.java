@@ -29,7 +29,8 @@ public class ScoreMid extends SequentialCommandGroup {
       //   Commands.parallel(new SetElevator(e,1)) //new RunWrist(w, false))
       // )
       new SetArm(a, ArmConstants.midScoringPos),
-      Commands.parallel(new SetElevator(e, 1), new SetWrist(w, WristConstants.globalWristMaxAngleDown))
+      Commands.parallel(new SetElevator(e, 1)),
+      new SetWrist(w, WristConstants.globalWristMaxAngleDown)
     );
   }
 }
