@@ -7,6 +7,7 @@ package frc.robot.subsystems;
 import java.util.concurrent.CancellationException;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.RemoteSensorSource;
@@ -63,13 +64,13 @@ public class Wrist extends SubsystemBase {
     motor.config_kP(0, 0);
     motor.config_kI(0, 0);
     motor.config_kD(0, 0);
-    motor.configPeakOutputForward(0.2625, 20);
-    motor.configPeakOutputReverse(-0.15, 20);
+    motor.configPeakOutputForward(0.63, 20);
+    motor.configPeakOutputReverse(-0.36, 20);
     motor.setNeutralMode(NeutralMode.Brake);
     motor.setStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0, 20);
     
 
-    pid = new PIDController(-0.165, 0, 0);
+    pid = new PIDController(-0.07, 0.0, 0.0); // used to be 165
     pid.setTolerance(2);
     // solenoid = new Solenoid(PneumaticsModuleType.REVPH, Constants.wristSolenoidID);
     // phub = new PneumaticHub(Constants.pHubID);
@@ -86,17 +87,21 @@ public class Wrist extends SubsystemBase {
     // solenoid.set(true);
     motor.set(ControlMode.PercentOutput, speed);
   }
+  
+  public void setSpeed0ArbitraryFeedForward(){
+    motor.set(ControlMode.PercentOutput, 0, DemandType.ArbitraryFeedForward, 0.05);
+  }
 
   public void up() {
-    motor.set(ControlMode.PercentOutput, 1);
+    motor.set(ControlMode.PercentOutput, 0.5);
   }
 
   public void down() {
-    motor.set(ControlMode.PercentOutput, -1);
+    motor.set(ControlMode.PercentOutput, -0.5);
   }
 
   public boolean isAtCurrentLimit() {
-    return motor.getStatorCurrent() >= 15;
+    return motor.getStatorCurrent() >= 20;
   }
 
   public double getAbsEncoderPos() {
@@ -116,7 +121,7 @@ public class Wrist extends SubsystemBase {
   }
 
   public boolean globalWristMaxAngleDown() {
-    return getEncoderPos() >= WristConstants.globalWristMaxAngleDown || getEncoderPos() <= 5; // Second part is to make it work if it loops back around to 0
+    return getEncoderPos() >= WristConstants.globalWristMaxAngleDown; // Second part is to make it work if it loops back around to 0
   }
 
   public void setState(double state) {

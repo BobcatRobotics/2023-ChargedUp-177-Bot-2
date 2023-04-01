@@ -44,7 +44,8 @@ public class RunWrist extends CommandBase {
     } else if (rightBumper.getAsBoolean()) {
       w.up();
     } else {
-      w.setSpeed(0);
+      //w.setSpeed(0);
+      w.setSpeed0ArbitraryFeedForward();
     }
   }
 

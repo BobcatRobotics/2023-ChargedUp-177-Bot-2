@@ -34,7 +34,8 @@ public class PoseEstimator extends SubsystemBase {
   private final Supplier<SwerveModulePosition[]> modulePositionSupplier;
   private final SwerveDrivePoseEstimator poseEstimator;
   //private PhotonVision photon = new PhotonVision();
-  private Limelight limelight;
+  private Limelight limelightFront;
+  private Limelight limelightBack;
 
   private OriginPosition originPosition = OriginPosition.kBlueAllianceWallRightSide;
   private boolean sawTag = false;
@@ -45,7 +46,7 @@ public class PoseEstimator extends SubsystemBase {
   private Alliance alliance = Alliance.Blue;
 
   /** Creates a new PoseEstimatorSubsystem. */
-  public PoseEstimator(Supplier<Rotation2d> rotationSupplier, Supplier<SwerveModulePosition[]> modulePositionSupplier, Limelight limelight) {
+  public PoseEstimator(Supplier<Rotation2d> rotationSupplier, Supplier<SwerveModulePosition[]> modulePositionSupplier, Limelight limelightFront, Limelight limelightBack) {
     this.rotationSupplier = rotationSupplier;
     this.modulePositionSupplier = modulePositionSupplier;
 
@@ -57,12 +58,14 @@ public class PoseEstimator extends SubsystemBase {
       stateStdDevs,
       visionMeasurementStdDevs
     );
-    this.limelight = limelight;
+    this.limelightFront = limelightFront;
+    this.limelightBack = limelightBack;
   }
   
   public void setAlliance(Alliance alliance) {
     boolean allianceChanged = false;
-    this.limelight.setAlliance(alliance);
+    this.limelightFront.setAlliance(alliance);
+    this.limelightBack.setAlliance(alliance);
     switch(alliance) {
       case Blue:
         allianceChanged = (originPosition == OriginPosition.kRedAllianceWallRightSide);
@@ -122,20 +125,9 @@ public class PoseEstimator extends SubsystemBase {
       Math.pow((x2-x1), 2)  -  (Math.pow((y2-y1), 2))
       );
   }
-   
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-    poseEstimator.update(this.rotationSupplier.get(), this.modulePositionSupplier.get());
-    // var visionPose = photon.grabLatestEstimatedPose();
-    // if (visionPose != null) {
-    //   sawTag = true;
-    //   Pose2d pose2d = visionPose.estimatedPose.toPose2d();
-    //   if (originPosition != OriginPosition.kBlueAllianceWallRightSide) {
-    //     pose2d = flipAlliance(pose2d);
-    //   }
-    //   poseEstimator.addVisionMeasurement(pose2d, visionPose.timestampSeconds);
-    // }
+  
+  private void addVisionMeasurement(Limelight limelight) {
+    
     Pose3d visionPose = null;
     try {
       double[] botPose = limelight.botPose();
@@ -159,6 +151,47 @@ public class PoseEstimator extends SubsystemBase {
       }
       //setCurrentPose(pose2d);
     }
+  }
+
+  @Override
+  public void periodic() {
+    // This method will be called once per scheduler run
+    poseEstimator.update(this.rotationSupplier.get(), this.modulePositionSupplier.get());
+    addVisionMeasurement(limelightFront);
+    addVisionMeasurement(limelightBack);
+
+    // var visionPose = photon.grabLatestEstimatedPose();
+    // if (visionPose != null) {
+    //   sawTag = true;
+    //   Pose2d pose2d = visionPose.estimatedPose.toPose2d();
+    //   if (originPosition != OriginPosition.kBlueAllianceWallRightSide) {
+    //     pose2d = flipAlliance(pose2d);
+    //   }
+    //   poseEstimator.addVisionMeasurement(pose2d, visionPose.timestampSeconds);
+    // }
+    // Pose3d visionPose = null;
+    // try {
+    //   double[] botPose = limelightFront.botPose();
+    //   Rotation3d rot3 = new Rotation3d(Units.degreesToRadians(botPose[3]), Units.degreesToRadians(botPose[4]), Units.degreesToRadians(botPose[5]));
+  
+    //   visionPose = new Pose3d(botPose[0], botPose[1], botPose[2], rot3);
+    // } catch (Exception e) {
+    //   System.out.println(e);
+    // }
+    // if (visionPose != null && limelightFront.tv() == 1.0) {
+    //   ///System.out.println("vision pose found!");
+    //   sawTag = true;
+      
+    //   Pose2d pose2d = new Pose2d(visionPose.getTranslation().toTranslation2d(), rotationSupplier.get());
+
+    //   double distance = limelightFront.targetDist();
+    //   double timeStampSeconds =  Timer.getFPGATimestamp() - (limelightFront.tl()/1000.0) - (limelightFront.cl()/1000.0);
+    //   // double poseDist = distanceFormula(pose2d.getX(),pose2d.getY(),visionPose.getX(),visionPose.getY());
+    //   if (distanceFormula(pose2d.getX(),pose2d.getY(),visionPose.getX(),visionPose.getY()) < 1.0) {
+    //     poseEstimator.addVisionMeasurement(pose2d, timeStampSeconds, VecBuilder.fill(distance/2, distance/2, 100));
+    //   }
+    //   //setCurrentPose(pose2d);
+    // }
   }
 
   private String getFormattedPose() {

@@ -26,9 +26,10 @@ public class Limelight extends SubsystemBase {
   private NetworkTableEntry tl = null;
   private NetworkTableEntry cl = null;
   private Alliance alliance = Alliance.Blue;
-  
-  public Limelight() {
-    NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+  private String limeLightName="limelight";
+  public Limelight(String limeLightName) {
+    this.limeLightName = limeLightName;
+    NetworkTable table = NetworkTableInstance.getDefault().getTable(limeLightName);
     turnOnLED();
     try {
       tTarget = table.getEntry("tv");
@@ -53,7 +54,7 @@ public class Limelight extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    NetworkTable table = NetworkTableInstance.getDefault().getTable("limelight");
+    NetworkTable table = NetworkTableInstance.getDefault().getTable(limeLightName);
     try {
       tTarget = table.getEntry("tv");
       tx = table.getEntry("tx");
@@ -129,7 +130,7 @@ public class Limelight extends SubsystemBase {
   public double x() {
     double dx = 0.0;
     if (isInitialized()) {
-      dx = getEntry("tx").getDouble(0.0);
+      dx = tx.getDouble(0.0);
     }
     return dx;
   }
@@ -137,7 +138,7 @@ public class Limelight extends SubsystemBase {
   public double y() {
     double dy = 0.0;
     if (isInitialized()) {
-      dy = getEntry("ty").getDouble(0.0);
+      dy = ty.getDouble(0.0);
     }
     return dy;
   }
@@ -145,7 +146,7 @@ public class Limelight extends SubsystemBase {
   public double targetArea() {
     double dArea = 0.0;
     if (isInitialized()) {
-      dArea = getEntry("ta").getDouble(0.0);
+      dArea = ta.getDouble(0.0);
     }
     return dArea;
   }
@@ -153,7 +154,7 @@ public class Limelight extends SubsystemBase {
   public double tv() {
     double tv = 0.0;
     if (isInitialized()) {
-      tv = getEntry("tv").getDouble(0.0);
+      tv = tTarget.getDouble(0.0);
     }
     return tv;
   }

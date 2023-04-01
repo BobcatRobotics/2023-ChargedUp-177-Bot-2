@@ -79,7 +79,11 @@ public class ArmControls extends CommandBase {
     } else if(arm.isAtMaxExtension() && gamepad.getRawAxis(1) > 0){
       arm.setSpeed(0);
     }else if (Math.abs(gamepad.getRawAxis(1)) < 0.02) {
-      arm.setSpeed(0);
+      if (arm.getEncoderPos() > 50) {
+        arm.setSpeed0ArbitraryFeedForward();
+      } else {
+        arm.setSpeed(0);
+      }
     } else {
       arm.setSpeed(gamepad.getRawAxis(1)/5);
     }

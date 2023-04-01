@@ -1,6 +1,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.RemoteSensorSource;
 import com.ctre.phoenix.motorcontrol.StatusFrameEnhanced;
@@ -87,6 +88,11 @@ public class Arm extends SubsystemBase {
     public void setSpeed(double speed) {
         armMotor.set(ControlMode.PercentOutput, speed);
     }
+
+    public void setSpeed0ArbitraryFeedForward() {
+        armMotor.set(ControlMode.PercentOutput, 0, DemandType.ArbitraryFeedForward, -0.02);
+    }
+
     public void runArmOutSlow() {
         armMotor.set(ControlMode.PercentOutput, 0.2);
     }

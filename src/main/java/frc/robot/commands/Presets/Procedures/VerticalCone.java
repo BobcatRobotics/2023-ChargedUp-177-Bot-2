@@ -4,33 +4,28 @@
 
 package frc.robot.commands.Presets.Procedures;
 
-import edu.wpi.first.wpilibj2.command.Commands;
+import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.WristConstants;
-import frc.robot.commands.Presets.RunIntake;
 import frc.robot.commands.Presets.SetArm;
 import frc.robot.commands.Presets.SetElevator;
 import frc.robot.commands.Presets.SetWrist;
-//import frc.robot.commands.Presets.RunWrist;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Elevator;
-import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Wrist;
 
-public class ScoreMid extends SequentialCommandGroup {
-    // elevator mid, arm out, wrist down, intake out
-    public ScoreMid(Elevator e, Arm a, Wrist w) {
+// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
+// information, see:
+// https://docs.wpilib.org/en/stable/docs/software/commandbased/convenience-features.html
+public class VerticalCone extends SequentialCommandGroup {
+  /** Creates a new VerticalCone. */
+  public VerticalCone(Elevator e, Arm a, Wrist w) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      // new SequentialCommandGroup(
-      //   new SetArm(a,1),
-      //   Commands.parallel(new SetElevator(e,1)) //new RunWrist(w, false))
-      // )
-      new SetArm(a, ArmConstants.midScoringPos),
-      Commands.parallel(new SetElevator(e, 1)),
-      new SetWrist(w, WristConstants.midScorePos)
+      new SetElevator(e, 0),
+      new ParallelCommandGroup(new SetArm(a, ArmConstants.topSuck), new SetWrist(w, WristConstants.topSuck))
     );
   }
 }

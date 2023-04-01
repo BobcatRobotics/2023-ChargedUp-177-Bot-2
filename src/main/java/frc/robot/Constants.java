@@ -279,13 +279,14 @@ public final class Constants {
 
         public static final double armOffset = 205; // 5 degrees at start
         public static final double startingArmPos = 10; // in box
-        public static final double groundPickupArm = 86.5; // ground intake
+        public static final double groundPickupArm = 82.5; // ground intake
         public static final double chuteArmPos = 33; // pickup from hp chute
         public static final double shelfArmPos = 13;
         public static final double trueArmMaxExtension = 200; // TODO: change!
         public static final double minNonCollidingExtention = 33; // limit for arm so it doesn't crash into the elevator
-        public static final double midScoringPos = 35;
-        public static final double highScoringPos = 60.56;
+        public static final double midScoringPos = 28.65;
+        public static final double highScoringPos = 57.21;
+        public static final double topSuck = 70.9;
 
         public static int armState = 0;
     }
@@ -315,11 +316,13 @@ public final class Constants {
     public static final class WristConstants {
         public static final double wristOffset = 160.66; // 5 degrees at start
         public static final double globalWristMaxAngleUp = 260; // chute wrist position as well
-        public static final double globalWristMaxAngleDown = 355; 
+        public static final double globalWristMaxAngleDown = 352; 
+        public static final double midScorePos = 345.76;
         public static final double groundPickupWrist = 275; // ground intake
         public static final double startingPosWrist = 320; // in box
-        public static final double highScorePos = 308.58;
+        public static final double highScorePos = 304.6;
         public static final double shelfPickupPos = 359;
+        public static final double topSuck = 296;
     }  
 
 }

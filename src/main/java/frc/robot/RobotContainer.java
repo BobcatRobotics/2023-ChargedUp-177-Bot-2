@@ -40,6 +40,7 @@ import frc.robot.commands.Autos.BalanceChargeStation;
 import frc.robot.commands.Autos.MountAndBalance;
 import frc.robot.commands.Autos.MountAndBalanceInverse;
 import frc.robot.commands.Autos.AutoPresets.ScoreCubeHighAutos;
+import frc.robot.commands.LEDs.Blink;
 import frc.robot.commands.Presets.IntakeInConstantly;
 import frc.robot.commands.Presets.RetractArm;
 import frc.robot.commands.Presets.RunIntake;
@@ -54,6 +55,7 @@ import frc.robot.commands.Presets.Procedures.GrabFromHPShelf;
 import frc.robot.commands.Presets.Procedures.ScoreHigh;
 import frc.robot.commands.Presets.Procedures.ScoreMid;
 import frc.robot.commands.Presets.Procedures.TopSuck;
+import frc.robot.commands.Presets.Procedures.VerticalCone;
 import frc.robot.subsystems.*;
 //import frc.robot.autos.RedHighCone6PickupBalance;
 import frc.robot.subsystems.Limelight;
@@ -91,7 +93,11 @@ public class RobotContainer {
     //ruffy buttons
     private final JoystickButton ruffy0 = new JoystickButton(rotate, 1);
     private final JoystickButton ruffy1 = new JoystickButton(strafe, 1);
-
+    //driver button board
+    //TODO: check if these are the right sides
+    private final JoystickButton driverLeft = new JoystickButton(buttonBoards, 2);
+    private final JoystickButton driverRight = new JoystickButton(buttonBoards, 1);
+  
    // private final JoystickButton alignRobot = new JoystickButton(driver, 1);
 
 
@@ -123,15 +129,16 @@ public class RobotContainer {
     /* Subsystems */
 
 
-    //public static Limelight m_Limelight = new Limelight();
+    public static Limelight m_LimelightFront = new Limelight("limelight-front");
+    public static Limelight m_LimelightBack = new Limelight("limelight-back");
     public static Swerve s_Swerve = new Swerve();
-    //public static PoseEstimator swervePoseEstimator = new PoseEstimator(s_Swerve::getYaw, s_Swerve::getModulePositions, m_Limelight);
+    public static PoseEstimator swervePoseEstimator = new PoseEstimator(s_Swerve::getYaw, s_Swerve::getModulePositions, m_LimelightFront, m_LimelightBack);
 
     private final Elevator m_Elevator = new Elevator();
     private final Intake m_Intake = new Intake();
     private final Arm m_Arm = new Arm();
     private final Wrist m_Wrist = new Wrist();
-    //private final BlinkinLEDs m_LEDs = new BlinkinLEDs();
+    private final BlinkinLEDs m_LEDs = new BlinkinLEDs();
     
     /* Commands */
     private final Command elevatorControls = new ElevatorControls(m_Elevator, driver, m_Arm);
@@ -330,9 +337,13 @@ public class RobotContainer {
         ruffy0.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
         ruffy1.onTrue(new InstantCommand(() -> s_Swerve.configToX()));
 
-        //OpTopLeft.onTrue(new TopRight(s_Swerve, swervePoseEstimator, m_Elevator, m_Arm, m_Wrist, m_Intake).until(this::baseDriverControlsMoved));
-        //OpTopMid.onTrue(new TopMid(s_Swerve, swervePoseEstimator, m_Elevator, m_Arm, m_Wrist, m_Intake).until(this::baseDriverControlsMoved));
-        //OpTopRight.onTrue(new TopRight(s_Swerve, swervePoseEstimator, m_Elevator, m_Arm, m_Wrist, m_Intake).until(this::baseDriverControlsMoved));
+        driverLeft.onTrue(new Blink(m_LEDs, false));
+        driverRight.onTrue(new Blink(m_LEDs, true));
+        
+
+        OpTopLeft.onTrue(new TopRight(s_Swerve, swervePoseEstimator, m_Elevator, m_Arm, m_Wrist, m_Intake).until(this::baseDriverControlsMoved));
+        OpTopMid.onTrue(new TopMid(s_Swerve, swervePoseEstimator, m_Elevator, m_Arm, m_Wrist, m_Intake).until(this::baseDriverControlsMoved));
+        OpTopRight.onTrue(new TopRight(s_Swerve, swervePoseEstimator, m_Elevator, m_Arm, m_Wrist, m_Intake).until(this::baseDriverControlsMoved));
         
         lefttrigger.whileTrue(new InstantCommand(m_Intake::runIntakeOut));
         leftBumper.whileTrue(new InstantCommand(m_Intake::runIntakeIn));
@@ -356,8 +367,9 @@ public class RobotContainer {
         b.onTrue(new GrabFromHPChute(m_Elevator, m_Arm, m_Wrist).until(this::anythingPressed)); // chute
 
         //a.onTrue(new ForwardSuck(m_Elevator, m_Arm, m_Wrist).until(this::anythingPressed));
-        a.onTrue(new TopSuck(m_Elevator, m_Arm, m_Intake, m_Wrist).until(this::anythingPressed));
-        y.onTrue(new GrabFromHPShelf(m_Elevator, m_Arm, m_Wrist).until(this::anythingPressed));
+        a.onTrue(new TopSuck(m_Elevator, m_Arm, m_Intake, m_Wrist).until(this::anythingPressed)); //TopSuck? This command should be named BottomSuck
+        // y.onTrue(new GrabFromHPShelf(m_Elevator, m_Arm, m_Wrist).until(this::anythingPressed));
+        // x.onTrue(new VerticalCone(m_Elevator, m_Arm, m_Wrist).until(this::anythingPressed));
 
         //x.onTrue(new InstantCommand(m_LEDs::setPurple));
         //y.onTrue(new InstantCommand(m_LEDs::setYellow));

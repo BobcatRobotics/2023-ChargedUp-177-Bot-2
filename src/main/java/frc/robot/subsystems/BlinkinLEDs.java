@@ -28,6 +28,14 @@ public class BlinkinLEDs extends SubsystemBase {
     pdh.setSwitchableChannel(true);
       leds.set(0.69);
   }
+  public void blinkPurple(){
+    pdh.setSwitchableChannel(true);
+    leds.set(0.15);
+  }
+  public void blinkYellow(){
+    pdh.setSwitchableChannel(true);
+    leds.set(-0.07);
+  }
 
   public boolean getYellow() {
     return leds.get() < 0.69+0.1 && leds.get() > 0.69 + 0.1;

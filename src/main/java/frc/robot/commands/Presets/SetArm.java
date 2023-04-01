@@ -51,6 +51,8 @@ public class SetArm extends CommandBase {
       arm.setPos((int) ArmConstants.highScoringPos);
     } else if(state == ArmConstants.shelfArmPos){
       arm.setPos((int) ArmConstants.shelfArmPos);
+    } else if(state == ArmConstants.topSuck){
+      arm.setPos((int) ArmConstants.topSuck);
     }
   }
 
