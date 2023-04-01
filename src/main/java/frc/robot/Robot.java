@@ -103,7 +103,7 @@ public class Robot extends TimedRobot {
   public void disabledInit() {
 
     CommandScheduler.getInstance().cancelAll();
-    //m_robotContainer.turnOffLeds();
+    m_robotContainer.turnOffLeds();
     for (int i = 0; i < 10; i++) {
       m_robotContainer.resetToAbsolute();
     }

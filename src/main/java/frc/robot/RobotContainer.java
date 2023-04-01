@@ -32,6 +32,10 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.*;
+import frc.robot.commands.AutoAlign.MidLeft;
+import frc.robot.commands.AutoAlign.MidMid;
+import frc.robot.commands.AutoAlign.MidRight;
+import frc.robot.commands.AutoAlign.TopLeft;
 import frc.robot.commands.AutoAlign.TopMid;
 import frc.robot.commands.AutoAlign.TopRight;
 import frc.robot.commands.Autos.AlignToTarget;
@@ -167,82 +171,82 @@ public class RobotContainer {
         // Sendable Chooser Setup
         //autoChooser.setDefaultOption("Red High Cone 6 Pickup & Balance", redHighCone6PickupBalance);
         setUpEventMap();
-        // //pathPlannerTest = new PathPlannerTest();
-        // autoChooser.setDefaultOption("1HighDirtyBalance", buildAuto(PathPlanner.loadPathGroup("Score1HighCubeRightBalance", new PathConstraints(4.5, 3))));
-        // autoChooser.addOption("1HybridCleanBalance", buildAuto(PathPlanner.loadPathGroup("Score1LeftBalance", new PathConstraints(4, 3))));
-        // autoChooser.addOption("CleanBalance", buildAuto(PathPlanner.loadPathGroup("LeftBalance", new PathConstraints(4, 3))));
-        // autoChooser.addOption("DirtyBalance", buildAuto(PathPlanner.loadPathGroup("RightBalance", new PathConstraints(4, 3))));
-        // // autoChooser.addOption("CenterBalance", PathPlanner.loadPathGroup("CenterBalance", new PathConstraints(4, 3)));
-        // // autoChooser.addOption("Score1CenterBalance", PathPlanner.loadPathGroup("Score1CenterBalance", new PathConstraints(4, 3)));
-        // autoChooser.addOption("1HybridDirtyBalance", buildAuto(PathPlanner.loadPathGroup("Score1RightBalance", new PathConstraints(4, 3))));
-        // autoChooser.addOption("1HighCleanBalance", buildAuto(PathPlanner.loadPathGroup("Score1HighCubeLeftBalance", new PathConstraints(4.5, 3))));
-        // // autoChooser.addOption("Score1HighCubeCenterBalance", PathPlanner.loadPathGroup("Score1HighCubeCenterBalance", new PathConstraints(4.5, 3)));
-        // // autoChooser.addOption("Score1HighCubeCleanNoBalance", PathPlanner.loadPathGroup("ScoreHighCubeCleanNoBalance", new PathConstraints(4.5, 3)));
-        // autoChooser.addOption("1HighDirtyNoBalance", buildAuto(PathPlanner.loadPathGroup("ScoreHighCubeDirtyNoBalance", new PathConstraints(4.5, 3))));
-        // autoChooser.addOption("NoMove1High", buildAuto(PathPlanner.loadPathGroup("NoMoveScore1High", new PathConstraints(0, 0))));
-        // autoChooser.addOption("NoMove1HighCone", buildAuto(PathPlanner.loadPathGroup("NoMoveScore1HighCone", new PathConstraints(0, 0))));
-        // autoChooser.addOption("NoTurn1HighCenterBalance", buildAuto(PathPlanner.loadPathGroup("NoTurnScore1HighCenterBalance", new PathConstraints(4, 3))));
-        // autoChooser.addOption("1.5CleanBalance", buildAuto(PathPlanner.loadPathGroup("Score1HighCubePickupLeftBalance", new PathConstraints(4.5, 3))));
-        // autoChooser.addOption("1.5DirtyBalance", buildAuto(PathPlanner.loadPathGroup("Score1HighCubePickupRightBalance", new PathConstraints(4.5, 3))));
-        // autoChooser.addOption("1.5CleanNoBalance", buildAuto(PathPlanner.loadPathGroup("Score1HighCubePickupLeftNoBalance", new PathConstraints(4.5, 3))));
-        // autoChooser.addOption("1.5DirtyNoBalance", buildAuto(PathPlanner.loadPathGroup("Score1HighCubePickupRightNoBalance", new PathConstraints(4.5, 3))));
-        // autoChooser.addOption("2PieceBalanceClean", buildAuto(PathPlanner.loadPathGroup("2PieceBalanceClean", new PathConstraints(4.5, 3))));
-        // autoChooser.addOption("2PieceBalanceDirty", buildAuto(PathPlanner.loadPathGroup("2PieceBalanceDirty", new PathConstraints(4.5, 3))));
-        // autoChooser.addOption("2PieceHighBalanceClean", buildAuto(PathPlanner.loadPathGroup("2PieceHighBalanceClean", new PathConstraints(4.5, 3))));
-        // autoChooser.addOption("3PieceHybridClean", buildAuto(PathPlanner.loadPathGroup("3PieceHybridClean", new PathConstraints(4.5, 3))));
-        // autoChooser.addOption("PPTestBalance", buildAuto(PathPlanner.loadPathGroup("PPTestBalance", new PathConstraints(2, 2))));
-        //autoChooser.addOption("PathPlanner Test w/ Events", new SequentialCommandGroup(Swerve.followTrajectoryCommand(PathPlanner.loadPath("New Path", new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)), true)));
-        //autoChooser.addOption("charge station", chargestation);
+        //pathPlannerTest = new PathPlannerTest();
+        autoChooser.setDefaultOption("1HighDirtyBalance", buildAuto(PathPlanner.loadPathGroup("Score1HighCubeRightBalance", new PathConstraints(4.5, 3))));
+        autoChooser.addOption("1HybridCleanBalance", buildAuto(PathPlanner.loadPathGroup("Score1LeftBalance", new PathConstraints(4, 3))));
+        autoChooser.addOption("CleanBalance", buildAuto(PathPlanner.loadPathGroup("LeftBalance", new PathConstraints(4, 3))));
+        autoChooser.addOption("DirtyBalance", buildAuto(PathPlanner.loadPathGroup("RightBalance", new PathConstraints(4, 3))));
+        // autoChooser.addOption("CenterBalance", PathPlanner.loadPathGroup("CenterBalance", new PathConstraints(4, 3)));
+        // autoChooser.addOption("Score1CenterBalance", PathPlanner.loadPathGroup("Score1CenterBalance", new PathConstraints(4, 3)));
+        autoChooser.addOption("1HybridDirtyBalance", buildAuto(PathPlanner.loadPathGroup("Score1RightBalance", new PathConstraints(4, 3))));
+        autoChooser.addOption("1HighCleanBalance", buildAuto(PathPlanner.loadPathGroup("Score1HighCubeLeftBalance", new PathConstraints(4.5, 3))));
+        // autoChooser.addOption("Score1HighCubeCenterBalance", PathPlanner.loadPathGroup("Score1HighCubeCenterBalance", new PathConstraints(4.5, 3)));
+        // autoChooser.addOption("Score1HighCubeCleanNoBalance", PathPlanner.loadPathGroup("ScoreHighCubeCleanNoBalance", new PathConstraints(4.5, 3)));
+        autoChooser.addOption("1HighDirtyNoBalance", buildAuto(PathPlanner.loadPathGroup("ScoreHighCubeDirtyNoBalance", new PathConstraints(4.5, 3))));
+        autoChooser.addOption("NoMove1High", buildAuto(PathPlanner.loadPathGroup("NoMoveScore1High", new PathConstraints(0, 0))));
+        autoChooser.addOption("NoMove1HighCone", buildAuto(PathPlanner.loadPathGroup("NoMoveScore1HighCone", new PathConstraints(0, 0))));
+        autoChooser.addOption("NoTurn1HighCenterBalance", buildAuto(PathPlanner.loadPathGroup("NoTurnScore1HighCenterBalance", new PathConstraints(4, 3))));
+        autoChooser.addOption("1.5CleanBalance", buildAuto(PathPlanner.loadPathGroup("Score1HighCubePickupLeftBalance", new PathConstraints(4.5, 3))));
+        autoChooser.addOption("1.5DirtyBalance", buildAuto(PathPlanner.loadPathGroup("Score1HighCubePickupRightBalance", new PathConstraints(4.5, 3))));
+        autoChooser.addOption("1.5CleanNoBalance", buildAuto(PathPlanner.loadPathGroup("Score1HighCubePickupLeftNoBalance", new PathConstraints(4.5, 3))));
+        autoChooser.addOption("1.5DirtyNoBalance", buildAuto(PathPlanner.loadPathGroup("Score1HighCubePickupRightNoBalance", new PathConstraints(4.5, 3))));
+        autoChooser.addOption("2PieceBalanceClean", buildAuto(PathPlanner.loadPathGroup("2PieceBalanceClean", new PathConstraints(4.5, 3))));
+        autoChooser.addOption("2PieceBalanceDirty", buildAuto(PathPlanner.loadPathGroup("2PieceBalanceDirty", new PathConstraints(4.5, 3))));
+        autoChooser.addOption("2PieceHighBalanceClean", buildAuto(PathPlanner.loadPathGroup("2PieceHighBalanceClean", new PathConstraints(4.5, 3))));
+        autoChooser.addOption("3PieceHybridClean", buildAuto(PathPlanner.loadPathGroup("3PieceHybridClean", new PathConstraints(4.5, 3))));
+        autoChooser.addOption("PPTestBalance", buildAuto(PathPlanner.loadPathGroup("PPTestBalance", new PathConstraints(2, 2))));
+        // autoChooser.addOption("PathPlanner Test w/ Events", new SequentialCommandGroup(Swerve.followTrajectoryCommand(PathPlanner.loadPath("New Path", new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)), true)));
+        // autoChooser.addOption("charge station", chargestation);
         SmartDashboard.putData(autoChooser);
     }
 
     public void setUpEventMap() {
-        // Constants.AutoConstants.eventMap.clear();
-        // Constants.AutoConstants.eventMap.put("chargeStation", new MountAndBalance(s_Swerve));
-        // //Constants.AutoConstants.eventMap.put("align", new AlignToTargetAutos(s_Swerve, m_Limelight));
-        // Constants.AutoConstants.eventMap.put("highPreset", new ScoreHigh(m_Elevator, m_Arm, m_Intake, m_Wrist));
-        // Constants.AutoConstants.eventMap.put("intakeGround", new SequentialCommandGroup(
-        //     new ForwardSuck(m_Elevator, m_Arm, m_Wrist),
-        //     new IntakeInConstantly(m_Intake)
-        // ));
-        // Constants.AutoConstants.eventMap.put("startingConfig", new StartingConfig(m_Elevator, m_Arm, m_Wrist));
+        Constants.AutoConstants.eventMap.clear();
+        Constants.AutoConstants.eventMap.put("chargeStation", new MountAndBalance(s_Swerve));
+        //Constants.AutoConstants.eventMap.put("align", new AlignToTargetAutos(s_Swerve, m_Limelight));
+        Constants.AutoConstants.eventMap.put("highPreset", new ScoreHigh(m_Elevator, m_Arm, m_Intake, m_Wrist));
+        Constants.AutoConstants.eventMap.put("intakeGround", new SequentialCommandGroup(
+            new TopSuck(m_Elevator, m_Arm, m_Intake, m_Wrist),
+            new IntakeInConstantly(m_Intake)
+        ));
+        Constants.AutoConstants.eventMap.put("startingConfig", new StartingConfig(m_Elevator, m_Arm, m_Wrist));
         // Constants.AutoConstants.eventMap.put("flickWrist", new InstantCommand(m_Wrist::wristSolenoidON));
-        // Constants.AutoConstants.eventMap.put("intakeOut", new IntakeOut(m_Intake));//new ParallelRaceGroup(new IntakeOut(), new WaitCommand(5)));
-        // Constants.AutoConstants.eventMap.put("intakeOutFullSpeed", new IntakeOutFullSpeed(m_Intake));
-        // Constants.AutoConstants.eventMap.put("driveBack", new DriveBack(s_Swerve)); // TODO: Actually is driving forward, my bad
-        // Constants.AutoConstants.eventMap.put("spinInPlace", new SpinInPlace(s_Swerve));
-        // Constants.AutoConstants.eventMap.put("waitHalfSec", new WaitCommand(0.5));
-        // Constants.AutoConstants.eventMap.put("smallDrive", new SmallDrive(s_Swerve));
-        // Constants.AutoConstants.eventMap.put("scoreCubeHigh", new SequentialCommandGroup(
-        //     new InstantCommand(m_Wrist::wristSolenoidON),
-        //     new ParallelRaceGroup(new ScoreHigh(m_Elevator, m_Arm, m_Intake, m_Wrist), new WaitCommand(2)), 
-        //     new InstantCommand(m_Wrist::wristSolenoidON),
-        //     new WaitCommand(0.2),
-        //     new IntakeOutFullSpeed(m_Intake), 
-        //     new StartingConfig(m_Elevator, m_Arm, m_Wrist)
-        //     )
-        // );
-        // Constants.AutoConstants.eventMap.put("scoreConeHigh", new SequentialCommandGroup(
-        //     new InstantCommand(m_Wrist::wristSolenoidON),
-        //     new ParallelRaceGroup(new ScoreHigh(m_Elevator, m_Arm, m_Intake, m_Wrist), new WaitCommand(2)), 
-        //     new IntakeOutFullSpeed(m_Intake), 
-        //     new StartingConfig(m_Elevator, m_Arm, m_Wrist)
-        //     )
-        // );
-        // Constants.AutoConstants.eventMap.put("setElevatorMid", new ParallelRaceGroup(new ScoreMid(m_Elevator, m_Arm, m_Wrist), new WaitCommand(1.5)));
+        Constants.AutoConstants.eventMap.put("intakeOut", new IntakeOut(m_Intake));//new ParallelRaceGroup(new IntakeOut(), new WaitCommand(5)));
+        Constants.AutoConstants.eventMap.put("intakeOutFullSpeed", new IntakeOutFullSpeed(m_Intake));
+        Constants.AutoConstants.eventMap.put("driveBack", new DriveBack(s_Swerve)); // TODO: Actually is driving forward, my bad
+        Constants.AutoConstants.eventMap.put("spinInPlace", new SpinInPlace(s_Swerve));
+        Constants.AutoConstants.eventMap.put("waitHalfSec", new WaitCommand(0.5));
+        Constants.AutoConstants.eventMap.put("smallDrive", new SmallDrive(s_Swerve));
+        Constants.AutoConstants.eventMap.put("scoreCubeHigh", new SequentialCommandGroup(
+            // new InstantCommand(m_Wrist::wristSolenoidON),
+            new ParallelRaceGroup(new ScoreHigh(m_Elevator, m_Arm, m_Intake, m_Wrist), new WaitCommand(2)), 
+            // new InstantCommand(m_Wrist::wristSolenoidON),
+            new WaitCommand(0.2),
+            new IntakeOutFullSpeed(m_Intake), 
+            new StartingConfig(m_Elevator, m_Arm, m_Wrist)
+            )
+        );
+        Constants.AutoConstants.eventMap.put("scoreConeHigh", new SequentialCommandGroup(
+            // new InstantCommand(m_Wrist::wristSolenoidON),
+            new ParallelRaceGroup(new ScoreHigh(m_Elevator, m_Arm, m_Intake, m_Wrist), new WaitCommand(2)), 
+            new IntakeOutFullSpeed(m_Intake), 
+            new StartingConfig(m_Elevator, m_Arm, m_Wrist)
+            )
+        );
+        Constants.AutoConstants.eventMap.put("setElevatorMid", new ParallelRaceGroup(new ScoreMid(m_Elevator, m_Arm, m_Wrist), new WaitCommand(1.5)));
 
-        // Constants.AutoConstants.eventMap.put("scoreCubeMid", new SequentialCommandGroup(
-        //     new InstantCommand(m_Wrist::wristSolenoidON),
-        //     new ParallelRaceGroup(new ScoreMid(m_Elevator, m_Arm, m_Wrist), new WaitCommand(1.5)),
-        //     new InstantCommand(m_Wrist::wristSolenoidON),
-        //     new WaitCommand(0.2),
-        //     new IntakeOut(m_Intake, .1),
-        //     new StartingConfig(m_Elevator, m_Arm, m_Wrist)
-        //     )
-        // );
-        // Constants.AutoConstants.eventMap.put("driveBackInverse", new DriveBackInverse(s_Swerve));
-        // Constants.AutoConstants.eventMap.put("chargeStationInverse", new MountAndBalanceInverse(s_Swerve));
-        // Constants.AutoConstants.eventMap.put("balanceChargeStationInverse", new BalanceChargeStation(s_Swerve, true));
+        Constants.AutoConstants.eventMap.put("scoreCubeMid", new SequentialCommandGroup(
+            // new InstantCommand(m_Wrist::wristSolenoidON),
+            new ParallelRaceGroup(new ScoreMid(m_Elevator, m_Arm, m_Wrist), new WaitCommand(1.5)),
+            // new InstantCommand(m_Wrist::wristSolenoidON),
+            new WaitCommand(0.2),
+            new IntakeOut(m_Intake, .1),
+            new StartingConfig(m_Elevator, m_Arm, m_Wrist)
+            )
+        );
+        Constants.AutoConstants.eventMap.put("driveBackInverse", new DriveBackInverse(s_Swerve));
+        Constants.AutoConstants.eventMap.put("chargeStationInverse", new MountAndBalanceInverse(s_Swerve));
+        Constants.AutoConstants.eventMap.put("balanceChargeStationInverse", new BalanceChargeStation(s_Swerve, true));
     }
 
     public void printHashMap() {
@@ -341,10 +345,16 @@ public class RobotContainer {
         driverRight.onTrue(new Blink(m_LEDs, true));
         
 
-        OpTopLeft.onTrue(new TopRight(s_Swerve, swervePoseEstimator, m_Elevator, m_Arm, m_Wrist, m_Intake).until(this::baseDriverControlsMoved));
-        OpTopMid.onTrue(new TopMid(s_Swerve, swervePoseEstimator, m_Elevator, m_Arm, m_Wrist, m_Intake).until(this::baseDriverControlsMoved));
-        OpTopRight.onTrue(new TopRight(s_Swerve, swervePoseEstimator, m_Elevator, m_Arm, m_Wrist, m_Intake).until(this::baseDriverControlsMoved));
-        
+        OpTopLeft.onTrue(new TopLeft(s_Swerve, swervePoseEstimator, m_Elevator, m_Arm, m_Wrist, m_Intake).until(this::anythingPressed));
+        OpTopMid.onTrue(new TopMid(s_Swerve, swervePoseEstimator, m_Elevator, m_Arm, m_Wrist, m_Intake).until(this::anythingPressed));
+        OpTopRight.onTrue(new TopRight(s_Swerve, swervePoseEstimator, m_Elevator, m_Arm, m_Wrist, m_Intake).until(this::anythingPressed));
+        OpBottomLeft.onTrue(new MidLeft(s_Swerve, swervePoseEstimator, m_Elevator, m_Arm, m_Wrist, m_Intake).until(this::anythingPressed));
+        OpBottomMid.onTrue(new MidMid(s_Swerve, swervePoseEstimator, m_Elevator, m_Arm, m_Wrist, m_Intake).until(this::anythingPressed));
+        OpBottomRight.onTrue(new MidRight(s_Swerve, swervePoseEstimator, m_Elevator, m_Arm, m_Wrist, m_Intake).until(this::anythingPressed));
+
+
+
+
         lefttrigger.whileTrue(new InstantCommand(m_Intake::runIntakeOut));
         leftBumper.whileTrue(new InstantCommand(m_Intake::runIntakeIn));
 
@@ -377,41 +387,45 @@ public class RobotContainer {
         //back.whileTrue(new InstantCommand(m_Intake::runIntakeOutFull));
         
         //alignRobot.whileTrue(align);
-        //start.whileTrue(driveToPose(true).until(this::baseDriverControlsMoved));
+        start.whileTrue(driveToPose(true).until(this::baseDriverControlsMoved));
     }
 
 
 
-    // public Command driveToPose(boolean useAlianceColor) {
-    //     return new DriveToPoseCommand(s_Swerve, this::closestGrid, swervePoseEstimator::getCurrentPose, useAlianceColor);
-    // }
+    public Command driveToPose(boolean useAlianceColor) {
+        return new DriveToPoseCommand(s_Swerve, this::closestGrid, swervePoseEstimator::getCurrentPose, useAlianceColor);
+    }
 
     public Pose2d getSelectedNode() {
         return Constants.PoseEstimation.scoringPositions.get(1);
     }
     
-    // public Pose2d closestGrid(){
-    //     List<Pose2d> poses = List.of(
-    //         Constants.PoseEstimation.grid1[1],
-    //         Constants.PoseEstimation.grid2[1],
-    //         Constants.PoseEstimation.grid3[1]
-    //     );
+    public Pose2d closestGrid(){
+        List<Pose2d> poses = List.of(
+            Constants.PoseEstimation.grid1[1],
+            Constants.PoseEstimation.grid2[1],
+            Constants.PoseEstimation.grid3[1]
+        );
         
         
-    //     switch (poses.indexOf(swervePoseEstimator.getCurrentPose().nearest(poses))+1){
-    //         case 1:
-    //             return Constants.PoseEstimation.grid1[1];
-    //         case 2:
-    //             return Constants.PoseEstimation.grid2[1];
-    //         case 3:
-    //             return Constants.PoseEstimation.grid3[1];
-    //         default:
-    //             return Constants.PoseEstimation.grid2[1];
-    //         }
-    // }
+        switch (poses.indexOf(swervePoseEstimator.getCurrentPose().nearest(poses))+1){
+            case 1:
+                return Constants.PoseEstimation.grid1[1];
+            case 2:
+                return Constants.PoseEstimation.grid2[1];
+            case 3:
+                return Constants.PoseEstimation.grid3[1];
+            default:
+                return Constants.PoseEstimation.grid2[1];
+            }
+    }
 
 
     public boolean anythingPressed() {
+        return operatorMoved() || baseDriverControlsMoved();
+    }
+
+    public boolean operatorMoved(){
         return Math.abs(driver.getRawAxis(1)) >= 0.1 || Math.abs(driver.getRawAxis(3)) >= 0.1; 
     }
 
@@ -419,29 +433,29 @@ public class RobotContainer {
         return Math.abs(rotate.getRawAxis(Joystick.AxisType.kX.value)) >= 0.1 || Math.abs(strafe.getRawAxis(Joystick.AxisType.kX.value)) >= 0.1 || Math.abs(strafe.getRawAxis(Joystick.AxisType.kY.value)) >= 0.1;
     }
 
-    // public void turnOffLeds() {
-    //     m_LEDs.turnOff();
-    // }
+    public void turnOffLeds() {
+        m_LEDs.turnOff();
+    }
 
 
 
   
     
-    // public static Command buildAuto(List<PathPlannerTrajectory> trajs) {
-    //     swerveAutoBuilder = new SwerveAutoBuilder(
-    //         swervePoseEstimator::getCurrentPose,
-    //         swervePoseEstimator::setCurrentPose,
-    //         Constants.Swerve.swerveKinematics,
-    //         new PIDConstants(Constants.AutoConstants.kPXController, 0, 0),
-    //         new PIDConstants(Constants.AutoConstants.kPThetaController, 0, 0),
-    //         s_Swerve::setModuleStates,
-    //         Constants.AutoConstants.eventMap,
-    //         true,
-    //         s_Swerve
-    //     );
+    public static Command buildAuto(List<PathPlannerTrajectory> trajs) {
+        swerveAutoBuilder = new SwerveAutoBuilder(
+            swervePoseEstimator::getCurrentPose,
+            swervePoseEstimator::setCurrentPose,
+            Constants.Swerve.swerveKinematics,
+            new PIDConstants(Constants.AutoConstants.kPXController, 0, 0),
+            new PIDConstants(Constants.AutoConstants.kPThetaController, 0, 0),
+            s_Swerve::setModuleStates,
+            Constants.AutoConstants.eventMap,
+            true,
+            s_Swerve
+        );
 
-    //     return swerveAutoBuilder.fullAuto(trajs);
-    // }
+        return swerveAutoBuilder.fullAuto(trajs);
+    }
     
 
 

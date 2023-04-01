@@ -146,7 +146,7 @@ public class PoseEstimator extends SubsystemBase {
       double distance = limelight.targetDist();
       double timeStampSeconds =  Timer.getFPGATimestamp() - (limelight.tl()/1000.0) - (limelight.cl()/1000.0);
       // double poseDist = distanceFormula(pose2d.getX(),pose2d.getY(),visionPose.getX(),visionPose.getY());
-      if (distanceFormula(pose2d.getX(),pose2d.getY(),visionPose.getX(),visionPose.getY()) < 1.0) {
+      if (distanceFormula(pose2d.getX(),pose2d.getY(), getCurrentPose().getX(),getCurrentPose().getY()) < 1.0) {
         poseEstimator.addVisionMeasurement(pose2d, timeStampSeconds, VecBuilder.fill(distance/2, distance/2, 100));
       }
       //setCurrentPose(pose2d);

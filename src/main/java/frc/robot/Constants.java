@@ -41,15 +41,15 @@ public final class Constants {
             //     new Pose2d(Units.inchesToMeters(20.19 + 22.0 * 7), 2.18,  new Rotation2d()),
             //     new Pose2d(Units.inchesToMeters(20.19 + 22.0 * 8), 2.18,  new Rotation2d())                
             // );
-            add(new Pose2d(2.18, Units.inchesToMeters(20.19 + 22.0 * 0), new Rotation2d(Math.PI)));//0, 
-            add(new Pose2d(2.18, Units.inchesToMeters(20.19 + 22.0 * 1), new Rotation2d(Math.PI)));//1, center of grid
-            add(new Pose2d(2.18, Units.inchesToMeters(20.19 + 22.0 * 2), new Rotation2d(Math.PI)));//2
-            add(new Pose2d(2.18, Units.inchesToMeters(20.19 + 22.0 * 3), new Rotation2d(Math.PI)));//3
-            add(new Pose2d(2.18, Units.inchesToMeters(20.19 + 22.0 * 4), new Rotation2d(Math.PI)));//4, middle column of middle grid
-            add(new Pose2d(2.18, Units.inchesToMeters(20.19 + 22.0 * 5), new Rotation2d(Math.PI)));//5
-            add(new Pose2d(2.18, Units.inchesToMeters(20.19 + 22.0 * 6), new Rotation2d(Math.PI)));//6
-            add(new Pose2d(2.18, Units.inchesToMeters(20.19 + 22.0 * 7), new Rotation2d(Math.PI)));//7, center of grid
-            add(new Pose2d(2.18, Units.inchesToMeters(20.19 + 22.0 * 8), new Rotation2d(Math.PI)));//8, 
+            add(new Pose2d(1.95, Units.inchesToMeters(20.19 + 22.0 * 0), new Rotation2d(Math.PI)));//0, 
+            add(new Pose2d(1.95, Units.inchesToMeters(20.19 + 22.0 * 1), new Rotation2d(Math.PI)));//1, center of grid
+            add(new Pose2d(1.95, Units.inchesToMeters(20.19 + 22.0 * 2), new Rotation2d(Math.PI)));//2
+            add(new Pose2d(1.95, Units.inchesToMeters(20.19 + 22.0 * 3), new Rotation2d(Math.PI)));//3
+            add(new Pose2d(1.95, Units.inchesToMeters(20.19 + 22.0 * 4), new Rotation2d(Math.PI)));//4, middle column of middle grid
+            add(new Pose2d(1.95, Units.inchesToMeters(20.19 + 22.0 * 5), new Rotation2d(Math.PI)));//5
+            add(new Pose2d(1.95, Units.inchesToMeters(20.19 + 22.0 * 6), new Rotation2d(Math.PI)));//6
+            add(new Pose2d(1.95, Units.inchesToMeters(20.19 + 22.0 * 7), new Rotation2d(Math.PI)));//7, center of grid
+            add(new Pose2d(1.95, Units.inchesToMeters(20.19 + 22.0 * 8), new Rotation2d(Math.PI)));//8, 
         }};
 
         public static final Pose2d hpStation = new Pose2d(15.61, 7.34, new Rotation2d());
@@ -74,8 +74,8 @@ public final class Constants {
             scoringPositions.get(8)
         };
         
-        public static final double kPXController = 2.8;
-        public static final double kPYController = 2.8;
+        public static final double kPXController = 3;
+        public static final double kPYController = 3;
         public static final double kPThetaController = 3.7;
     
 
