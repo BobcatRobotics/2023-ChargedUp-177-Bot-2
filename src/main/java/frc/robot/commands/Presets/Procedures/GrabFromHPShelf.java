@@ -24,9 +24,9 @@ public class GrabFromHPShelf extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new SetElevator(e, 0),
+      new SetElevator(e, 0, w),
       new SetArm(a, ArmConstants.minNonCollidingExtention),
-      new ParallelCommandGroup(new SetElevator(e, 3), new SetWrist(w, WristConstants.shelfPickupPos)),
+      new ParallelCommandGroup(new SetElevator(e, 3, w), new SetWrist(w, WristConstants.shelfPickupPos)),
       new SetArm(a, ArmConstants.shelfArmPos)
     );
   }

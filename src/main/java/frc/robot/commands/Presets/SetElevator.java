@@ -8,18 +8,22 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
+import frc.robot.Constants.WristConstants;
 import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.Elevator; 
+import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Wrist; 
 
 public class SetElevator extends CommandBase {
   Elevator elevator;
   int state;
   Timer timer;
   int pos;
+  Wrist w;
   /** Creates a new SetElevator. */
-  public SetElevator(Elevator e, int state_g) {
+  public SetElevator(Elevator e, int state_g, Wrist w) {
     elevator = e;
     state = state_g;
+    this.w = w;
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(e);
     
@@ -55,10 +59,10 @@ public class SetElevator extends CommandBase {
     if(state == 0){
       elevator.setState(0);
     }
-    else if(state == 1){
+    else if(state == 1 && w.getEncoderPos() >= WristConstants.wristConditionForElevatorMovement) {
       elevator.setState(1);
     }
-    else if(state == 2){
+    else if(state == 2 && w.getEncoderPos() >= WristConstants.wristConditionForElevatorMovement) {
       elevator.setState(2);
     }
     else if(state == 3){

@@ -160,6 +160,9 @@ public class PoseEstimator extends SubsystemBase {
     addVisionMeasurement(limelightFront);
     addVisionMeasurement(limelightBack);
 
+    SmartDashboard.putNumber("pose x", getCurrentPose().getX());
+    SmartDashboard.putNumber("pose y", getCurrentPose().getY());
+    SmartDashboard.putNumber("pose rotation deg", getCurrentPose().getRotation().getDegrees());
     // var visionPose = photon.grabLatestEstimatedPose();
     // if (visionPose != null) {
     //   sawTag = true;

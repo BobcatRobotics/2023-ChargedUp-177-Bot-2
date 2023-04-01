@@ -30,7 +30,7 @@ public class TopSuck extends ParallelCommandGroup {
     addCommands(
       // Commands.parallel(new SetElevator(e,1),new SetArm(a,2)) //new RunWrist(W, false))
       
-      new SetElevator(e, 0),new SetWrist(W, WristConstants.groundPickupWrist), new SetArm(a, ArmConstants.groundPickupArm)
+      new SetElevator(e, 0, W),new SetWrist(W, WristConstants.groundPickupWrist), new SetArm(a, ArmConstants.groundPickupArm)
     );
   }
 }

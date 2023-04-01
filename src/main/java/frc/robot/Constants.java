@@ -54,20 +54,20 @@ public final class Constants {
 
         public static final Pose2d hpStation = new Pose2d(15.61, 7.34, new Rotation2d());
         
-        public static final Pose2d[] grid1 = 
+        public static final Pose2d[] grid1 = // dirty side
         {
             scoringPositions.get(0),
             scoringPositions.get(1),
             scoringPositions.get(2)
         };
-        public static final Pose2d[] grid2 = 
+        public static final Pose2d[] grid2 = // center
         {
             scoringPositions.get(3),
             scoringPositions.get(4),
             scoringPositions.get(5)
         };
 
-        public static final Pose2d[] grid3 = 
+        public static final Pose2d[] grid3 = // clean
         {
             scoringPositions.get(6),
             scoringPositions.get(7),
@@ -280,7 +280,7 @@ public final class Constants {
         public static final double armOffset = 205; // 5 degrees at start
         public static final double startingArmPos = 10; // in box
         public static final double groundPickupArm = 82.5; // ground intake
-        public static final double chuteArmPos = 33; // pickup from hp chute
+        public static final double chuteArmPos = 35; // pickup from hp chute
         public static final double shelfArmPos = 13;
         public static final double trueArmMaxExtension = 200; // TODO: change!
         public static final double minNonCollidingExtention = 33; // limit for arm so it doesn't crash into the elevator
@@ -323,6 +323,7 @@ public final class Constants {
         public static final double highScorePos = 304.6;
         public static final double shelfPickupPos = 359;
         public static final double topSuck = 296;
+        public static final double wristConditionForElevatorMovement = 263.58;
     }  
 
 }

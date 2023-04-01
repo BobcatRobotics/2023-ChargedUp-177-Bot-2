@@ -16,7 +16,7 @@ public class ScoreCubeHighAutos extends SequentialCommandGroup {
     public ScoreCubeHighAutos(Elevator e, Arm a, Intake i, Wrist w) {
         addCommands(//will not work because we need to create the set elevator and arm commands
             new SetArm(a,1),//set arm to pos 1      
-            Commands.parallel(new SetElevator(e,2),new SetArm(a,2))
+            Commands.parallel(new SetElevator(e,2, w),new SetArm(a,2))
         );
     }
 } 

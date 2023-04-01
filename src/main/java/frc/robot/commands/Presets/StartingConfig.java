@@ -34,7 +34,7 @@ public class StartingConfig extends SequentialCommandGroup {
       //   ),
       //   new SetArm(a,0)
       new SetArm(a, ArmConstants.minNonCollidingExtention),
-      Commands.parallel(new SetElevator(e, 0), new SetWrist(w, WristConstants.startingPosWrist)),
+      Commands.parallel(new SetElevator(e, 0, w), new SetWrist(w, WristConstants.startingPosWrist)),
       new SetArm(a, ArmConstants.startingArmPos)
     );
   }

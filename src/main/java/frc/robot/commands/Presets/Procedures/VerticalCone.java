@@ -24,7 +24,7 @@ public class VerticalCone extends SequentialCommandGroup {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
-      new SetElevator(e, 0),
+      new SetElevator(e, 0, w),
       new ParallelCommandGroup(new SetArm(a, ArmConstants.topSuck), new SetWrist(w, WristConstants.topSuck))
     );
   }

@@ -73,7 +73,7 @@ public class Arm extends SubsystemBase {
         armMotor.configMotionAcceleration(24000, 20);
         armMotor.configAllowableClosedloopError(0, 200, 20);
 
-        pid = new PIDController(0.0375, 0.00375, 0);
+        pid = new PIDController(0.0375, 0, 0);
         pid.setTolerance(2);
         // holdPosValue = armMotor.getSelectedSensorPosition();
         Timer.delay(1);

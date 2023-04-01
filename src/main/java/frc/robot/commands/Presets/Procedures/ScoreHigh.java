@@ -33,8 +33,8 @@ public class ScoreHigh extends SequentialCommandGroup {
       // new SetArm(a,1),//set arm to pos 1      
       // Commands.parallel(new SetElevator(e,2)),//new RunWrist(w,false )),
       // new SetArm(a,2)
-      new SetArm(a, ArmConstants.minNonCollidingExtention),
-      new SetElevator(e, 2),
+      Commands.parallel(new SetArm(a, ArmConstants.minNonCollidingExtention), new SetWrist(w, WristConstants.startingPosWrist)),
+      new SetElevator(e, 2, w),
       new ParallelCommandGroup(new SetArm(a, ArmConstants.highScoringPos), new SetWrist(w, WristConstants.highScorePos))
     );
   }

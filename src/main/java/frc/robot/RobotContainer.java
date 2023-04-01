@@ -31,6 +31,7 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import frc.robot.Constants.PoseEstimation;
 import frc.robot.commands.*;
 import frc.robot.commands.AutoAlign.MidLeft;
 import frc.robot.commands.AutoAlign.MidMid;
@@ -150,8 +151,8 @@ public class RobotContainer {
     private final Command setarm0 = new SetArm(m_Arm,0);
     private final Command setarm1 = new SetArm(m_Arm,1);
     private final Command setarm2 = new SetArm(m_Arm,2);
-    private final Command setelevator0 = new SetElevator(m_Elevator,0);
-    private final Command setelevator2 = new SetElevator(m_Elevator,2);
+    private final Command setelevator0 = new SetElevator(m_Elevator,0, m_Wrist);
+    private final Command setelevator2 = new SetElevator(m_Elevator,2, m_Wrist);
     //private final SequentialCommandGroup chargestation = new MountAndBalance(s_Swerve);
     
     
@@ -195,11 +196,12 @@ public class RobotContainer {
         autoChooser.addOption("2PieceHighBalanceClean", buildAuto(PathPlanner.loadPathGroup("2PieceHighBalanceClean", new PathConstraints(4.5, 3))));
         autoChooser.addOption("3PieceHybridClean", buildAuto(PathPlanner.loadPathGroup("3PieceHybridClean", new PathConstraints(4.5, 3))));
         autoChooser.addOption("PPTestBalance", buildAuto(PathPlanner.loadPathGroup("PPTestBalance", new PathConstraints(2, 2))));
+        autoChooser.addOption("2CleanHighConeBalance", buildAuto(PathPlanner.loadPathGroup("2CleanHighConeBalance", new PathConstraints(4.5, 3))));
         // autoChooser.addOption("PathPlanner Test w/ Events", new SequentialCommandGroup(Swerve.followTrajectoryCommand(PathPlanner.loadPath("New Path", new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)), true)));
         // autoChooser.addOption("charge station", chargestation);
         SmartDashboard.putData(autoChooser);
     }
-
+    
     public void setUpEventMap() {
         Constants.AutoConstants.eventMap.clear();
         Constants.AutoConstants.eventMap.put("chargeStation", new MountAndBalance(s_Swerve));
@@ -247,6 +249,20 @@ public class RobotContainer {
         Constants.AutoConstants.eventMap.put("driveBackInverse", new DriveBackInverse(s_Swerve));
         Constants.AutoConstants.eventMap.put("chargeStationInverse", new MountAndBalanceInverse(s_Swerve));
         Constants.AutoConstants.eventMap.put("balanceChargeStationInverse", new BalanceChargeStation(s_Swerve, true));
+        // First "clean" = grid
+        // Second "clean" = column
+        Constants.AutoConstants.eventMap.put("highCleanClean", new SequentialCommandGroup(
+            new DriveToPoseCommand(s_Swerve, () -> PoseEstimation.grid3[2], () -> swervePoseEstimator.getCurrentPose(), true),
+            new ParallelRaceGroup(new ScoreHigh(m_Elevator, m_Arm, m_Intake, m_Wrist), new WaitCommand(2)), 
+            new IntakeOutFullSpeed(m_Intake), 
+            new StartingConfig(m_Elevator, m_Arm, m_Wrist)
+        ));
+        Constants.AutoConstants.eventMap.put("highCleanMid", new SequentialCommandGroup(
+            new DriveToPoseCommand(s_Swerve, () -> PoseEstimation.grid3[1], () -> swervePoseEstimator.getCurrentPose(), true),
+            new ParallelRaceGroup(new ScoreHigh(m_Elevator, m_Arm, m_Intake, m_Wrist), new WaitCommand(2)), 
+            new IntakeOutFullSpeed(m_Intake), 
+            new StartingConfig(m_Elevator, m_Arm, m_Wrist)
+        ));
     }
 
     public void printHashMap() {
@@ -345,12 +361,12 @@ public class RobotContainer {
         driverRight.onTrue(new Blink(m_LEDs, true));
         
 
-        OpTopLeft.onTrue(new TopLeft(s_Swerve, swervePoseEstimator, m_Elevator, m_Arm, m_Wrist, m_Intake).until(this::anythingPressed));
-        OpTopMid.onTrue(new TopMid(s_Swerve, swervePoseEstimator, m_Elevator, m_Arm, m_Wrist, m_Intake).until(this::anythingPressed));
-        OpTopRight.onTrue(new TopRight(s_Swerve, swervePoseEstimator, m_Elevator, m_Arm, m_Wrist, m_Intake).until(this::anythingPressed));
-        OpBottomLeft.onTrue(new MidLeft(s_Swerve, swervePoseEstimator, m_Elevator, m_Arm, m_Wrist, m_Intake).until(this::anythingPressed));
-        OpBottomMid.onTrue(new MidMid(s_Swerve, swervePoseEstimator, m_Elevator, m_Arm, m_Wrist, m_Intake).until(this::anythingPressed));
-        OpBottomRight.onTrue(new MidRight(s_Swerve, swervePoseEstimator, m_Elevator, m_Arm, m_Wrist, m_Intake).until(this::anythingPressed));
+        OpTopLeft.onTrue(new TopLeft(s_Swerve, swervePoseEstimator, m_Elevator, m_Arm, m_Wrist, m_Intake).until(this::baseDriverControlsMoved));
+        OpTopMid.onTrue(new TopMid(s_Swerve, swervePoseEstimator, m_Elevator, m_Arm, m_Wrist, m_Intake).until(this::baseDriverControlsMoved));
+        OpTopRight.onTrue(new TopRight(s_Swerve, swervePoseEstimator, m_Elevator, m_Arm, m_Wrist, m_Intake).until(this::baseDriverControlsMoved));
+        OpBottomLeft.onTrue(new MidLeft(s_Swerve, swervePoseEstimator, m_Elevator, m_Arm, m_Wrist, m_Intake).until(this::baseDriverControlsMoved));
+        OpBottomMid.onTrue(new MidMid(s_Swerve, swervePoseEstimator, m_Elevator, m_Arm, m_Wrist, m_Intake).until(this::baseDriverControlsMoved));
+        OpBottomRight.onTrue(new MidRight(s_Swerve, swervePoseEstimator, m_Elevator, m_Arm, m_Wrist, m_Intake).until(this::baseDriverControlsMoved));
 
 
 
@@ -364,22 +380,22 @@ public class RobotContainer {
         // if(driver.getPOV() == 0){
         //     new ScoreHigh(m_Elevator, m_Arm, m_Intake, m_Wrist);
         // }
-        DUp.onTrue(new ScoreHigh(m_Elevator, m_Arm, m_Intake, m_Wrist).until(this::anythingPressed));
+        DUp.onTrue(new ScoreHigh(m_Elevator, m_Arm, m_Intake, m_Wrist).until(this::operatorMoved));
         // if(driver.getPOV() == 180){
         //     new StartingConfig(m_Elevator, m_Arm);
         // }
-        DDown.onTrue(new StartingConfig(m_Elevator, m_Arm, m_Wrist).until(this::anythingPressed));
+        DDown.onTrue(new StartingConfig(m_Elevator, m_Arm, m_Wrist).until(this::operatorMoved));
         // if(driver.getPOV() == 270){
         //     new ScoreMid(m_Elevator, m_Arm, m_Intake, m_Wrist);
         // }
-        DLeft.onTrue(new ScoreMid(m_Elevator, m_Arm, m_Wrist).until(this::anythingPressed));
+        DLeft.onTrue(new ScoreMid(m_Elevator, m_Arm, m_Wrist).until(this::operatorMoved));
 
-        b.onTrue(new GrabFromHPChute(m_Elevator, m_Arm, m_Wrist).until(this::anythingPressed)); // chute
+        b.onTrue(new GrabFromHPChute(m_Elevator, m_Arm, m_Wrist).until(this::operatorMoved)); // chute
 
-        //a.onTrue(new ForwardSuck(m_Elevator, m_Arm, m_Wrist).until(this::anythingPressed));
-        a.onTrue(new TopSuck(m_Elevator, m_Arm, m_Intake, m_Wrist).until(this::anythingPressed)); //TopSuck? This command should be named BottomSuck
-        // y.onTrue(new GrabFromHPShelf(m_Elevator, m_Arm, m_Wrist).until(this::anythingPressed));
-        // x.onTrue(new VerticalCone(m_Elevator, m_Arm, m_Wrist).until(this::anythingPressed));
+        //a.onTrue(new ForwardSuck(m_Elevator, m_Arm, m_Wrist).until(this::operatorMoved));
+        a.onTrue(new TopSuck(m_Elevator, m_Arm, m_Intake, m_Wrist).until(this::operatorMoved)); //TopSuck? This command should be named BottomSuck
+        // y.onTrue(new GrabFromHPShelf(m_Elevator, m_Arm, m_Wrist).until(this::operatorMoved));
+        // x.onTrue(new VerticalCone(m_Elevator, m_Arm, m_Wrist).until(this::operatorMoved));
 
         //x.onTrue(new InstantCommand(m_LEDs::setPurple));
         //y.onTrue(new InstantCommand(m_LEDs::setYellow));
@@ -423,6 +439,7 @@ public class RobotContainer {
 
     public boolean anythingPressed() {
         return operatorMoved() || baseDriverControlsMoved();
+        // return operatorMoved();
     }
 
     public boolean operatorMoved(){
