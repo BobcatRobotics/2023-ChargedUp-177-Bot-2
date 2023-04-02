@@ -282,6 +282,7 @@ public final class Constants {
         public static final double groundPickupArm = 82.5; // ground intake
         public static final double chuteArmPos = 35; // pickup from hp chute
         public static final double shelfArmPos = 13;
+        public static final double autoCarry = 38.5;
         public static final double trueArmMaxExtension = 200; // TODO: change!
         public static final double minNonCollidingExtention = 33; // limit for arm so it doesn't crash into the elevator
         public static final double midScoringPos = 28.65;
@@ -323,6 +324,7 @@ public final class Constants {
         public static final double highScorePos = 304.6;
         public static final double shelfPickupPos = 359;
         public static final double topSuck = 296;
+        public static final double autoCarry = 322;
         public static final double wristConditionForElevatorMovement = 263.58;
     }  
 

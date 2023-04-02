@@ -61,6 +61,7 @@ import frc.robot.commands.Presets.Procedures.ScoreHigh;
 import frc.robot.commands.Presets.Procedures.ScoreMid;
 import frc.robot.commands.Presets.Procedures.TopSuck;
 import frc.robot.commands.Presets.Procedures.VerticalCone;
+import frc.robot.commands.Presets.Procedures.autoCarry;
 import frc.robot.subsystems.*;
 //import frc.robot.autos.RedHighCone6PickupBalance;
 import frc.robot.subsystems.Limelight;
@@ -196,7 +197,7 @@ public class RobotContainer {
         autoChooser.addOption("2PieceHighBalanceClean", buildAuto(PathPlanner.loadPathGroup("2PieceHighBalanceClean", new PathConstraints(4.5, 3))));
         autoChooser.addOption("3PieceHybridClean", buildAuto(PathPlanner.loadPathGroup("3PieceHybridClean", new PathConstraints(4.5, 3))));
         autoChooser.addOption("PPTestBalance", buildAuto(PathPlanner.loadPathGroup("PPTestBalance", new PathConstraints(2, 2))));
-        autoChooser.addOption("2CleanHighConeBalance", buildAuto(PathPlanner.loadPathGroup("2CleanHighConeBalance", new PathConstraints(4.5, 3))));
+        autoChooser.addOption("2CleanHighConeBalance", buildAuto(PathPlanner.loadPathGroup("2CleanHighConeBalance", new PathConstraints(3.5, 3.0))));
         // autoChooser.addOption("PathPlanner Test w/ Events", new SequentialCommandGroup(Swerve.followTrajectoryCommand(PathPlanner.loadPath("New Path", new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)), true)));
         // autoChooser.addOption("charge station", chargestation);
         SmartDashboard.putData(autoChooser);
@@ -212,6 +213,7 @@ public class RobotContainer {
             new IntakeInConstantly(m_Intake)
         ));
         Constants.AutoConstants.eventMap.put("startingConfig", new StartingConfig(m_Elevator, m_Arm, m_Wrist));
+        Constants.AutoConstants.eventMap.put("autoStowe", new autoCarry(m_Wrist, m_Arm));
         // Constants.AutoConstants.eventMap.put("flickWrist", new InstantCommand(m_Wrist::wristSolenoidON));
         Constants.AutoConstants.eventMap.put("intakeOut", new IntakeOut(m_Intake));//new ParallelRaceGroup(new IntakeOut(), new WaitCommand(5)));
         Constants.AutoConstants.eventMap.put("intakeOutFullSpeed", new IntakeOutFullSpeed(m_Intake));
@@ -231,7 +233,8 @@ public class RobotContainer {
         Constants.AutoConstants.eventMap.put("scoreConeHigh", new SequentialCommandGroup(
             // new InstantCommand(m_Wrist::wristSolenoidON),
             new ParallelRaceGroup(new ScoreHigh(m_Elevator, m_Arm, m_Intake, m_Wrist), new WaitCommand(2)), 
-            new IntakeOutFullSpeed(m_Intake), 
+            new WaitCommand(0.25),
+            new IntakeOut(m_Intake), 
             new StartingConfig(m_Elevator, m_Arm, m_Wrist)
             )
         );

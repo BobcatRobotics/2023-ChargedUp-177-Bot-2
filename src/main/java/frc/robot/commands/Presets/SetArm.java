@@ -37,23 +37,7 @@ public class SetArm extends CommandBase {
       arm.setSpeed(0);
     }
     
-    if (state == ArmConstants.startingArmPos){
-      arm.setPos((int) ArmConstants.startingArmPos);
-    } else if(state == ArmConstants.groundPickupArm){
-      arm.setPos((int) ArmConstants.groundPickupArm);
-    } else if(state == ArmConstants.chuteArmPos){
-      arm.setPos((int) ArmConstants.chuteArmPos);
-    } else if(state == ArmConstants.minNonCollidingExtention) {
-      arm.setPos((int) ArmConstants.minNonCollidingExtention);
-    } else if(state == ArmConstants.midScoringPos){
-      arm.setPos((int) ArmConstants.midScoringPos);
-    } else if(state == ArmConstants.highScoringPos){
-      arm.setPos((int) ArmConstants.highScoringPos);
-    } else if(state == ArmConstants.shelfArmPos){
-      arm.setPos((int) ArmConstants.shelfArmPos);
-    } else if(state == ArmConstants.topSuck){
-      arm.setPos((int) ArmConstants.topSuck);
-    }
+    arm.setPos((int) state);
   }
 
   // Called once the command ends or is interrupted.
