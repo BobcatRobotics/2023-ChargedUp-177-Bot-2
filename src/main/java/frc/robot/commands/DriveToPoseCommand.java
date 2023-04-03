@@ -63,6 +63,7 @@ public class DriveToPoseCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    swerve.drive(new Translation2d(), 0, true, false);
     resetPIDControllers();
     Pose2d pose = goalPoseSupplier.get();
     if (useAllianceColor && DriverStation.getAlliance() == DriverStation.Alliance.Red) {

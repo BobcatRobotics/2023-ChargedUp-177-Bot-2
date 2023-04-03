@@ -137,7 +137,7 @@ public final class Constants {
         public static final double angleKF = chosenModule.angleKF;
 
         /* Drive Motor PID Values */
-        public static final double driveKP = 0.70; //0.6; //TODO: This must be tuned to specific robot 0.45
+        public static final double driveKP = 0.70; //0.70; //TODO: This must be tuned to specific robot 0.45
         public static final double driveKI = 0.0;
         public static final double driveKD = 0.0;
         public static final double driveKF = 0.0;
@@ -228,6 +228,7 @@ public final class Constants {
             new TrapezoidProfile.Constraints(
                 kMaxAngularSpeedRadiansPerSecond, kMaxAngularSpeedRadiansPerSecondSquared);
     }
+    
     public class BalancingConstants{
         public static final double kP = 0.225;//TODO: tune
         public static final double kI = 0;
@@ -284,7 +285,7 @@ public final class Constants {
         public static final double startingArmPos = 10; // in box
         public static final double groundPickupArm = 82.5; // ground intake
         public static final double chuteArmPos = 35; // pickup from hp chute
-        public static final double shelfArmPos = 13;
+        public static final double shelfArmPos = 17; // 13
         public static final double autoCarry = 38.5;
         public static final double trueArmMaxExtension = 200; // TODO: change!
         public static final double minNonCollidingExtention = 33; // limit for arm so it doesn't crash into the elevator
@@ -319,7 +320,8 @@ public final class Constants {
 
     public static final class WristConstants {
         public static final double wristOffset = 160.66; // 5 degrees at start
-        public static final double globalWristMaxAngleUp = 260; // chute wrist position as well
+        public static final double globalWristMaxAngleUp = 250; // chute wrist position as well 260
+        // public static final double babyBirdPos = 240;
         public static final double globalWristMaxAngleDown = 352; 
         public static final double midScorePos = 345.76;
         public static final double groundPickupWrist = 275; // ground intake

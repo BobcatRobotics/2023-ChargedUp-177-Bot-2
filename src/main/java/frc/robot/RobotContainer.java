@@ -157,9 +157,6 @@ public class RobotContainer {
     private final Command setelevator2 = new SetElevator(m_Elevator,2, m_Wrist);
     //private final SequentialCommandGroup chargestation = new MountAndBalance(s_Swerve);
     
-    
-    
-
 
     //private final Command align = new AlignToTarget(s_Swerve, m_Limelight).withInterruptBehavior(InterruptionBehavior.kCancelIncoming).repeatedly();
     //private final Command align = new AlignToTarget(s_Swerve, m_Limelight);
@@ -172,6 +169,7 @@ public class RobotContainer {
     public static Command NoMove1HighCone = null;
     public static Command OneCenterBalance = null;
     public static Command clean2Path = null;
+    public static Command TwoPieceDirty = null;
 
     public void setUpAutos() {
         // Sendable Chooser Setup
@@ -190,14 +188,14 @@ public class RobotContainer {
         // autoChooser.addOption("Score1HighCubeCleanNoBalance", PathPlanner.loadPathGroup("ScoreHighCubeCleanNoBalance", new PathConstraints(4.5, 3)));
         //autoChooser.addOption("1HighDirtyNoBalance", buildAuto(PathPlanner.loadPathGroup("ScoreHighCubeDirtyNoBalance", new PathConstraints(4.5, 3))));
         //autoChooser.addOption("NoMove1High", buildAuto(PathPlanner.loadPathGroup("NoMoveScore1High", new PathConstraints(0, 0))));
-        autoChooser.addOption("NoMove1HighCone", NoMove1HighCone);
+        autoChooser.setDefaultOption("NoMove1HighCone", NoMove1HighCone);
         //autoChooser.addOption("NoTurn1HighCenterBalance", buildAuto(PathPlanner.loadPathGroup("NoTurnScore1HighCenterBalance", new PathConstraints(4, 3))));
         autoChooser.addOption("1.5CleanBalance", buildAuto(PathPlanner.loadPathGroup("Score1HighCubePickupLeftBalance", new PathConstraints(4.5, 3))));
         autoChooser.addOption("1.5DirtyBalance", buildAuto(PathPlanner.loadPathGroup("Score1HighCubePickupRightBalance", new PathConstraints(4.5, 3))));
         autoChooser.addOption("1.5CleanNoBalance", buildAuto(PathPlanner.loadPathGroup("Score1HighCubePickupLeftNoBalance", new PathConstraints(4.5, 3))));
         autoChooser.addOption("1.5DirtyNoBalance", buildAuto(PathPlanner.loadPathGroup("Score1HighCubePickupRightNoBalance", new PathConstraints(4.5, 3))));
         autoChooser.addOption("2PieceBalanceClean", buildAuto(PathPlanner.loadPathGroup("2PieceBalanceClean", new PathConstraints(4.5, 3))));
-        autoChooser.addOption("2PieceBalanceDirty", buildAuto(PathPlanner.loadPathGroup("2PieceBalanceDirty", new PathConstraints(2.0, 2.0))));
+        autoChooser.addOption("2PieceDirty", TwoPieceDirty); // TODO: rename with no balance
         autoChooser.addOption("2PieceHighBalanceClean", buildAuto(PathPlanner.loadPathGroup("2PieceHighBalanceClean", new PathConstraints(4.5, 3))));
         autoChooser.addOption("3PieceHybridClean", buildAuto(PathPlanner.loadPathGroup("3PieceHybridClean", new PathConstraints(4.5, 3))));
         // autoChooser.addOption("PPTestBalance", buildAuto(PathPlanner.loadPathGroup("PPTestBalance", new PathConstraints(2, 2))));
@@ -279,6 +277,7 @@ public class RobotContainer {
             new IntakeOutFullSpeed(m_Intake), 
             new StartingConfig(m_Elevator, m_Arm, m_Wrist)))
         );
+        Constants.AutoConstants.eventMap.put("finalOuttake", new WaitUntilTime(14.5, new IntakeOutFullSpeed(m_Intake)));
     }
 
     public void printHashMap() {
@@ -328,6 +327,7 @@ public class RobotContainer {
         NoMove1HighCone = buildAuto(PathPlanner.loadPathGroup("NoMoveScore1HighCone", new PathConstraints(0, 0)));
         OneCenterBalance = buildAuto(PathPlanner.loadPathGroup("1CenterBalance", new PathConstraints(2, 2)));
         clean2Path = buildAuto(PathPlanner.loadPathGroup("clean2", new PathConstraints(2.0, 2.0)));
+        TwoPieceDirty = buildAuto(PathPlanner.loadPathGroup("2PieceBalanceDirty", new PathConstraints(2.0, 2.0)));
         configureButtonBindings();
     }
 
@@ -340,6 +340,7 @@ public class RobotContainer {
                 () -> -strafe.getRawAxis(Joystick.AxisType.kX.value)*Math.abs(strafe.getRawAxis(Joystick.AxisType.kX.value)), 
                 () -> -rotate.getRawAxis(Joystick.AxisType.kX.value), 
                 () -> false, //() -> robotCentric.getAsBoolean() //always field centric,
+                () -> -rotate.getRawAxis(Joystick.AxisType.kZ.value)*0.2,
                 () -> -strafe.getRawAxis(Joystick.AxisType.kZ.value)*0.2 // fine tune strafing supplier
             )
         );
@@ -413,7 +414,7 @@ public class RobotContainer {
 
         //a.onTrue(new ForwardSuck(m_Elevator, m_Arm, m_Wrist).until(this::operatorMoved));
         a.onTrue(new TopSuck(m_Elevator, m_Arm, m_Intake, m_Wrist).until(this::operatorMoved)); //TopSuck? This command should be named BottomSuck
-        // y.onTrue(new GrabFromHPShelf(m_Elevator, m_Arm, m_Wrist).until(this::operatorMoved));
+        y.onTrue(new GrabFromHPShelf(m_Elevator, m_Arm, m_Wrist).until(this::operatorMoved));
         // x.onTrue(new VerticalCone(m_Elevator, m_Arm, m_Wrist).until(this::operatorMoved));
 
         //x.onTrue(new InstantCommand(m_LEDs::setPurple));

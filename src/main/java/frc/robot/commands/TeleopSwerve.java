@@ -18,8 +18,9 @@ public class TeleopSwerve extends CommandBase {
     private DoubleSupplier strafeSup;
     private DoubleSupplier rotationSup;
     private BooleanSupplier robotCentricSup;
+    private DoubleSupplier fineTransSup;
 
-    public TeleopSwerve(Swerve s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup, BooleanSupplier robotCentricSup, DoubleSupplier fineStrafeSup) {
+    public TeleopSwerve(Swerve s_Swerve, DoubleSupplier translationSup, DoubleSupplier strafeSup, DoubleSupplier rotationSup, BooleanSupplier robotCentricSup, DoubleSupplier fineStrafeSup, DoubleSupplier fineTransSup) {
         this.s_Swerve = s_Swerve;
         addRequirements(s_Swerve);
 
@@ -28,6 +29,7 @@ public class TeleopSwerve extends CommandBase {
         this.rotationSup = rotationSup;
         this.robotCentricSup = robotCentricSup;
         this.fineStrafeSup = fineStrafeSup;
+        this.fineTransSup = fineTransSup;
     }
 
     @Override
@@ -39,6 +41,9 @@ public class TeleopSwerve extends CommandBase {
 
         if (strafeVal == 0.0) {
             strafeVal = fineStrafeSup.getAsDouble();
+        } 
+        if(translationVal == 0.0) {
+            translationVal = fineTransSup.getAsDouble();
         }
         /* Drive */
         s_Swerve.drive(

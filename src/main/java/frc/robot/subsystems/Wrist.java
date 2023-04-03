@@ -71,7 +71,7 @@ public class Wrist extends SubsystemBase {
     
 
     pid = new PIDController(-0.075, 0.0, 0.0); // increased from -.07 to compensate for loose chain
-    pid.setTolerance(4); // increased from 2 to compensate for loose chain
+    pid.setTolerance(2); // increased from 2 to compensate for loose chain
     // solenoid = new Solenoid(PneumaticsModuleType.REVPH, Constants.wristSolenoidID);
     // phub = new PneumaticHub(Constants.pHubID);
     // compressor = new Compressor(Constants.compressorID, PneumaticsModuleType.REVPH);
