@@ -22,6 +22,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
+import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
@@ -170,6 +171,7 @@ public class RobotContainer {
     private static SendableChooser<Command> autoChooser = new SendableChooser<Command>();
     public static Command NoMove1HighCone = null;
     public static Command OneCenterBalance = null;
+    public static Command clean2Path = null;
 
     public void setUpAutos() {
         // Sendable Chooser Setup
@@ -195,12 +197,13 @@ public class RobotContainer {
         autoChooser.addOption("1.5CleanNoBalance", buildAuto(PathPlanner.loadPathGroup("Score1HighCubePickupLeftNoBalance", new PathConstraints(4.5, 3))));
         autoChooser.addOption("1.5DirtyNoBalance", buildAuto(PathPlanner.loadPathGroup("Score1HighCubePickupRightNoBalance", new PathConstraints(4.5, 3))));
         autoChooser.addOption("2PieceBalanceClean", buildAuto(PathPlanner.loadPathGroup("2PieceBalanceClean", new PathConstraints(4.5, 3))));
-        autoChooser.addOption("2PieceBalanceDirty", buildAuto(PathPlanner.loadPathGroup("2PieceBalanceDirty", new PathConstraints(4.5, 3))));
+        autoChooser.addOption("2PieceBalanceDirty", buildAuto(PathPlanner.loadPathGroup("2PieceBalanceDirty", new PathConstraints(2.0, 2.0))));
         autoChooser.addOption("2PieceHighBalanceClean", buildAuto(PathPlanner.loadPathGroup("2PieceHighBalanceClean", new PathConstraints(4.5, 3))));
         autoChooser.addOption("3PieceHybridClean", buildAuto(PathPlanner.loadPathGroup("3PieceHybridClean", new PathConstraints(4.5, 3))));
         // autoChooser.addOption("PPTestBalance", buildAuto(PathPlanner.loadPathGroup("PPTestBalance", new PathConstraints(2, 2))));
         autoChooser.addOption("1.5CenterBalance", buildAuto(PathPlanner.loadPathGroup("1.5CenterBalance", new PathConstraints(3.5, 3.0))));
         autoChooser.addOption("1CenterBalance", OneCenterBalance);
+        autoChooser.addOption("Clean2", clean2Path);
         // autoChooser.addOption("2CleanHighConeBalance", buildAuto(PathPlanner.loadPathGroup("2CleanHighConeBalance", new PathConstraints(3.0, 3.0))));
         // autoChooser.addOption("PathPlanner Test w/ Events", new SequentialCommandGroup(Swerve.followTrajectoryCommand(PathPlanner.loadPath("New Path", new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)), true)));
         // autoChooser.addOption("charge station", chargestation);
@@ -264,12 +267,18 @@ public class RobotContainer {
             new IntakeOutFullSpeed(m_Intake), 
             new StartingConfig(m_Elevator, m_Arm, m_Wrist)
         ));
-        Constants.AutoConstants.eventMap.put("highCleanMid", new SequentialCommandGroup(
+        Constants.AutoConstants.eventMap.put("highCleanMid", new ParallelDeadlineGroup(new WaitUntilTime(14.5, new IntakeOutFullSpeed(m_Intake)),new SequentialCommandGroup(
             new DriveToPoseCommand(s_Swerve, () -> PoseEstimation.grid3[1], () -> swervePoseEstimator.getCurrentPose(), true),
             new ParallelRaceGroup(new ScoreHigh(m_Elevator, m_Arm, m_Intake, m_Wrist), new WaitCommand(2)), 
             new IntakeOutFullSpeed(m_Intake), 
-            new StartingConfig(m_Elevator, m_Arm, m_Wrist)
-        ));
+            new StartingConfig(m_Elevator, m_Arm, m_Wrist)))
+        );
+        Constants.AutoConstants.eventMap.put("highDirtyMid", new ParallelDeadlineGroup(new WaitUntilTime(14.5, new IntakeOutFullSpeed(m_Intake)),new SequentialCommandGroup(
+            new DriveToPoseCommand(s_Swerve, () -> PoseEstimation.grid1[1], () -> swervePoseEstimator.getCurrentPose(), true),
+            new ParallelRaceGroup(new ScoreHigh(m_Elevator, m_Arm, m_Intake, m_Wrist), new WaitCommand(2)), 
+            new IntakeOutFullSpeed(m_Intake), 
+            new StartingConfig(m_Elevator, m_Arm, m_Wrist)))
+        );
     }
 
     public void printHashMap() {
@@ -318,7 +327,7 @@ public class RobotContainer {
         setUpEventMap();
         NoMove1HighCone = buildAuto(PathPlanner.loadPathGroup("NoMoveScore1HighCone", new PathConstraints(0, 0)));
         OneCenterBalance = buildAuto(PathPlanner.loadPathGroup("1CenterBalance", new PathConstraints(2, 2)));
-
+        clean2Path = buildAuto(PathPlanner.loadPathGroup("clean2", new PathConstraints(2.0, 2.0)));
         configureButtonBindings();
     }
 

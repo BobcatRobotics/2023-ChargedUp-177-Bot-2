@@ -157,7 +157,7 @@ public class PoseEstimator extends SubsystemBase {
       }
 
       if (distanceFormula(pose2d.getX(), pose2d.getY(), getCurrentPose().getX(), getCurrentPose().getY()) < 0.5 && DriverStation.isAutonomous()) {
-        // poseEstimator.addVisionMeasurement(pose2d, timeStampSeconds, VecBuilder.fill(distance/2, distance/2, 100));
+        poseEstimator.addVisionMeasurement(pose2d, timeStampSeconds, VecBuilder.fill(distance/2, distance/2, 100));
       } else if (DriverStation.isTeleop()) {
         poseEstimator.addVisionMeasurement(pose2d, timeStampSeconds, VecBuilder.fill(distance/2, distance/2, 100));
       }
