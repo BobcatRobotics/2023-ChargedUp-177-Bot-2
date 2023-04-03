@@ -70,8 +70,8 @@ public class Wrist extends SubsystemBase {
     motor.setStatusFramePeriod(StatusFrame.Status_13_Base_PIDF0, 20);
     
 
-    pid = new PIDController(-0.07, 0.0, 0.0); // used to be 165
-    pid.setTolerance(2);
+    pid = new PIDController(-0.075, 0.0, 0.0); // increased from -.07 to compensate for loose chain
+    pid.setTolerance(4); // increased from 2 to compensate for loose chain
     // solenoid = new Solenoid(PneumaticsModuleType.REVPH, Constants.wristSolenoidID);
     // phub = new PneumaticHub(Constants.pHubID);
     // compressor = new Compressor(Constants.compressorID, PneumaticsModuleType.REVPH);
@@ -90,6 +90,10 @@ public class Wrist extends SubsystemBase {
   
   public void setSpeed0ArbitraryFeedForward(){
     motor.set(ControlMode.PercentOutput, 0, DemandType.ArbitraryFeedForward, 0.05);
+  }
+
+  public double getClosedLoopError() {
+    return pid.getPositionError();
   }
 
   public void up() {

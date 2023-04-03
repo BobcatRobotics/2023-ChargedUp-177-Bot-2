@@ -74,9 +74,9 @@ public final class Constants {
             scoringPositions.get(8)
         };
         
-        public static final double kPXController = 3;
-        public static final double kPYController = 3;
-        public static final double kPThetaController = 3.7;
+        public static final double kPXController = 3; // 3
+        public static final double kPYController = 3; // 3
+        public static final double kPThetaController = 3.9; // 3.7
     
 
     }
@@ -137,16 +137,16 @@ public final class Constants {
         public static final double angleKF = chosenModule.angleKF;
 
         /* Drive Motor PID Values */
-        public static final double driveKP = 0.45; //TODO: This must be tuned to specific robot
+        public static final double driveKP = 0.70; //0.6; //TODO: This must be tuned to specific robot 0.45
         public static final double driveKI = 0.0;
         public static final double driveKD = 0.0;
         public static final double driveKF = 0.0;
 
-        /* Drive Motor Characterization Values 
+        /* Drive Motor Chmaracterization Values 
          * Divide SYSID values by 12 to convert from volts to percent output for CTRE */
-        public static final double driveKS = (0.1724 / 12); // TUNED
-        public static final double driveKV = (2.0434 / 12);
-        public static final double driveKA = (0.72651 / 12);
+        public static final double driveKS = (0.15565 / 12); // TUNED
+        public static final double driveKV = (2.0206 / 12);
+        public static final double driveKA = (0.94648 / 12);
 
         /* Swerve Profiling Values */
         /** Meters per Second */
@@ -217,7 +217,7 @@ public final class Constants {
         // public static final double kPYController = 2.3;
         // public static final double kPThetaController = 3.6;
 
-        public static final double kPXController = 2.5; // 2
+        public static final double kPXController = 2.5; // 2.5
         public static final double kPYController = 2.5;
         public static final double kPThetaController = 3.4; // 3.3
 
@@ -232,9 +232,12 @@ public final class Constants {
         public static final double kP = 0.225;//TODO: tune
         public static final double kI = 0;
         public static final double kD = 0.025;
+        public static final double InversekP = 0.225;//TODO: tune
+        public static final double InversekI = 0;
+        public static final double InversekD = 0;
         public static final double kToleranceDegrees = 2.5;//acceptable absolute error in degrees
         public static final double kSetpoint = 0.0; // we want a pitch of 0 degrees
-        public static final double kSensitivity = 20; // sigmoid(pid/sensitivity)*max speed = meters per second to drive    
+        public static final double kSensitivity = 20; // throttle(pid/sensitivity)*max speed = meters per second to drive    
     }
     
     public static class ButtonHashtable {

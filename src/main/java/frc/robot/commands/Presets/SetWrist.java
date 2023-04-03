@@ -5,6 +5,7 @@
 package frc.robot.commands.Presets;
 
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Wrist;
 
@@ -34,16 +35,15 @@ public class SetWrist extends CommandBase {
   @Override
   public void execute() {
     w.setState(pos);
+    SmartDashboard.putNumber("while command running, wrist pid error", w.getClosedLoopError());
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    if (!interrupted) {
-      w.setState(pos);
-    } else {
-      w.setSpeed(0);
-    }
+    SmartDashboard.putBoolean("wrist interrupted", interrupted);
+    SmartDashboard.putNumber("wrist pid error",w.getClosedLoopError());
+    w.setSpeed0ArbitraryFeedForward();
   }
 
   // Returns true when the command should end.

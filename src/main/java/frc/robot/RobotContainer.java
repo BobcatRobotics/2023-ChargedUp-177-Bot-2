@@ -167,27 +167,29 @@ public class RobotContainer {
     private static SwerveAutoBuilder swerveAutoBuilder;
 
     /* SendableChooser */
-    SendableChooser<Command> autoChooser = new SendableChooser<Command>();
+    private static SendableChooser<Command> autoChooser = new SendableChooser<Command>();
+    public static Command NoMove1HighCone = null;
+    public static Command OneCenterBalance = null;
 
     public void setUpAutos() {
         // Sendable Chooser Setup
         //autoChooser.setDefaultOption("Red High Cone 6 Pickup & Balance", redHighCone6PickupBalance);
         setUpEventMap();
         //pathPlannerTest = new PathPlannerTest();
-        autoChooser.setDefaultOption("1HighDirtyBalance", buildAuto(PathPlanner.loadPathGroup("Score1HighCubeRightBalance", new PathConstraints(4.5, 3))));
-        autoChooser.addOption("1HybridCleanBalance", buildAuto(PathPlanner.loadPathGroup("Score1LeftBalance", new PathConstraints(4, 3))));
-        autoChooser.addOption("CleanBalance", buildAuto(PathPlanner.loadPathGroup("LeftBalance", new PathConstraints(4, 3))));
-        autoChooser.addOption("DirtyBalance", buildAuto(PathPlanner.loadPathGroup("RightBalance", new PathConstraints(4, 3))));
+        //autoChooser.setDefaultOption("1HighDirtyBalance", buildAuto(PathPlanner.loadPathGroup("Score1HighCubeRightBalance", new PathConstraints(4.5, 3))));
+        //autoChooser.addOption("1HybridCleanBalance", buildAuto(PathPlanner.loadPathGroup("Score1LeftBalance", new PathConstraints(4, 3))));
+        //autoChooser.addOption("CleanBalance", buildAuto(PathPlanner.loadPathGroup("LeftBalance", new PathConstraints(4, 3))));
+        //autoChooser.addOption("DirtyBalance", buildAuto(PathPlanner.loadPathGroup("RightBalance", new PathConstraints(4, 3))));
         // autoChooser.addOption("CenterBalance", PathPlanner.loadPathGroup("CenterBalance", new PathConstraints(4, 3)));
         // autoChooser.addOption("Score1CenterBalance", PathPlanner.loadPathGroup("Score1CenterBalance", new PathConstraints(4, 3)));
-        autoChooser.addOption("1HybridDirtyBalance", buildAuto(PathPlanner.loadPathGroup("Score1RightBalance", new PathConstraints(4, 3))));
-        autoChooser.addOption("1HighCleanBalance", buildAuto(PathPlanner.loadPathGroup("Score1HighCubeLeftBalance", new PathConstraints(4.5, 3))));
+        //autoChooser.addOption("1HybridDirtyBalance", buildAuto(PathPlanner.loadPathGroup("Score1RightBalance", new PathConstraints(4, 3))));
+        //autoChooser.addOption("1HighCleanBalance", buildAuto(PathPlanner.loadPathGroup("Score1HighCubeLeftBalance", new PathConstraints(4.5, 3))));
         // autoChooser.addOption("Score1HighCubeCenterBalance", PathPlanner.loadPathGroup("Score1HighCubeCenterBalance", new PathConstraints(4.5, 3)));
         // autoChooser.addOption("Score1HighCubeCleanNoBalance", PathPlanner.loadPathGroup("ScoreHighCubeCleanNoBalance", new PathConstraints(4.5, 3)));
-        autoChooser.addOption("1HighDirtyNoBalance", buildAuto(PathPlanner.loadPathGroup("ScoreHighCubeDirtyNoBalance", new PathConstraints(4.5, 3))));
-        autoChooser.addOption("NoMove1High", buildAuto(PathPlanner.loadPathGroup("NoMoveScore1High", new PathConstraints(0, 0))));
-        autoChooser.addOption("NoMove1HighCone", buildAuto(PathPlanner.loadPathGroup("NoMoveScore1HighCone", new PathConstraints(0, 0))));
-        autoChooser.addOption("NoTurn1HighCenterBalance", buildAuto(PathPlanner.loadPathGroup("NoTurnScore1HighCenterBalance", new PathConstraints(4, 3))));
+        //autoChooser.addOption("1HighDirtyNoBalance", buildAuto(PathPlanner.loadPathGroup("ScoreHighCubeDirtyNoBalance", new PathConstraints(4.5, 3))));
+        //autoChooser.addOption("NoMove1High", buildAuto(PathPlanner.loadPathGroup("NoMoveScore1High", new PathConstraints(0, 0))));
+        autoChooser.addOption("NoMove1HighCone", NoMove1HighCone);
+        //autoChooser.addOption("NoTurn1HighCenterBalance", buildAuto(PathPlanner.loadPathGroup("NoTurnScore1HighCenterBalance", new PathConstraints(4, 3))));
         autoChooser.addOption("1.5CleanBalance", buildAuto(PathPlanner.loadPathGroup("Score1HighCubePickupLeftBalance", new PathConstraints(4.5, 3))));
         autoChooser.addOption("1.5DirtyBalance", buildAuto(PathPlanner.loadPathGroup("Score1HighCubePickupRightBalance", new PathConstraints(4.5, 3))));
         autoChooser.addOption("1.5CleanNoBalance", buildAuto(PathPlanner.loadPathGroup("Score1HighCubePickupLeftNoBalance", new PathConstraints(4.5, 3))));
@@ -196,8 +198,10 @@ public class RobotContainer {
         autoChooser.addOption("2PieceBalanceDirty", buildAuto(PathPlanner.loadPathGroup("2PieceBalanceDirty", new PathConstraints(4.5, 3))));
         autoChooser.addOption("2PieceHighBalanceClean", buildAuto(PathPlanner.loadPathGroup("2PieceHighBalanceClean", new PathConstraints(4.5, 3))));
         autoChooser.addOption("3PieceHybridClean", buildAuto(PathPlanner.loadPathGroup("3PieceHybridClean", new PathConstraints(4.5, 3))));
-        autoChooser.addOption("PPTestBalance", buildAuto(PathPlanner.loadPathGroup("PPTestBalance", new PathConstraints(2, 2))));
-        autoChooser.addOption("2CleanHighConeBalance", buildAuto(PathPlanner.loadPathGroup("2CleanHighConeBalance", new PathConstraints(3.5, 3.0))));
+        // autoChooser.addOption("PPTestBalance", buildAuto(PathPlanner.loadPathGroup("PPTestBalance", new PathConstraints(2, 2))));
+        autoChooser.addOption("1.5CenterBalance", buildAuto(PathPlanner.loadPathGroup("1.5CenterBalance", new PathConstraints(3.5, 3.0))));
+        autoChooser.addOption("1CenterBalance", OneCenterBalance);
+        // autoChooser.addOption("2CleanHighConeBalance", buildAuto(PathPlanner.loadPathGroup("2CleanHighConeBalance", new PathConstraints(3.0, 3.0))));
         // autoChooser.addOption("PathPlanner Test w/ Events", new SequentialCommandGroup(Swerve.followTrajectoryCommand(PathPlanner.loadPath("New Path", new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)), true)));
         // autoChooser.addOption("charge station", chargestation);
         SmartDashboard.putData(autoChooser);
@@ -208,7 +212,7 @@ public class RobotContainer {
         Constants.AutoConstants.eventMap.put("chargeStation", new MountAndBalance(s_Swerve));
         //Constants.AutoConstants.eventMap.put("align", new AlignToTargetAutos(s_Swerve, m_Limelight));
         Constants.AutoConstants.eventMap.put("highPreset", new ScoreHigh(m_Elevator, m_Arm, m_Intake, m_Wrist));
-        Constants.AutoConstants.eventMap.put("intakeGround", new SequentialCommandGroup(
+        Constants.AutoConstants.eventMap.put("intakeGround", new ParallelCommandGroup(
             new TopSuck(m_Elevator, m_Arm, m_Intake, m_Wrist),
             new IntakeInConstantly(m_Intake)
         ));
@@ -251,7 +255,7 @@ public class RobotContainer {
         );
         Constants.AutoConstants.eventMap.put("driveBackInverse", new DriveBackInverse(s_Swerve));
         Constants.AutoConstants.eventMap.put("chargeStationInverse", new MountAndBalanceInverse(s_Swerve));
-        Constants.AutoConstants.eventMap.put("balanceChargeStationInverse", new BalanceChargeStation(s_Swerve, true));
+        Constants.AutoConstants.eventMap.put("balanceChargeStationInverse", new BalanceChargeStation(s_Swerve, true, true));
         // First "clean" = grid
         // Second "clean" = column
         Constants.AutoConstants.eventMap.put("highCleanClean", new SequentialCommandGroup(
@@ -312,6 +316,9 @@ public class RobotContainer {
         // Configure the button bindings
         CameraServer.startAutomaticCapture(0);
         setUpEventMap();
+        NoMove1HighCone = buildAuto(PathPlanner.loadPathGroup("NoMoveScore1HighCone", new PathConstraints(0, 0)));
+        OneCenterBalance = buildAuto(PathPlanner.loadPathGroup("1CenterBalance", new PathConstraints(2, 2)));
+
         configureButtonBindings();
     }
 
@@ -493,7 +500,7 @@ public class RobotContainer {
        return autoChooser.getSelected();
     }
 
-    public Command getAutoChooserResult() {
+    public static Command getAutoChooserResult() {
         return autoChooser.getSelected();
     }
 }

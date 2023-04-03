@@ -4,7 +4,11 @@
 
 package frc.robot.subsystems;
 
+import java.sql.Driver;
 import java.util.function.Supplier;
+
+import com.pathplanner.lib.PathConstraints;
+import com.pathplanner.lib.PathPlanner;
 
 import edu.wpi.first.apriltag.AprilTagFieldLayout.OriginPosition;
 import edu.wpi.first.math.VecBuilder;
@@ -18,8 +22,10 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.RobotContainer;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.shuffleboard.ShuffleboardTab;
@@ -146,9 +152,15 @@ public class PoseEstimator extends SubsystemBase {
       double distance = limelight.targetDist();
       double timeStampSeconds =  Timer.getFPGATimestamp() - (limelight.tl()/1000.0) - (limelight.cl()/1000.0);
       // double poseDist = distanceFormula(pose2d.getX(),pose2d.getY(),visionPose.getX(),visionPose.getY());
-      // if (distanceFormula(pose2d.getX(),pose2d.getY(), getCurrentPose().getX(),getCurrentPose().getY()) < 1.0) {
+      if (DriverStation.isAutonomous() && RobotContainer.getAutoChooserResult().equals(RobotContainer.buildAuto(PathPlanner.loadPathGroup("1CenterBalance", new PathConstraints(2, 2))))) {
         poseEstimator.addVisionMeasurement(pose2d, timeStampSeconds, VecBuilder.fill(distance/2, distance/2, 100));
-      // }
+      }
+
+      if (distanceFormula(pose2d.getX(), pose2d.getY(), getCurrentPose().getX(), getCurrentPose().getY()) < 0.5 && DriverStation.isAutonomous()) {
+        // poseEstimator.addVisionMeasurement(pose2d, timeStampSeconds, VecBuilder.fill(distance/2, distance/2, 100));
+      } else if (DriverStation.isTeleop()) {
+        poseEstimator.addVisionMeasurement(pose2d, timeStampSeconds, VecBuilder.fill(distance/2, distance/2, 100));
+      }
       //setCurrentPose(pose2d);
     }
   }

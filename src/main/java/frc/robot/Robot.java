@@ -150,16 +150,14 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
 
-    // if (
-    //   m_robotContainer.getAutoChooserResult().equals(RobotContainer.buildAuto(PathPlanner.loadPathGroup("NoMoveScore1High", new PathConstraints(0, 0)))) || 
-    //   m_robotContainer.getAutoChooserResult().equals(RobotContainer.buildAuto(PathPlanner.loadPathGroup("NoTurnScore1HighCenterBalance", new PathConstraints(4, 3)))) ||
-    //   m_robotContainer.getAutoChooserResult().equals(RobotContainer.buildAuto(PathPlanner.loadPathGroup("ScoreHighCubeDirtyNoBalance", new PathConstraints(4.5, 3)))) ||
-    //   m_robotContainer.getAutoChooserResult().equals(RobotContainer.buildAuto(PathPlanner.loadPathGroup("2PieceBalance", new PathConstraints(4.5, 3))))
-    // ) {
-    //   m_robotContainer.reverseZeroGyro();
-    // } else {
-    //   m_robotContainer.zeroGyro();
-    // }
+    if (
+      RobotContainer.getAutoChooserResult().equals(RobotContainer.NoMove1HighCone) || 
+      RobotContainer.getAutoChooserResult().equals(RobotContainer.OneCenterBalance)
+    ) {
+      m_robotContainer.reverseZeroGyro();
+    } else {
+      m_robotContainer.zeroGyro();
+    }
 
     SmartDashboard.putNumber("PID Value", 0);
     // m_robotContainer.resetToAbsolute();

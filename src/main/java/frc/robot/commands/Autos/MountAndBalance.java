@@ -22,7 +22,7 @@ public class MountAndBalance extends SequentialCommandGroup {
     addRequirements(s_Swerve);
     addCommands(
     new MountChargeStation(s_Swerve, false),
-    new BalanceChargeStation(s_Swerve, true)//TODO: change iscountinuous
+    new BalanceChargeStation(s_Swerve, true, false)//TODO: change iscountinuous
     );
   }
   

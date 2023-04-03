@@ -1,0 +1,4 @@
+WORKING:
+1.5CleanBalance - cube pickup working, cone isn't
+1.5DirtyBalance - working without vision, gyro resets properly
+1CenterBalance - working with cone, gyro resets properly

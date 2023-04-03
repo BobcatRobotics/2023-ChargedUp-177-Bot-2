@@ -2,13 +2,13 @@
   "waypoints": [
     {
       "anchorPoint": {
-        "x": 2.103905746273031,
-        "y": 2.7520195211330596
+        "x": 1.8070073746985102,
+        "y": 2.18
       },
       "prevControl": null,
       "nextControl": {
-        "x": 2.8118941707968883,
-        "y": 2.8091153618204667
+        "x": 2.446480790397478,
+        "y": 2.1571616637250366
       },
       "holonomicAngle": 180.0,
       "isReversal": false,
@@ -16,20 +16,23 @@
       "isLocked": false,
       "isStopPoint": false,
       "stopEvent": {
-        "names": [],
-        "executionBehavior": "parallel",
+        "names": [
+          "scoreConeHigh",
+          "autoStowe"
+        ],
+        "executionBehavior": "sequential",
         "waitBehavior": "none",
         "waitTime": 0
       }
     },
     {
       "anchorPoint": {
-        "x": 3.9195534801326013,
-        "y": 2.797696193682985
+        "x": 6.4,
+        "y": 2.18
       },
       "prevControl": {
-        "x": 3.2686608962961516,
-        "y": 2.763438689270541
+        "x": 6.091343152937735,
+        "y": 2.1716479911744497
       },
       "nextControl": null,
       "holonomicAngle": 180.0,
@@ -39,7 +42,7 @@
       "isStopPoint": false,
       "stopEvent": {
         "names": [
-          "balanceChargeStationInverse"
+          "chargeStationInverse"
         ],
         "executionBehavior": "sequential",
         "waitBehavior": "none",

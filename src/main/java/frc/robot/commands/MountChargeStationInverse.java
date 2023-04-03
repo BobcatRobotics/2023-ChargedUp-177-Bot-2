@@ -14,7 +14,7 @@ public class MountChargeStationInverse extends CommandBase {
   private Swerve swerve;
   private double pitch;
   private double stage1Threshold = -10;
-  private double stage2Threshold = -15;
+  private double stage2Threshold = -5;
   private int stage = 1;
   private boolean isRed;
   private boolean finished = false;
@@ -27,12 +27,12 @@ public class MountChargeStationInverse extends CommandBase {
     this.isRed = isRed;
     stage1Threshold = -10;
     //stage2Threshold = 16; - akash says max tilt is 15 degrees
-    stage2Threshold = -15;
+    stage2Threshold = -5;
     stage = 1;
     finished = false;
     // xSpeed = -1.75; - tread worn out currently
     //xSpeed = -2.25; - worked but too slow
-    xSpeed = 2.75;
+    xSpeed = 2.5;
   }
 
   // Called when the command is initially scheduled.
@@ -40,11 +40,11 @@ public class MountChargeStationInverse extends CommandBase {
   public void initialize() {
     stage1Threshold = -10;
     //stage2Threshold = 16; - akash says max tilt is 15 degrees
-    stage2Threshold = -15;
+    stage2Threshold = -5;
     stage = 1;
     finished = false;
     // xSpeed = -1.75; - tread worn out currently
-    xSpeed = 2.75;
+    xSpeed = 2.5;
   }
 
   // Called every time the scheduler runs while the command is scheduled.

@@ -53,8 +53,12 @@ public class BalanceChargeStation extends CommandBase {
   
 
   /** Creates a new BalanceChargeStation. */
-  public BalanceChargeStation(Swerve dt, boolean isContinuous) {
-    pid = new PIDController(BalancingConstants.kP, BalancingConstants.kI, BalancingConstants.kD);
+  public BalanceChargeStation(Swerve dt, boolean isContinuous, boolean inverse) {
+    if (!inverse) {
+      pid = new PIDController(BalancingConstants.kP, BalancingConstants.kI, BalancingConstants.kD);
+    } else {
+      pid = new PIDController(BalancingConstants.InversekP, BalancingConstants.InversekI, BalancingConstants.InversekD);
+    }
     pid.setTolerance(BalancingConstants.kToleranceDegrees);
     this.dt = dt;
     this.isContinuous = isContinuous;
