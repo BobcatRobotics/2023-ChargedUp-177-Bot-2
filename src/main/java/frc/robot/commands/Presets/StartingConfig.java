@@ -24,18 +24,20 @@ public class StartingConfig extends SequentialCommandGroup {
   public StartingConfig(Elevator e, Arm a, Wrist w) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
-    addCommands(
-      // new SequentialCommandGroup(
-      // new SetArm(a, 4),  
-      // new ParallelCommandGroup( 
-      //     new SetElevator(e,0)
-      //     //new SetWrist(w, true)
-      //     )
-      //   ),
-      //   new SetArm(a,0)
-      new SetArm(a, ArmConstants.minNonCollidingExtention),
-      Commands.parallel(new SetElevator(e, 0, w), new SetWrist(w, WristConstants.startingPosWrist)),
-      new SetArm(a, ArmConstants.startingArmPos)
-    );
+
+    if (e.getBottomLimits()) {
+      addCommands(
+        Commands.parallel(
+          new SetWrist(w, WristConstants.startingPosWrist),
+          new SetArm(a, ArmConstants.startingArmPos)
+        )
+      );
+    } else {
+      addCommands(
+        new SetArm(a, ArmConstants.minNonCollidingExtention),
+        Commands.parallel(new SetElevator(e, 0, w), new SetWrist(w, WristConstants.startingPosWrist)),
+        new SetArm(a, ArmConstants.startingArmPos)
+      );
+    }
   }
 }

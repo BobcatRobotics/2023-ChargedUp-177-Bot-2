@@ -17,6 +17,9 @@ public class SetArm extends CommandBase {
   double state;
   Timer timer;
   double pos;
+
+  // public SetArm(Arm a, double )
+
   public SetArm(Arm a, double state_g) {
     state = state_g;
     arm = a;

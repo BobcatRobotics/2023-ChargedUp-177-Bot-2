@@ -190,17 +190,17 @@ public class RobotContainer {
         //autoChooser.addOption("NoMove1High", buildAuto(PathPlanner.loadPathGroup("NoMoveScore1High", new PathConstraints(0, 0))));
         autoChooser.setDefaultOption("NoMove1HighCone", NoMove1HighCone);
         //autoChooser.addOption("NoTurn1HighCenterBalance", buildAuto(PathPlanner.loadPathGroup("NoTurnScore1HighCenterBalance", new PathConstraints(4, 3))));
-        autoChooser.addOption("1.5CleanBalance", buildAuto(PathPlanner.loadPathGroup("Score1HighCubePickupLeftBalance", new PathConstraints(4.5, 3))));
-        autoChooser.addOption("1.5DirtyBalance", buildAuto(PathPlanner.loadPathGroup("Score1HighCubePickupRightBalance", new PathConstraints(4.5, 3))));
-        autoChooser.addOption("1.5CleanNoBalance", buildAuto(PathPlanner.loadPathGroup("Score1HighCubePickupLeftNoBalance", new PathConstraints(4.5, 3))));
-        autoChooser.addOption("1.5DirtyNoBalance", buildAuto(PathPlanner.loadPathGroup("Score1HighCubePickupRightNoBalance", new PathConstraints(4.5, 3))));
-        autoChooser.addOption("2PieceBalanceClean", buildAuto(PathPlanner.loadPathGroup("2PieceBalanceClean", new PathConstraints(4.5, 3))));
-        autoChooser.addOption("2PieceDirty", TwoPieceDirty); // TODO: rename with no balance
-        autoChooser.addOption("2PieceHighBalanceClean", buildAuto(PathPlanner.loadPathGroup("2PieceHighBalanceClean", new PathConstraints(4.5, 3))));
-        autoChooser.addOption("3PieceHybridClean", buildAuto(PathPlanner.loadPathGroup("3PieceHybridClean", new PathConstraints(4.5, 3))));
+        autoChooser.addOption("Clean1.5Balance", buildAuto(PathPlanner.loadPathGroup("Score1HighCubePickupLeftBalance", new PathConstraints(4.5, 3))));
+        autoChooser.addOption("Dirty1.5Balance", buildAuto(PathPlanner.loadPathGroup("Score1HighCubePickupRightBalance", new PathConstraints(4.5, 3))));
+        autoChooser.addOption("Clean1.5", buildAuto(PathPlanner.loadPathGroup("Score1HighCubePickupLeftNoBalance", new PathConstraints(4.5, 3))));
+        autoChooser.addOption("Dirty1.5", buildAuto(PathPlanner.loadPathGroup("Score1HighCubePickupRightNoBalance", new PathConstraints(4.5, 3))));
+        // autoChooser.addOption("Clean2Balance", buildAuto(PathPlanner.loadPathGroup("2PieceBalanceClean", new PathConstraints(4.5, 3))));
+        autoChooser.addOption("Dirty2", TwoPieceDirty); // TODO: rename with no balance
+        autoChooser.addOption("Clean2Balance", buildAuto(PathPlanner.loadPathGroup("2PieceHighBalanceClean", new PathConstraints(4.5, 3))));
+        autoChooser.addOption("Clean3Hybrid", buildAuto(PathPlanner.loadPathGroup("3PieceHybridClean", new PathConstraints(4.5, 3))));
         // autoChooser.addOption("PPTestBalance", buildAuto(PathPlanner.loadPathGroup("PPTestBalance", new PathConstraints(2, 2))));
-        autoChooser.addOption("1.5CenterBalance", buildAuto(PathPlanner.loadPathGroup("1.5CenterBalance", new PathConstraints(3.5, 3.0))));
-        autoChooser.addOption("1CenterBalance", OneCenterBalance);
+        autoChooser.addOption("Center1.5Balance", buildAuto(PathPlanner.loadPathGroup("1.5CenterBalance", new PathConstraints(3.5, 3.0))));
+        autoChooser.addOption("Center1Balance", OneCenterBalance);
         autoChooser.addOption("Clean2", clean2Path);
         // autoChooser.addOption("2CleanHighConeBalance", buildAuto(PathPlanner.loadPathGroup("2CleanHighConeBalance", new PathConstraints(3.0, 3.0))));
         // autoChooser.addOption("PathPlanner Test w/ Events", new SequentialCommandGroup(Swerve.followTrajectoryCommand(PathPlanner.loadPath("New Path", new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)), true)));
@@ -379,7 +379,6 @@ public class RobotContainer {
 
         driverLeft.onTrue(new Blink(m_LEDs, false));
         driverRight.onTrue(new Blink(m_LEDs, true));
-        
 
         OpTopLeft.onTrue(new TopLeft(s_Swerve, swervePoseEstimator, m_Elevator, m_Arm, m_Wrist, m_Intake).until(this::baseDriverControlsMoved));
         OpTopMid.onTrue(new TopMid(s_Swerve, swervePoseEstimator, m_Elevator, m_Arm, m_Wrist, m_Intake).until(this::baseDriverControlsMoved));
@@ -387,9 +386,6 @@ public class RobotContainer {
         OpBottomLeft.onTrue(new MidLeft(s_Swerve, swervePoseEstimator, m_Elevator, m_Arm, m_Wrist, m_Intake).until(this::baseDriverControlsMoved));
         OpBottomMid.onTrue(new MidMid(s_Swerve, swervePoseEstimator, m_Elevator, m_Arm, m_Wrist, m_Intake).until(this::baseDriverControlsMoved));
         OpBottomRight.onTrue(new MidRight(s_Swerve, swervePoseEstimator, m_Elevator, m_Arm, m_Wrist, m_Intake).until(this::baseDriverControlsMoved));
-
-
-
 
         lefttrigger.whileTrue(new InstantCommand(m_Intake::runIntakeOut));
         leftBumper.whileTrue(new InstantCommand(m_Intake::runIntakeIn));
