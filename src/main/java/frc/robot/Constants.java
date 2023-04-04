@@ -321,7 +321,7 @@ public final class Constants {
     public static final class WristConstants {
         public static final double wristOffset = 160.66; // 5 degrees at start
         public static final double globalWristMaxAngleUp = 250; // chute wrist position as well 260
-        // public static final double babyBirdPos = 240;
+        public static final double babyBirdPos = 255;
         public static final double globalWristMaxAngleDown = 352; 
         public static final double midScorePos = 345.76;
         public static final double groundPickupWrist = 275; // ground intake

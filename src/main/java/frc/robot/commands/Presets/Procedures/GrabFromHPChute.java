@@ -23,7 +23,7 @@ public class GrabFromHPChute extends SequentialCommandGroup {
     // addCommands(new FooCommand(), new BarCommand());
     addCommands(
       new SetElevator(e, 0, w),
-      new ParallelCommandGroup(new SetArm(a, ArmConstants.chuteArmPos), new SetWrist(w, WristConstants.globalWristMaxAngleUp))
+      new ParallelCommandGroup(new SetArm(a, ArmConstants.chuteArmPos), new SetWrist(w, WristConstants.babyBirdPos))
     );
   }
 }
