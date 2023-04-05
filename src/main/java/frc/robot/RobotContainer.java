@@ -47,6 +47,7 @@ import frc.robot.commands.Autos.MountAndBalance;
 import frc.robot.commands.Autos.MountAndBalanceInverse;
 import frc.robot.commands.Autos.AutoPresets.ScoreCubeHighAutos;
 import frc.robot.commands.LEDs.Blink;
+import frc.robot.commands.LEDs.BlinkPWM;
 import frc.robot.commands.Presets.IntakeInConstantly;
 import frc.robot.commands.Presets.RetractArm;
 import frc.robot.commands.Presets.RunIntake;
@@ -146,6 +147,7 @@ public class RobotContainer {
     private final Arm m_Arm = new Arm();
     private final Wrist m_Wrist = new Wrist();
     private final BlinkinLEDs m_LEDs = new BlinkinLEDs();
+    // private final PWMLEDs m_LEDs = new PWMLEDs();
     
     /* Commands */
     private final Command elevatorControls = new ElevatorControls(m_Elevator, driver, m_Arm);
@@ -379,6 +381,8 @@ public class RobotContainer {
 
         driverLeft.onTrue(new Blink(m_LEDs, false));
         driverRight.onTrue(new Blink(m_LEDs, true));
+        // driverLeft.onTrue(new BlinkPWM(m_LEDs, false));
+        // driverRight.onTrue(new BlinkPWM(m_LEDs, true));
 
         OpTopLeft.onTrue(new TopLeft(s_Swerve, swervePoseEstimator, m_Elevator, m_Arm, m_Wrist, m_Intake).until(this::baseDriverControlsMoved));
         OpTopMid.onTrue(new TopMid(s_Swerve, swervePoseEstimator, m_Elevator, m_Arm, m_Wrist, m_Intake).until(this::baseDriverControlsMoved));

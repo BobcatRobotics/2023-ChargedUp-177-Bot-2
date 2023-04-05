@@ -316,6 +316,9 @@ public final class Constants {
     
     public static final class LEDConstants {
         public static final int ledPort = 0; // placeholder
+        // For use when leds are connected to the rio with pwm
+        public static final int pwmLedPort1 = 99; // placeholder value
+        public static final int pwmLedPort2 = 99; // placeholder value
     }
 
     public static final class WristConstants {
