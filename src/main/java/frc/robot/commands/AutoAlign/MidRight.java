@@ -43,7 +43,7 @@ public class MidRight extends SequentialCommandGroup {
   
     
     addCommands(
-      new DriveToPoseCommand(s, this::getGrid, sPose::getCurrentPose, true),
+      new DriveToPoseCommand(s, this::getGrid, sPose::getCurrentPose),
       new ScoreMid(e, a, w)
     );
   }

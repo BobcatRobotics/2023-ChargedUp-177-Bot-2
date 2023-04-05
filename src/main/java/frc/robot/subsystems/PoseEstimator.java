@@ -43,13 +43,13 @@ public class PoseEstimator extends SubsystemBase {
   private Limelight limelightFront;
   private Limelight limelightBack;
 
-  private OriginPosition originPosition = OriginPosition.kBlueAllianceWallRightSide;
+  //private OriginPosition originPosition = OriginPosition.kBlueAllianceWallRightSide;
   private boolean sawTag = false;
 
   private final double FIELD_LENGTH_METERS = 16.54175;
   private final double FIELD_WIDTH_METERS = 8.0137;
   
-  private Alliance alliance = Alliance.Blue;
+  //private Alliance alliance = Alliance.Blue;
 
   /** Creates a new PoseEstimatorSubsystem. */
   public PoseEstimator(Supplier<Rotation2d> rotationSupplier, Supplier<SwerveModulePosition[]> modulePositionSupplier, Limelight limelightFront, Limelight limelightBack) {
@@ -68,31 +68,31 @@ public class PoseEstimator extends SubsystemBase {
     this.limelightBack = limelightBack;
   }
   
-  public void setAlliance(Alliance alliance) {
-    boolean allianceChanged = false;
-    this.limelightFront.setAlliance(alliance);
-    this.limelightBack.setAlliance(alliance);
-    switch(alliance) {
-      case Blue:
-        allianceChanged = (originPosition == OriginPosition.kRedAllianceWallRightSide);
-        originPosition = OriginPosition.kBlueAllianceWallRightSide;
-        break;
-      case Red:
-        allianceChanged = (originPosition == OriginPosition.kBlueAllianceWallRightSide);
-        originPosition = OriginPosition.kRedAllianceWallRightSide;
-        break;
-      default:
-    }
-
-    if (allianceChanged && sawTag) {
-      Pose2d newPose = flipAlliance(getCurrentPose());
-      poseEstimator.resetPosition(
-        this.rotationSupplier.get(), 
-        this.modulePositionSupplier.get(), 
-        newPose
-      );
-    }
-  }
+  // public void setAlliance(Alliance alliance) {
+  //   boolean allianceChanged = false;
+  //   this.limelightFront.setAlliance(alliance);
+  //   this.limelightBack.setAlliance(alliance);
+  //   switch(alliance) {
+  //     case Blue:
+  //       allianceChanged = (originPosition == OriginPosition.kRedAllianceWallRightSide);
+  //       originPosition = OriginPosition.kBlueAllianceWallRightSide;
+  //       break;
+  //     case Red:
+  //       allianceChanged = (originPosition == OriginPosition.kBlueAllianceWallRightSide);
+  //       originPosition = OriginPosition.kRedAllianceWallRightSide;
+  //       break;
+  //     default:
+  //   }
+  //
+  //   if (allianceChanged && sawTag) {
+  //     Pose2d newPose = flipAlliance(getCurrentPose());
+  //     poseEstimator.resetPosition(
+  //       this.rotationSupplier.get(), 
+  //       this.modulePositionSupplier.get(), 
+  //       newPose
+  //     );
+  //   }
+  // }
 
   /**
    * 
@@ -227,7 +227,7 @@ public class PoseEstimator extends SubsystemBase {
     setCurrentPose(new Pose2d());
   }
 
-  private Pose2d flipAlliance(Pose2d poseToFlip) { // field length + field width + 180 degree rotation
-    return poseToFlip.relativeTo(new Pose2d(new Translation2d(16.54175, 8.0137), new Rotation2d(Math.PI)));
-  }
+  // private Pose2d flipAlliance(Pose2d poseToFlip) { // field length + field width + 180 degree rotation
+  //   return poseToFlip.relativeTo(new Pose2d(new Translation2d(16.54175, 8.0137), new Rotation2d(Math.PI)));
+  // }
 }

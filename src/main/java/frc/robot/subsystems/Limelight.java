@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems;
 
+import java.sql.Driver;
+
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
@@ -11,6 +13,7 @@ import edu.wpi.first.math.geometry.Translation3d;
 import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -29,6 +32,7 @@ public class Limelight extends SubsystemBase {
   private String limeLightName="limelight";
   public Limelight(String limeLightName) {
     this.limeLightName = limeLightName;
+    this.alliance = DriverStation.getAlliance();
     NetworkTable table = NetworkTableInstance.getDefault().getTable(limeLightName);
     turnOnLED();
     try {
@@ -36,7 +40,11 @@ public class Limelight extends SubsystemBase {
       tx = table.getEntry("tx");
       ty = table.getEntry("ty");
       ta = table.getEntry("ta");
-      botpose = table.getEntry("botpose_wpiblue");
+      if (this.alliance == Alliance.Blue) {
+        botpose = table.getEntry("botpose_wpiblue");
+      } else {
+        botpose = table.getEntry("botpose_wpired");
+      }
       targetpose = table.getEntry("targetpose_robotspace");
       tl = table.getEntry("tl");
       cl = table.getEntry("cl");

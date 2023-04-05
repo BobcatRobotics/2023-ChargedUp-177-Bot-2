@@ -42,7 +42,7 @@ public class TopMid extends SequentialCommandGroup {
   
     
     addCommands(
-      new DriveToPoseCommand(s, this::getGrid, sPose::getCurrentPose, true),
+      new DriveToPoseCommand(s, this::getGrid, sPose::getCurrentPose),
       new ScoreHigh(e, a, i, w)
     );
   }

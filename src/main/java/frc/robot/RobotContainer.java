@@ -12,6 +12,7 @@ import com.pathplanner.lib.auto.SwerveAutoBuilder;
 
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.math.geometry.Pose2d;
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.PowerDistribution;
@@ -262,19 +263,19 @@ public class RobotContainer {
         // First "clean" = grid
         // Second "clean" = column
         Constants.AutoConstants.eventMap.put("highCleanClean", new SequentialCommandGroup(
-            new DriveToPoseCommand(s_Swerve, () -> PoseEstimation.grid3[2], () -> swervePoseEstimator.getCurrentPose(), true),
+            new DriveToPoseCommand(s_Swerve, () -> PoseEstimation.grid3[2], () -> swervePoseEstimator.getCurrentPose()),
             new ParallelRaceGroup(new ScoreHigh(m_Elevator, m_Arm, m_Intake, m_Wrist), new WaitCommand(2)), 
             new IntakeOutFullSpeed(m_Intake), 
             new StartingConfig(m_Elevator, m_Arm, m_Wrist)
         ));
         Constants.AutoConstants.eventMap.put("highCleanMid", new ParallelDeadlineGroup(new WaitUntilTime(14.5, new IntakeOutFullSpeed(m_Intake)),new SequentialCommandGroup(
-            new DriveToPoseCommand(s_Swerve, () -> PoseEstimation.grid3[1], () -> swervePoseEstimator.getCurrentPose(), true),
+            new DriveToPoseCommand(s_Swerve, () -> PoseEstimation.grid3[1], () -> swervePoseEstimator.getCurrentPose()),
             new ParallelRaceGroup(new ScoreHigh(m_Elevator, m_Arm, m_Intake, m_Wrist), new WaitCommand(2)), 
             new IntakeOutFullSpeed(m_Intake), 
             new StartingConfig(m_Elevator, m_Arm, m_Wrist)))
         );
         Constants.AutoConstants.eventMap.put("highDirtyMid", new ParallelDeadlineGroup(new WaitUntilTime(14.5, new IntakeOutFullSpeed(m_Intake)),new SequentialCommandGroup(
-            new DriveToPoseCommand(s_Swerve, () -> PoseEstimation.grid1[1], () -> swervePoseEstimator.getCurrentPose(), true),
+            new DriveToPoseCommand(s_Swerve, () -> PoseEstimation.grid1[1], () -> swervePoseEstimator.getCurrentPose()),
             new ParallelRaceGroup(new ScoreHigh(m_Elevator, m_Arm, m_Intake, m_Wrist), new WaitCommand(2)), 
             new IntakeOutFullSpeed(m_Intake), 
             new StartingConfig(m_Elevator, m_Arm, m_Wrist)))
@@ -330,6 +331,8 @@ public class RobotContainer {
         OneCenterBalance = buildAuto(PathPlanner.loadPathGroup("1CenterBalance", new PathConstraints(2, 2)));
         clean2Path = buildAuto(PathPlanner.loadPathGroup("clean2", new PathConstraints(2.0, 2.0)));
         TwoPieceDirty = buildAuto(PathPlanner.loadPathGroup("2PieceBalanceDirty", new PathConstraints(2.0, 2.0)));
+        m_LimelightFront.setAlliance(DriverStation.getAlliance());
+        m_LimelightBack.setAlliance(DriverStation.getAlliance());
         configureButtonBindings();
     }
 
@@ -423,13 +426,13 @@ public class RobotContainer {
         //back.whileTrue(new InstantCommand(m_Intake::runIntakeOutFull));
         
         //alignRobot.whileTrue(align);
-        start.whileTrue(driveToPose(true).until(this::baseDriverControlsMoved));
+        start.whileTrue(driveToPose().until(this::baseDriverControlsMoved));
     }
 
 
 
-    public Command driveToPose(boolean useAlianceColor) {
-        return new DriveToPoseCommand(s_Swerve, this::closestGrid, swervePoseEstimator::getCurrentPose, useAlianceColor);
+    public Command driveToPose() {
+        return new DriveToPoseCommand(s_Swerve, this::closestGrid, swervePoseEstimator::getCurrentPose);
     }
 
     public Pose2d getSelectedNode() {
