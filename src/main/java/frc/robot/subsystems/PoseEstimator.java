@@ -23,6 +23,7 @@ import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
+import frc.robot.Constants.FieldConstants;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
@@ -148,11 +149,16 @@ public class PoseEstimator extends SubsystemBase {
       sawTag = true;
       
       Pose2d pose2d = new Pose2d(visionPose.getTranslation().toTranslation2d(), rotationSupplier.get());
-
+      
+      //4.5.23 DCMP Load-In bus fix, TODO: needs to be checkd! 
+      if(DriverStation.getAlliance().equals(Alliance.Red)){
+        pose2d = new Pose2d(pose2d.getX(), FieldConstants.width - pose2d.getY(), pose2d.getRotation());
+      }
+     
       double distance = limelight.targetDist();
       double timeStampSeconds =  Timer.getFPGATimestamp() - (limelight.tl()/1000.0) - (limelight.cl()/1000.0);
       // double poseDist = distanceFormula(pose2d.getX(),pose2d.getY(),visionPose.getX(),visionPose.getY());
-
+      SmartDashboard.putBoolean("vision measurement valid", distanceFormula(pose2d.getX(), pose2d.getY(), getCurrentPose().getX(), getCurrentPose().getY()) < 0.5);
       if (distanceFormula(pose2d.getX(), pose2d.getY(), getCurrentPose().getX(), getCurrentPose().getY()) < 0.5 && DriverStation.isAutonomous()) {
         poseEstimator.addVisionMeasurement(pose2d, timeStampSeconds, VecBuilder.fill(distance/2, distance/2, 100));
       } else if (DriverStation.isTeleop()) {

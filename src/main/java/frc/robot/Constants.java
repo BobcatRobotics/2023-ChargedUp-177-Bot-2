@@ -273,8 +273,8 @@ public final class Constants {
     }   
 
     public static final class FieldConstants {
-        public static final double length = 10;
-        public static final double width = 10;
+        public static final double length = 16.54175;
+        public static final double width = 8.0137;
     }
 
     public static final class ArmConstants {
