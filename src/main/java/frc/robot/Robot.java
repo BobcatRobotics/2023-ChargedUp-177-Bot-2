@@ -154,8 +154,10 @@ public class Robot extends TimedRobot {
       RobotContainer.getAutoChooserResult() != null && (
       RobotContainer.getAutoChooserResult().equals(RobotContainer.NoMove1HighCone) || 
       RobotContainer.getAutoChooserResult().equals(RobotContainer.OneCenterBalance) ||
-      RobotContainer.getAutoChooserResult().equals(RobotContainer.clean2Path) ||
-      RobotContainer.getAutoChooserResult().equals(RobotContainer.TwoPieceDirty)
+      RobotContainer.getAutoChooserResult().equals(RobotContainer.RedClean2Path) ||
+      RobotContainer.getAutoChooserResult().equals(RobotContainer.RedTwoPieceDirty) ||
+      RobotContainer.getAutoChooserResult().equals(RobotContainer.BlueClean2Path) ||
+      RobotContainer.getAutoChooserResult().equals(RobotContainer.BlueTwoPieceDirty)
     )) {
       m_robotContainer.reverseZeroGyro();
     } else {

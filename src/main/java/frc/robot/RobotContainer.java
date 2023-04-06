@@ -172,8 +172,11 @@ public class RobotContainer {
     private static SendableChooser<Command> autoChooser = new SendableChooser<Command>();
     public static Command NoMove1HighCone = null;
     public static Command OneCenterBalance = null;
-    public static Command clean2Path = null;
-    public static Command TwoPieceDirty = null;
+    public static Command RedClean2Path = null;
+    public static Command BlueClean2Path = null;
+    public static Command BlueTwoPieceDirty = null;
+    public static Command RedTwoPieceDirty = null;
+    public static Command CenterTwoBalance = null;
 
     public void setUpAutos() {
         // Sendable Chooser Setup
@@ -195,17 +198,21 @@ public class RobotContainer {
         autoChooser.setDefaultOption("NoMove1HighCone", NoMove1HighCone);
         //autoChooser.addOption("NoTurn1HighCenterBalance", buildAuto(PathPlanner.loadPathGroup("NoTurnScore1HighCenterBalance", new PathConstraints(4, 3))));
         autoChooser.addOption("Clean1.5Balance", buildAuto(PathPlanner.loadPathGroup("Score1HighCubePickupLeftBalance", new PathConstraints(4.5, 3))));
-        autoChooser.addOption("Dirty1.5Balance", buildAuto(PathPlanner.loadPathGroup("Score1HighCubePickupRightBalance", new PathConstraints(4.5, 3))));
+        autoChooser.addOption("BlueDirty1.5Balance", buildAuto(PathPlanner.loadPathGroup("Blue1.5DirtyBalance", new PathConstraints(4.5, 3))));
+        autoChooser.addOption("RedDirty1.5Balance", buildAuto(PathPlanner.loadPathGroup("Red1.5DirtyBalance", new PathConstraints(4.5, 3))));
         // autoChooser.addOption("Clean1.5", buildAuto(PathPlanner.loadPathGroup("Score1HighCubePickupLeftNoBalance", new PathConstraints(4.5, 3))));
         // autoChooser.addOption("Dirty1.5", buildAuto(PathPlanner.loadPathGroup("Score1HighCubePickupRightNoBalance", new PathConstraints(4.5, 3))));
         // autoChooser.addOption("Clean2Balance", buildAuto(PathPlanner.loadPathGroup("2PieceBalanceClean", new PathConstraints(4.5, 3))));
-        autoChooser.addOption("Clean2", clean2Path);
-        autoChooser.addOption("Dirty2", TwoPieceDirty); // TODO: rename with no balance
+        autoChooser.addOption("RedClean2", RedClean2Path);
+        autoChooser.addOption("BlueClean2", BlueClean2Path);
+        autoChooser.addOption("BlueDirty2", BlueTwoPieceDirty); // TODO: rename with no balance
+        autoChooser.addOption("RedDirty2", RedTwoPieceDirty);
         // autoChooser.addOption("Clean2Balance", buildAuto(PathPlanner.loadPathGroup("2PieceHighBalanceClean", new PathConstraints(4.5, 3))));
         // autoChooser.addOption("Clean3Hybrid", buildAuto(PathPlanner.loadPathGroup("3PieceHybridClean", new PathConstraints(4.5, 3))));
         // autoChooser.addOption("PPTestBalance", buildAuto(PathPlanner.loadPathGroup("PPTestBalance", new PathConstraints(2, 2))));
         // autoChooser.addOption("Center1.5Balance", buildAuto(PathPlanner.loadPathGroup("1.5CenterBalance", new PathConstraints(3.5, 3.0))));
         autoChooser.addOption("Center1Balance", OneCenterBalance);
+        autoChooser.addOption("Center2Balance", CenterTwoBalance);
         // autoChooser.addOption("2CleanHighConeBalance", buildAuto(PathPlanner.loadPathGroup("2CleanHighConeBalance", new PathConstraints(3.0, 3.0))));
         // autoChooser.addOption("PathPlanner Test w/ Events", new SequentialCommandGroup(Swerve.followTrajectoryCommand(PathPlanner.loadPath("New Path", new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)), true)));
         // autoChooser.addOption("charge station", chargestation);
@@ -330,8 +337,12 @@ public class RobotContainer {
         setUpEventMap();
         NoMove1HighCone = buildAuto(PathPlanner.loadPathGroup("NoMoveScore1HighCone", new PathConstraints(0, 0)));
         OneCenterBalance = buildAuto(PathPlanner.loadPathGroup("1CenterBalance", new PathConstraints(2, 2)));
-        clean2Path = buildAuto(PathPlanner.loadPathGroup("clean2", new PathConstraints(2.0, 2.0)));
-        TwoPieceDirty = buildAuto(PathPlanner.loadPathGroup("2PieceBalanceDirty", new PathConstraints(2.0, 2.0)));
+        RedClean2Path = buildAuto(PathPlanner.loadPathGroup("RedClean2", new PathConstraints(2.0, 2.0)));
+        BlueClean2Path = buildAuto(PathPlanner.loadPathGroup("BlueClean2", new PathConstraints(2.0, 2.0)));
+        BlueTwoPieceDirty = buildAuto(PathPlanner.loadPathGroup("Blue2PieceDirty", new PathConstraints(2.0, 2.0)));
+        RedTwoPieceDirty = buildAuto(PathPlanner.loadPathGroup("Red2PieceDirty", new PathConstraints(2.0, 2.0)));
+        CenterTwoBalance = buildAuto(PathPlanner.loadPathGroup("2CenterBalance", new PathConstraints(2.0, 2.0)));
+
         m_LimelightFront.setAlliance(DriverStation.getAlliance());
         m_LimelightBack.setAlliance(DriverStation.getAlliance());
         configureButtonBindings();

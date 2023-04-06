@@ -77,10 +77,11 @@ public class ElevatorControls extends CommandBase {
     } else if (elevator.topLimitSwitch() && gamepad.getRawAxis(3) < 0.05) {
       elevator.elevate(0);
       return;
-    } else if (elevator.topLimitSwitch()){
-      elevator.elevate(0);
-      return;
     }
+    // } else if (elevator.topLimitSwitch()){
+    //   elevator.elevate(0);
+    //   return;
+    // }
     // -207000
     if (elevator.isAtCurrentLimit()) {
       elevator.elevate(0);
