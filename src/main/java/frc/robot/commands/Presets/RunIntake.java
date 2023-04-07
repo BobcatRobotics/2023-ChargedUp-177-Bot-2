@@ -55,7 +55,7 @@ public class RunIntake extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    SmartDashboard.putNumber("Intake Current", i.getCurrent());
+    //SmartDashboard.putNumber("Intake Current", i.getCurrent());
     if(!isTimed) {
       if(gp.getRawButton(in)){
         i.runIntakeIn();

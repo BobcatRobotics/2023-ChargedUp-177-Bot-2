@@ -46,7 +46,7 @@ public class SetArm extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    SmartDashboard.putBoolean("arm interrupted", interrupted);
+    //SmartDashboard.putBoolean("arm interrupted", interrupted);
     //arm.setClosedLoopSpeed(0);
     if (arm.getEncoderPos() > 50) {
       arm.setSpeed0ArbitraryFeedForward();

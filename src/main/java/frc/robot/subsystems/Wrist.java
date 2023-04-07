@@ -105,7 +105,7 @@ public class Wrist extends SubsystemBase {
   }
 
   public boolean isAtCurrentLimit() {
-    return motor.getStatorCurrent() >= 20;
+    return motor.getStatorCurrent() >= 25;
   }
 
   public double getAbsEncoderPos() {
@@ -157,6 +157,7 @@ public class Wrist extends SubsystemBase {
     if (wristEncoder.getPosition() <= 5 && wristEncoder.getPosition() >= 0) {
       wristEncoder.setPosition(360);
     }
+    //SmartDashboard.putNumber("wrist current", motor.getStatorCurrent());
     if (isAtCurrentLimit()) {
       motor.set(ControlMode.PercentOutput, 0);
     }

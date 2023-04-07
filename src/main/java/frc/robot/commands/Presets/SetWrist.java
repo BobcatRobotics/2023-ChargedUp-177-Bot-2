@@ -35,14 +35,14 @@ public class SetWrist extends CommandBase {
   @Override
   public void execute() {
     w.setState(pos);
-    SmartDashboard.putNumber("while command running, wrist pid error", w.getClosedLoopError());
+    //SmartDashboard.putNumber("while command running, wrist pid error", w.getClosedLoopError());
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    SmartDashboard.putBoolean("wrist interrupted", interrupted);
-    SmartDashboard.putNumber("wrist pid error",w.getClosedLoopError());
+    //SmartDashboard.putBoolean("wrist interrupted", interrupted);
+    //SmartDashboard.putNumber("wrist pid error",w.getClosedLoopError());
     w.setSpeed0ArbitraryFeedForward();
   }
 

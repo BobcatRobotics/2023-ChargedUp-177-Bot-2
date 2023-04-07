@@ -70,6 +70,6 @@ public class BlinkinLEDs extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("led state",leds.get());
+    //SmartDashboard.putNumber("led state",leds.get());
   }
 }

@@ -228,6 +228,10 @@ public class RobotContainer {
             new TopSuck(m_Elevator, m_Arm, m_Intake, m_Wrist),
             new IntakeInConstantly(m_Intake)
         ));
+
+        // Potential fix if starting config fails to properly stow
+        // Constants.AutoConstants.eventMap.put("startingConfig", new ParallelDeadlineGroup(new StartingConfig(m_Elevator, m_Arm, m_Wrist), new SequentialCommandGroup(new WaitCommand(2.5), new StartingConfig(m_Elevator, m_Arm, m_Wrist))));
+        
         Constants.AutoConstants.eventMap.put("startingConfig", new StartingConfig(m_Elevator, m_Arm, m_Wrist));
         Constants.AutoConstants.eventMap.put("autoStowe", new autoCarry(m_Wrist, m_Arm));
         // Constants.AutoConstants.eventMap.put("flickWrist", new InstantCommand(m_Wrist::wristSolenoidON));
@@ -291,9 +295,9 @@ public class RobotContainer {
         Constants.AutoConstants.eventMap.put("finalOuttake", new WaitUntilTime(14.5, new IntakeOutFullSpeed(m_Intake)));
     }
 
-    public void printHashMap() {
-        SmartDashboard.putString("eventMap", Constants.AutoConstants.eventMap.toString());
-    }
+    // public void printHashMap() {
+    //     SmartDashboard.putString("eventMap", Constants.AutoConstants.eventMap.toString());
+    // }
 
     public void zeroGyro() {
         s_Swerve.zeroGyro();
@@ -310,10 +314,10 @@ public class RobotContainer {
         return  ((Math.atan2(rotate.getRawAxis(Joystick.AxisType.kY.value), rotate.getRawAxis(Joystick.AxisType.kX.value)) * 180 / Math.PI)+360)%360;
     }
 
-    public void displayGyro(){
-        SmartDashboard.putNumber("pitch", s_Swerve.getPitch());
-        SmartDashboard.putNumber("yaw", s_Swerve.getRoll());
-    }
+    // public void displayGyro(){
+    //     SmartDashboard.putNumber("pitch", s_Swerve.getPitch());
+    //     SmartDashboard.putNumber("yaw", s_Swerve.getRoll());
+    // }
 
    
     public Command getDefaultCommand(){
@@ -333,7 +337,7 @@ public class RobotContainer {
          * it in the cancelDefaultTeleop method.
          */
         // Configure the button bindings
-        CameraServer.startAutomaticCapture(0);
+        // CameraServer.startAutomaticCapture(0);
         setUpEventMap();
         NoMove1HighCone = buildAuto(PathPlanner.loadPathGroup("NoMoveScore1HighCone", new PathConstraints(0, 0)));
         OneCenterBalance = buildAuto(PathPlanner.loadPathGroup("1CenterBalance", new PathConstraints(2, 2)));

@@ -164,7 +164,7 @@ public class Robot extends TimedRobot {
       m_robotContainer.zeroGyro();
     }
 
-    SmartDashboard.putNumber("PID Value", 0);
+    //SmartDashboard.putNumber("PID Value", 0);
     // m_robotContainer.resetToAbsolute();
     m_robotContainer.scheduleDefaultTeleop();
   }

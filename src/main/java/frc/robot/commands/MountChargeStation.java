@@ -59,13 +59,13 @@ public class MountChargeStation extends CommandBase {
     
     
       if((pitch > stage1Threshold)){
-        SmartDashboard.putString("ChargeStation", "stage 1: " + pitch);
+        //SmartDashboard.putString("ChargeStation", "stage 1: " + pitch);
         stage = 2;
         xSpeed = -1.25;
     
       }
       else if(stage == 2 && (pitch < stage2Threshold)){
-        SmartDashboard.putString("ChargeStation", "stage 2: " + pitch);
+        //SmartDashboard.putString("ChargeStation", "stage 2: " + pitch);
         finished = true;
       }
       
@@ -76,7 +76,7 @@ public class MountChargeStation extends CommandBase {
   public void end(boolean interrupted) {
     swerve.drive(new Translation2d(0, 0), 0, true, true);
     
-    SmartDashboard.putString("ChargeStation", "Finished: " + pitch);
+    //SmartDashboard.putString("ChargeStation", "Finished: " + pitch);
   }
 
   // Returns true when the command should end.

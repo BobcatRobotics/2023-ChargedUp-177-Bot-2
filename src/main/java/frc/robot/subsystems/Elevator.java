@@ -122,22 +122,22 @@ public class Elevator extends SubsystemBase {
       elevatorMotor.set(ControlMode.MotionMagic, ElevatorConstants.bottomPos);
       // holdPosValue = ElevatorConstants.pos0;
       // holdPosition();
-      SmartDashboard.putString("elevator error", "State: " + state + ", Error: " + getPIDError());
+      // SmartDashboard.putString("elevator error", "State: " + state + ", Error: " + getPIDError());
     } else if (state == 1) {
       elevatorMotor.set(ControlMode.MotionMagic, ElevatorConstants.midPos);
       // holdPosValue = ElevatorConstants.pos1;
       // holdPosition();
-      SmartDashboard.putString("elevator error", "State: " + state + ", Error: " + getPIDError());
+      // SmartDashboard.putString("elevator error", "State: " + state + ", Error: " + getPIDError());
     } else if (state == 2) {
       elevatorMotor.set(ControlMode.MotionMagic, ElevatorConstants.highPos);
       // holdPosValue = ElevatorConstants.pos2;
       // holdPosition();
-      SmartDashboard.putString("elevator error", "State: " + state + ", Error: " + getPIDError());
+      // SmartDashboard.putString("elevator error", "State: " + state + ", Error: " + getPIDError());
     } else if (state == 3) {
       elevatorMotor.set(ControlMode.MotionMagic, ElevatorConstants.shelfPos);
       // holdPosValue = ElevatorConstants.pos2;
       // holdPosition();
-      SmartDashboard.putString("elevator error", "State: " + state + ", Error: " + getPIDError());
+      // SmartDashboard.putString("elevator error", "State: " + state + ", Error: " + getPIDError());
     }
   }
 
@@ -162,16 +162,16 @@ public class Elevator extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // if (getBottomLimits()){
-    //   resetEncoderPos();
+    if (getBottomLimits()){
+      resetEncoderPos();
     //   holdPosValue = 0;
     //   //elevatorMotor.set(ControlMode.PercentOutput, 0, DemandType.ArbitraryFeedForward, 0.06);
     //   elevatorMotor.set(ControlMode.PercentOutput, 0);
-    // }
+    }
     // This method will be called once per scheduler run
     SmartDashboard.putBoolean("bottom limits", getBottomLimits());
     SmartDashboard.putBoolean("top limits", topLimitSwitch());
     SmartDashboard.putNumber("elevator encoder", getEncoder());
-    SmartDashboard.putBoolean("top limits", topLimitSwitch());
+    //SmartDashboard.putBoolean("top limits", topLimitSwitch());
   }
 }

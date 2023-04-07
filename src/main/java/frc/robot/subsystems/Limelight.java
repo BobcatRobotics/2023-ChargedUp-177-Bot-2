@@ -49,7 +49,7 @@ public class Limelight extends SubsystemBase {
       tl = table.getEntry("tl");
       cl = table.getEntry("cl");
     } catch (Exception e) {
-      SmartDashboard.putBoolean("couldn't get nt entries", true);
+      //SmartDashboard.putBoolean("couldn't get nt entries", true);
     }
     initialized = true;
   }
@@ -81,7 +81,7 @@ public class Limelight extends SubsystemBase {
     } catch (Exception e) {
       return;
     }
-    SmartDashboard.putString("botpose nt", botpose.toString());
+    //SmartDashboard.putString("botpose nt", botpose.toString());
   }
 
   public NetworkTableEntry getEntry(String str) {
@@ -94,7 +94,7 @@ public class Limelight extends SubsystemBase {
 
   public boolean hasTargets() {
     boolean hits = false;
-    SmartDashboard.putBoolean("isInitialized", isInitialized());
+    //SmartDashboard.putBoolean("isInitialized", isInitialized());
     if (isInitialized()) {
       hits = (getEntry("tv").getDouble(0.0) == 1.0);
     }
@@ -103,7 +103,7 @@ public class Limelight extends SubsystemBase {
 
   public double[] botPose() {
     double[] botPose = null;
-    SmartDashboard.putBoolean("Limelight Inititialized", isInitialized());
+    //SmartDashboard.putBoolean("Limelight Inititialized", isInitialized());
     if (isInitialized()) {
       botPose = botpose.getDoubleArray(new double[7]);
     }

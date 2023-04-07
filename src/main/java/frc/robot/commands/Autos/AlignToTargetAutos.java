@@ -51,15 +51,15 @@ public class AlignToTargetAutos extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    SmartDashboard.putBoolean("Executing", true);
-    SmartDashboard.putBoolean("HasTarget", lime.hasTargets());
-    SmartDashboard.putBoolean("has targets",lime.hasTargets());
-    SmartDashboard.putBoolean("align finished", isFinished());
+    // SmartDashboard.putBoolean("Executing", true);
+    // SmartDashboard.putBoolean("HasTarget", lime.hasTargets());
+    // SmartDashboard.putBoolean("has targets",lime.hasTargets());
+    // SmartDashboard.putBoolean("align finished", isFinished());
     if (lime.hasTargets() & !isFinished()) {
       xOffset = lime.x();
       calc = pidController.calculate(xOffset);
-      SmartDashboard.putNumber("xOffset", xOffset);
-      SmartDashboard.putNumber("PID Value", calc);
+      // SmartDashboard.putNumber("xOffset", xOffset);
+      // SmartDashboard.putNumber("PID Value", calc);
       drivetrain.drive(new Translation2d(), calc, true, true);
     } else {
       end(false);
@@ -70,7 +70,7 @@ public class AlignToTargetAutos extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     drivetrain.drive(new Translation2d(), 0, true, true);
-    SmartDashboard.putBoolean("Executing", false);
+    //SmartDashboard.putBoolean("Executing", false);
   }
 
   // Returns true when the command should end.

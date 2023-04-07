@@ -75,7 +75,7 @@ public class SetElevator extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    SmartDashboard.putBoolean("setElevator ended", true);
+    //SmartDashboard.putBoolean("setElevator ended", true);
     if (elevator.getBottomLimits()){
       elevator.resetEncoderPos();
       elevator.elevate(0);
@@ -98,7 +98,7 @@ public class SetElevator extends CommandBase {
     // return false;
     //return elevator.isAtSetpoint();
     if (elevator.getEncoderPos() >= pos-150 && elevator.getEncoderPos() <= pos+150) {
-      SmartDashboard.putBoolean("setElevator finished", true);
+      //SmartDashboard.putBoolean("setElevator finished", true);
       return true;
     }
     return false;
