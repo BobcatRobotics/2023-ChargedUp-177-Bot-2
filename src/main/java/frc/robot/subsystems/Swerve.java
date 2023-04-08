@@ -205,11 +205,11 @@ public class Swerve extends SubsystemBase {
             resetModulesToAbsolute();
         }
 
-        // for(SwerveModule mod : mSwerveMods){
-        //     SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
+        for(SwerveModule mod : mSwerveMods){
+            SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Cancoder", mod.getCanCoder().getDegrees());
         //     SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Integrated", mod.getDistanceMeters());
         //     SmartDashboard.putNumber("Mod " + mod.moduleNumber + " Velocity", mod.getState().speedMetersPerSecond); 
-        // }
+        }
         
         // SmartDashboard.putNumber("swerveOdometry Pose X Meters", poseEstimator.getCurrentPose().getX());
         // SmartDashboard.putNumber("swerveOdometry Pose Y Meters", poseEstimator.getCurrentPose().getY());
