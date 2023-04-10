@@ -151,9 +151,9 @@ public class PoseEstimator extends SubsystemBase {
       Pose2d pose2d = new Pose2d(visionPose.getTranslation().toTranslation2d(), rotationSupplier.get());
       
       //4.5.23 DCMP Load-In bus fix, TODO: needs to be checkd! 
-      if(DriverStation.getAlliance().equals(Alliance.Red)){
-        pose2d = new Pose2d(pose2d.getX(), FieldConstants.width - pose2d.getY(), pose2d.getRotation());
-      }
+      // if(DriverStation.getAlliance().equals(Alliance.Red)){
+      //   pose2d = new Pose2d(pose2d.getX(), FieldConstants.width - pose2d.getY(), pose2d.getRotation());
+      // }
      
       double distance = limelight.targetDist();
       double timeStampSeconds =  Timer.getFPGATimestamp() - (limelight.tl()/1000.0) - (limelight.cl()/1000.0);

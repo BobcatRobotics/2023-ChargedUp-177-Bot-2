@@ -47,6 +47,7 @@ import frc.robot.commands.Autos.AlignToTargetAutos;
 import frc.robot.commands.Autos.BalanceChargeStation;
 import frc.robot.commands.Autos.MountAndBalance;
 import frc.robot.commands.Autos.MountAndBalanceInverse;
+import frc.robot.commands.Autos.MountAndBalanceInverseScore;
 import frc.robot.commands.Autos.AutoPresets.ScoreCubeHighAutos;
 import frc.robot.commands.LEDs.Blink;
 import frc.robot.commands.LEDs.BlinkPWM;
@@ -180,6 +181,7 @@ public class RobotContainer {
     public static Command RedTwoPieceDirty = null;
     public static Command CenterTwoBalance = null;
     public static Command ThreePieceDirty = null;
+    public static Command TwoPieceCenterBalance = null;
 
     public void setUpAutos() {
         // Sendable Chooser Setup
@@ -217,6 +219,7 @@ public class RobotContainer {
         autoChooser.addOption("Center1Balance", OneCenterBalance);
         autoChooser.addOption("Center2Balance", CenterTwoBalance);
         autoChooser.addOption("HolyTrinity", ThreePieceDirty);
+        autoChooser.addOption("Center2Balance", TwoPieceCenterBalance);
         // autoChooser.addOption("2CleanHighConeBalance", buildAuto(PathPlanner.loadPathGroup("2CleanHighConeBalance", new PathConstraints(3.0, 3.0))));
         // autoChooser.addOption("PathPlanner Test w/ Events", new SequentialCommandGroup(Swerve.followTrajectoryCommand(PathPlanner.loadPath("New Path", new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)), true)));
         // autoChooser.addOption("charge station", chargestation);
@@ -278,6 +281,7 @@ public class RobotContainer {
         );
         Constants.AutoConstants.eventMap.put("driveBackInverse", new DriveBackInverse(s_Swerve));
         Constants.AutoConstants.eventMap.put("chargeStationInverse", new MountAndBalanceInverse(s_Swerve));
+        Constants.AutoConstants.eventMap.put("chargeStationInverseScore", new MountAndBalanceInverseScore(s_Swerve, m_Elevator, m_Arm, m_Wrist, m_Intake));
         Constants.AutoConstants.eventMap.put("balanceChargeStationInverse", new BalanceChargeStation(s_Swerve, true, true));
         // First "clean" = grid
         // Second "clean" = column
@@ -307,6 +311,10 @@ public class RobotContainer {
             new GrabFromHPChute(m_Elevator, m_Arm, m_Wrist),
             new ParallelCommandGroup(new WaitUntilTime(14.5, new IntakeOutFullSpeed(m_Intake)), new IntakeOutFullSpeed(m_Intake))
         ));
+        Constants.AutoConstants.eventMap.put("birdyScore2", new ParallelCommandGroup(new MountAndBalanceInverse(s_Swerve), new SequentialCommandGroup(
+            new GrabFromHPChute(m_Elevator, m_Arm, m_Wrist),
+            new WaitUntilTime(14.5, new IntakeOutFullSpeed(m_Intake))
+        )));
     }
 
     // public void printHashMap() {
@@ -361,6 +369,7 @@ public class RobotContainer {
         RedTwoPieceDirty = buildAuto(PathPlanner.loadPathGroup("Red2PieceDirty", new PathConstraints(2.0, 2.0)));
         CenterTwoBalance = buildAuto(PathPlanner.loadPathGroup("2CenterBalance", new PathConstraints(2.0, 2.0)));
         ThreePieceDirty = buildAuto(PathPlanner.loadPathGroup("BlueDirt3", new PathConstraints(2.5, 2.5)));
+        TwoPieceCenterBalance = buildAuto(PathPlanner.loadPathGroup("1.5CenterBalance", new PathConstraints(2.5, 2.5)));
         m_LimelightFront.setAlliance(DriverStation.getAlliance());
         m_LimelightBack.setAlliance(DriverStation.getAlliance());
         configureButtonBindings();

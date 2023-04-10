@@ -95,9 +95,9 @@ public class BalanceChargeStation extends CommandBase {
       true
       );
     }
-    // SmartDashboard.putNumber("charge error", calc);
-    // SmartDashboard.putBoolean(" charge Setpoint", pid.atSetpoint());    
-    // SmartDashboard.putNumber("charge output", throttle(calc/sensitivity)*Constants.Swerve.maxSpeed);
+    SmartDashboard.putNumber("charge error", calc);
+    SmartDashboard.putBoolean(" charge Setpoint", pid.atSetpoint());    
+    SmartDashboard.putNumber("charge output", throttle(calc/sensitivity)*Constants.Swerve.maxSpeed);
     
 /* 
     if (!pid.atSetpoint()) {

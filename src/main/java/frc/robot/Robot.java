@@ -157,7 +157,8 @@ public class Robot extends TimedRobot {
       RobotContainer.getAutoChooserResult().equals(RobotContainer.RedClean2Path) ||
       RobotContainer.getAutoChooserResult().equals(RobotContainer.RedTwoPieceDirty) ||
       RobotContainer.getAutoChooserResult().equals(RobotContainer.BlueClean2Path) ||
-      RobotContainer.getAutoChooserResult().equals(RobotContainer.BlueTwoPieceDirty)
+      RobotContainer.getAutoChooserResult().equals(RobotContainer.BlueTwoPieceDirty) ||
+      RobotContainer.getAutoChooserResult().equals(RobotContainer.ThreePieceDirty)
     )) {
       m_robotContainer.reverseZeroGyro();
     } else {
