@@ -9,6 +9,7 @@ import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.IntakeOutFullSpeed;
 import frc.robot.commands.MountChargeStationInverse;
 import frc.robot.commands.MountChargeStationInverseScore;
+import frc.robot.commands.Presets.StartingConfig;
 import frc.robot.commands.Presets.Procedures.GrabFromHPChute;
 import frc.robot.subsystems.Arm;
 import frc.robot.subsystems.Elevator;
@@ -39,7 +40,8 @@ public class MountAndBalanceInverseScore extends SequentialCommandGroup {
       new MountChargeStationInverseScore(s_Swerve),
       new SequentialCommandGroup(
             new GrabFromHPChute(elevator, arm, wrist),
-            new IntakeOutFullSpeed(intake)
+            new IntakeOutFullSpeed(intake),
+            new StartingConfig(elevator, arm, wrist)
       ),
       new BalanceChargeStation(s_Swerve, true, true)
     );
