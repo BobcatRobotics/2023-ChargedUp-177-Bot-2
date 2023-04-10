@@ -137,12 +137,12 @@ public final class Constants {
         public static final double angleKF = chosenModule.angleKF;
 
         /* Drive Motor PID Values */
-        public static final double driveKP = 0.70; //0.70; //TODO: This must be tuned to specific robot 0.45
+        public static final double driveKP = 0.1; //0.70; //TODO: This must be tuned to specific robot 0.45
         public static final double driveKI = 0.0;
         public static final double driveKD = 0.0;
         public static final double driveKF = 0.0;
 
-        /* Drive Motor Chmaracterization Values 
+        /* Drive Motor Chmaracterization Values
          * Divide SYSID values by 12 to convert from volts to percent output for CTRE */
         public static final double driveKS = (0.15565 / 12); // TUNED
         public static final double driveKV = (2.0206 / 12);
@@ -150,9 +150,9 @@ public final class Constants {
 
         /* Swerve Profiling Values */
         /** Meters per Second */
-        public static final double maxSpeed = 5.5; //TODO: This must be tuned to specific robot
+        public static final double maxSpeed = 4.5; //TODO: This must be tuned to specific robot
         /** Radians per Second */
-        public static final double maxAngularVelocity = 10.0; //TODO: This must be tuned to specific robot
+        public static final double maxAngularVelocity = Math.PI; //TODO: This must be tuned to specific robot
 
         /* Neutral Modes */
         public static final NeutralMode angleNeutralMode = NeutralMode.Coast;
@@ -165,7 +165,7 @@ public final class Constants {
             public static final int driveMotorID = 1;
             public static final int angleMotorID = 2;
             public static final int canCoderID = 1;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(110.654296875);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(108.80859375);
             
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
@@ -177,7 +177,7 @@ public final class Constants {
             public static final int driveMotorID = 3;
             public static final int angleMotorID = 4;
             public static final int canCoderID = 2;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(215.15625);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(213.310546875);
 
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
@@ -189,7 +189,7 @@ public final class Constants {
             public static final int driveMotorID = 5;
             public static final int angleMotorID = 6;
             public static final int canCoderID = 3;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(203.37890625);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(203.02734375);
 
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
@@ -201,14 +201,14 @@ public final class Constants {
             public static final int driveMotorID = 7;
             public static final int angleMotorID = 8;
             public static final int canCoderID = 4;
-            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(52.646484375);
+            public static final Rotation2d angleOffset = Rotation2d.fromDegrees(52.20703125);
             public static final SwerveModuleConstants constants = 
                 new SwerveModuleConstants(driveMotorID, angleMotorID, canCoderID, angleOffset);
         }
     }
 
-    public static final class AutoConstants { //TODO: The below constants are used in the example auto, and must be tuned to specific robot
-        public static final double kMaxSpeedMetersPerSecond = 4;
+    public static final class AutoConstants { //TODO: Tune drivekP first with kPX, kPY, and kPTheta as 0. Then tune the others.
+        public static final double kMaxSpeedMetersPerSecond = 4.5;
         public static final double kMaxAccelerationMetersPerSecondSquared = 3;
         public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
         public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
@@ -217,9 +217,9 @@ public final class Constants {
         // public static final double kPYController = 2.3;
         // public static final double kPThetaController = 3.6;
 
-        public static final double kPXController = 2.5; // 2.5
-        public static final double kPYController = 2.5;
-        public static final double kPThetaController = 3.4; // 3.3
+        public static final double kPXController = 1; // 2.5
+        public static final double kPYController = 1; // 2.5
+        public static final double kPThetaController = 2; // 3.4
 
         public static HashMap<String, Command> eventMap = new HashMap<>();
     
@@ -334,6 +334,7 @@ public final class Constants {
         public static final double topSuck = 296;
         public static final double autoCarry = 322;
         public static final double wristConditionForElevatorMovement = 263.58;
+        public static final double cubeLaunch = 266;
     }  
 
 }

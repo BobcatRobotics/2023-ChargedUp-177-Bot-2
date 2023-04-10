@@ -16,6 +16,7 @@ import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
+import frc.robot.Constants.FieldConstants;
 import frc.robot.subsystems.Swerve;
 
 public class DriveToPoseCommand extends CommandBase {
@@ -39,14 +40,14 @@ public class DriveToPoseCommand extends CommandBase {
   private final Swerve swerve;
   private final Supplier<Pose2d> poseProvider;
   private final Supplier<Pose2d> goalPoseSupplier;
-  //private final boolean useAllianceColor;
+  private final boolean useAllianceColor;
 
-  public DriveToPoseCommand(Swerve swerve, Supplier<Pose2d> goalPoseSupplier, Supplier<Pose2d> poseProvider) {
+  public DriveToPoseCommand(Swerve swerve, Supplier<Pose2d> goalPoseSupplier, Supplier<Pose2d> poseProvider, boolean useAllianceColor) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.swerve = swerve;
     this.goalPoseSupplier = goalPoseSupplier;
     this.poseProvider = poseProvider;
-    //this.useAllianceColor = useAllianceColor;
+    this.useAllianceColor = useAllianceColor;
 
     xController = new ProfiledPIDController(Constants.PoseEstimation.kPXController, 0, 0, DEFAULT_XY_CONSTRAINTS);
     yController = new ProfiledPIDController(Constants.PoseEstimation.kPYController, 0, 0, DEFAULT_XY_CONSTRAINTS);
@@ -66,11 +67,11 @@ public class DriveToPoseCommand extends CommandBase {
     swerve.drive(new Translation2d(), 0, true, false);
     resetPIDControllers();
     Pose2d pose = goalPoseSupplier.get();
-    // if (useAllianceColor && DriverStation.getAlliance() == DriverStation.Alliance.Red) {
-    //   Translation2d transformedTranslation = new Translation2d(pose.getX(), 8.0137 - pose.getY());
-    //   Rotation2d transformedHeading = pose.getRotation().times(-1);
-    //   pose = new Pose2d(transformedTranslation, transformedHeading);
-    // }
+    if (useAllianceColor && DriverStation.getAlliance() == DriverStation.Alliance.Red) {
+      Translation2d transformedTranslation = new Translation2d(pose.getX(), FieldConstants.width - pose.getY());
+      Rotation2d transformedHeading = pose.getRotation();
+      pose = new Pose2d(transformedTranslation, transformedHeading);
+    }
     xController.setGoal(pose.getX());
     yController.setGoal(pose.getY());
     thetaController.setGoal(pose.getRotation().getRadians());

@@ -37,7 +37,7 @@ public class MidMid extends SequentialCommandGroup {
     this.sPose = sPose;  
     
     addCommands(
-      new DriveToPoseCommand(s, this::getGrid, sPose::getCurrentPose),
+      new DriveToPoseCommand(s, this::getGrid, sPose::getCurrentPose, true),
       new ScoreMid(e, a, w)
     );
   }

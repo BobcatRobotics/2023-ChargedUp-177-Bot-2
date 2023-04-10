@@ -50,6 +50,7 @@ import frc.robot.commands.Autos.MountAndBalanceInverse;
 import frc.robot.commands.Autos.AutoPresets.ScoreCubeHighAutos;
 import frc.robot.commands.LEDs.Blink;
 import frc.robot.commands.LEDs.BlinkPWM;
+import frc.robot.commands.Presets.IntakeIn;
 import frc.robot.commands.Presets.IntakeInConstantly;
 import frc.robot.commands.Presets.RetractArm;
 import frc.robot.commands.Presets.RunIntake;
@@ -66,6 +67,7 @@ import frc.robot.commands.Presets.Procedures.ScoreMid;
 import frc.robot.commands.Presets.Procedures.TopSuck;
 import frc.robot.commands.Presets.Procedures.VerticalCone;
 import frc.robot.commands.Presets.Procedures.autoCarry;
+import frc.robot.commands.Presets.Procedures.falcon5;
 import frc.robot.subsystems.*;
 //import frc.robot.autos.RedHighCone6PickupBalance;
 import frc.robot.subsystems.Limelight;
@@ -177,6 +179,7 @@ public class RobotContainer {
     public static Command BlueTwoPieceDirty = null;
     public static Command RedTwoPieceDirty = null;
     public static Command CenterTwoBalance = null;
+    public static Command ThreePieceDirty = null;
 
     public void setUpAutos() {
         // Sendable Chooser Setup
@@ -213,6 +216,7 @@ public class RobotContainer {
         // autoChooser.addOption("Center1.5Balance", buildAuto(PathPlanner.loadPathGroup("1.5CenterBalance", new PathConstraints(3.5, 3.0))));
         autoChooser.addOption("Center1Balance", OneCenterBalance);
         autoChooser.addOption("Center2Balance", CenterTwoBalance);
+        autoChooser.addOption("HolyTrinity", ThreePieceDirty);
         // autoChooser.addOption("2CleanHighConeBalance", buildAuto(PathPlanner.loadPathGroup("2CleanHighConeBalance", new PathConstraints(3.0, 3.0))));
         // autoChooser.addOption("PathPlanner Test w/ Events", new SequentialCommandGroup(Swerve.followTrajectoryCommand(PathPlanner.loadPath("New Path", new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)), true)));
         // autoChooser.addOption("charge station", chargestation);
@@ -231,7 +235,9 @@ public class RobotContainer {
 
         // Potential fix if starting config fails to properly stow
         // Constants.AutoConstants.eventMap.put("startingConfig", new ParallelDeadlineGroup(new StartingConfig(m_Elevator, m_Arm, m_Wrist), new SequentialCommandGroup(new WaitCommand(2.5), new StartingConfig(m_Elevator, m_Arm, m_Wrist))));
-        
+        Constants.AutoConstants.eventMap.put("conePoop", new IntakeInConstantly(m_Intake));
+        Constants.AutoConstants.eventMap.put("stopIntake", new intakeStop(m_Intake));
+
         Constants.AutoConstants.eventMap.put("startingConfig", new StartingConfig(m_Elevator, m_Arm, m_Wrist));
         Constants.AutoConstants.eventMap.put("autoStowe", new autoCarry(m_Wrist, m_Arm));
         // Constants.AutoConstants.eventMap.put("flickWrist", new InstantCommand(m_Wrist::wristSolenoidON));
@@ -250,6 +256,7 @@ public class RobotContainer {
             new StartingConfig(m_Elevator, m_Arm, m_Wrist)
             )
         );
+        Constants.AutoConstants.eventMap.put("falcon5", new falcon5(m_Arm, m_Wrist));
         Constants.AutoConstants.eventMap.put("scoreConeHigh", new SequentialCommandGroup(
             // new InstantCommand(m_Wrist::wristSolenoidON),
             new ParallelRaceGroup(new ScoreHigh(m_Elevator, m_Arm, m_Intake, m_Wrist), new WaitCommand(2)), 
@@ -275,24 +282,31 @@ public class RobotContainer {
         // First "clean" = grid
         // Second "clean" = column
         Constants.AutoConstants.eventMap.put("highCleanClean", new SequentialCommandGroup(
-            new DriveToPoseCommand(s_Swerve, () -> PoseEstimation.grid3[2], () -> swervePoseEstimator.getCurrentPose()),
+            new DriveToPoseCommand(s_Swerve, () -> PoseEstimation.grid3[2], () -> swervePoseEstimator.getCurrentPose(), true),
             new ParallelRaceGroup(new ScoreHigh(m_Elevator, m_Arm, m_Intake, m_Wrist), new WaitCommand(2)), 
             new IntakeOutFullSpeed(m_Intake), 
             new StartingConfig(m_Elevator, m_Arm, m_Wrist)
         ));
         Constants.AutoConstants.eventMap.put("highCleanMid", new ParallelDeadlineGroup(new WaitUntilTime(14.5, new IntakeOutFullSpeed(m_Intake)),new SequentialCommandGroup(
-            new DriveToPoseCommand(s_Swerve, () -> PoseEstimation.grid3[1], () -> swervePoseEstimator.getCurrentPose()),
+            new DriveToPoseCommand(s_Swerve, () -> PoseEstimation.grid3[1], () -> swervePoseEstimator.getCurrentPose(), true),
             new ParallelRaceGroup(new ScoreHigh(m_Elevator, m_Arm, m_Intake, m_Wrist), new WaitCommand(2)), 
             new IntakeOutFullSpeed(m_Intake), 
             new StartingConfig(m_Elevator, m_Arm, m_Wrist)))
         );
         Constants.AutoConstants.eventMap.put("highDirtyMid", new ParallelDeadlineGroup(new WaitUntilTime(14.5, new IntakeOutFullSpeed(m_Intake)),new SequentialCommandGroup(
-            new DriveToPoseCommand(s_Swerve, () -> PoseEstimation.grid1[1], () -> swervePoseEstimator.getCurrentPose()),
+            new DriveToPoseCommand(s_Swerve, () -> PoseEstimation.grid1[1], () -> swervePoseEstimator.getCurrentPose(), true),
             new ParallelRaceGroup(new ScoreHigh(m_Elevator, m_Arm, m_Intake, m_Wrist), new WaitCommand(2)), 
             new IntakeOutFullSpeed(m_Intake), 
             new StartingConfig(m_Elevator, m_Arm, m_Wrist)))
         );
+        Constants.AutoConstants.eventMap.put("finalScoreHigh", 
+             new ParallelDeadlineGroup ( new WaitUntilTime(14, new IntakeOutFullSpeed(m_Intake)), new SequentialCommandGroup(new ScoreHigh(m_Elevator, m_Arm, m_Intake, m_Wrist), new IntakeOutFullSpeed(m_Intake))
+        ));
         Constants.AutoConstants.eventMap.put("finalOuttake", new WaitUntilTime(14.5, new IntakeOutFullSpeed(m_Intake)));
+        Constants.AutoConstants.eventMap.put("birdyScore", new SequentialCommandGroup(
+            new GrabFromHPChute(m_Elevator, m_Arm, m_Wrist),
+            new ParallelCommandGroup(new WaitUntilTime(14.5, new IntakeOutFullSpeed(m_Intake)), new IntakeOutFullSpeed(m_Intake))
+        ));
     }
 
     // public void printHashMap() {
@@ -343,10 +357,10 @@ public class RobotContainer {
         OneCenterBalance = buildAuto(PathPlanner.loadPathGroup("1CenterBalance", new PathConstraints(2, 2)));
         RedClean2Path = buildAuto(PathPlanner.loadPathGroup("RedClean2", new PathConstraints(2.0, 2.0)));
         BlueClean2Path = buildAuto(PathPlanner.loadPathGroup("BlueClean2", new PathConstraints(2.0, 2.0)));
-        BlueTwoPieceDirty = buildAuto(PathPlanner.loadPathGroup("Blue2PieceDirty", new PathConstraints(2.0, 2.0)));
+        BlueTwoPieceDirty = buildAuto(PathPlanner.loadPathGroup("Blue2PieceDirty", new PathConstraints(2.5, 2.5)));
         RedTwoPieceDirty = buildAuto(PathPlanner.loadPathGroup("Red2PieceDirty", new PathConstraints(2.0, 2.0)));
         CenterTwoBalance = buildAuto(PathPlanner.loadPathGroup("2CenterBalance", new PathConstraints(2.0, 2.0)));
-
+        ThreePieceDirty = buildAuto(PathPlanner.loadPathGroup("BlueDirt3", new PathConstraints(2.5, 2.5)));
         m_LimelightFront.setAlliance(DriverStation.getAlliance());
         m_LimelightBack.setAlliance(DriverStation.getAlliance());
         configureButtonBindings();
@@ -448,7 +462,7 @@ public class RobotContainer {
 
 
     public Command driveToPose() {
-        return new DriveToPoseCommand(s_Swerve, this::closestGrid, swervePoseEstimator::getCurrentPose);
+        return new DriveToPoseCommand(s_Swerve, this::closestGrid, swervePoseEstimator::getCurrentPose, true);
     }
 
     public Pose2d getSelectedNode() {

@@ -42,7 +42,7 @@ public class TopRight extends SequentialCommandGroup {
   
     
     addCommands(
-      new DriveToPoseCommand(s, this::getGrid, sPose::getCurrentPose),
+      new DriveToPoseCommand(s, this::getGrid, sPose::getCurrentPose, true),
       new ScoreHigh(e, a, i, w)
     );
   }
