@@ -314,6 +314,10 @@ public final class Constants {
         public static int elevatorState = 0;
     }
     
+    public static final class IntakeConstants {
+        public static final double gamepieceThreshold = 0.0;
+    }
+
     public static final class LEDConstants {
         public static final int ledPort = 0; // placeholder
         // For use when leds are connected to the rio with pwm

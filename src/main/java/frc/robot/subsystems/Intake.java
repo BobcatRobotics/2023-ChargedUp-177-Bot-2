@@ -12,6 +12,7 @@ import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.Constants.IntakeConstants;
 import frc.robot.Util.MathUtils;
 
 public class Intake extends SubsystemBase {
@@ -56,6 +57,10 @@ public class Intake extends SubsystemBase {
 
   public double getCurrent() {
     return motor.getStatorCurrent();
+  }
+
+  public boolean hasPiece() {
+    return getCurrent() >= IntakeConstants.gamepieceThreshold;
   }
 
   public void runIntakePercent(double speed){
