@@ -185,19 +185,44 @@ public class RobotContainer {
 
     public void setUpAutos() {
         // Sendable Chooser Setup
+        //autoChooser.setDefaultOption("Red High Cone 6 Pickup & Balance", redHighCone6PickupBalance);
         setUpEventMap();
+        //pathPlannerTest = new PathPlannerTest();
+        //autoChooser.setDefaultOption("1HighDirtyBalance", buildAuto(PathPlanner.loadPathGroup("Score1HighCubeRightBalance", new PathConstraints(4.5, 3))));
+        //autoChooser.addOption("1HybridCleanBalance", buildAuto(PathPlanner.loadPathGroup("Score1LeftBalance", new PathConstraints(4, 3))));
+        //autoChooser.addOption("CleanBalance", buildAuto(PathPlanner.loadPathGroup("LeftBalance", new PathConstraints(4, 3))));
+        //autoChooser.addOption("DirtyBalance", buildAuto(PathPlanner.loadPathGroup("RightBalance", new PathConstraints(4, 3))));
+        // autoChooser.addOption("CenterBalance", PathPlanner.loadPathGroup("CenterBalance", new PathConstraints(4, 3)));
+        // autoChooser.addOption("Score1CenterBalance", PathPlanner.loadPathGroup("Score1CenterBalance", new PathConstraints(4, 3)));
+        //autoChooser.addOption("1HybridDirtyBalance", buildAuto(PathPlanner.loadPathGroup("Score1RightBalance", new PathConstraints(4, 3))));
+        //autoChooser.addOption("1HighCleanBalance", buildAuto(PathPlanner.loadPathGroup("Score1HighCubeLeftBalance", new PathConstraints(4.5, 3))));
+        // autoChooser.addOption("Score1HighCubeCenterBalance", PathPlanner.loadPathGroup("Score1HighCubeCenterBalance", new PathConstraints(4.5, 3)));
+        // autoChooser.addOption("Score1HighCubeCleanNoBalance", PathPlanner.loadPathGroup("ScoreHighCubeCleanNoBalance", new PathConstraints(4.5, 3)));
+        //autoChooser.addOption("1HighDirtyNoBalance", buildAuto(PathPlanner.loadPathGroup("ScoreHighCubeDirtyNoBalance", new PathConstraints(4.5, 3))));
+        //autoChooser.addOption("NoMove1High", buildAuto(PathPlanner.loadPathGroup("NoMoveScore1High", new PathConstraints(0, 0))));
         autoChooser.setDefaultOption("NoMove1HighCone", NoMove1HighCone);
+        //autoChooser.addOption("NoTurn1HighCenterBalance", buildAuto(PathPlanner.loadPathGroup("NoTurnScore1HighCenterBalance", new PathConstraints(4, 3))));
         autoChooser.addOption("Clean1.5Balance", buildAuto(PathPlanner.loadPathGroup("Score1HighCubePickupLeftBalance", new PathConstraints(4.5, 3))));
         autoChooser.addOption("BlueDirty1.5Balance", buildAuto(PathPlanner.loadPathGroup("Blue1.5DirtyBalance", new PathConstraints(4.5, 3))));
         autoChooser.addOption("RedDirty1.5Balance", buildAuto(PathPlanner.loadPathGroup("Red1.5DirtyBalance", new PathConstraints(4.5, 3))));
+        // autoChooser.addOption("Clean1.5", buildAuto(PathPlanner.loadPathGroup("Score1HighCubePickupLeftNoBalance", new PathConstraints(4.5, 3))));
+        // autoChooser.addOption("Dirty1.5", buildAuto(PathPlanner.loadPathGroup("Score1HighCubePickupRightNoBalance", new PathConstraints(4.5, 3))));
+        // autoChooser.addOption("Clean2Balance", buildAuto(PathPlanner.loadPathGroup("2PieceBalanceClean", new PathConstraints(4.5, 3))));
         autoChooser.addOption("RedClean2", RedClean2Path);
         autoChooser.addOption("BlueClean2", BlueClean2Path);
-        autoChooser.addOption("BlueDirty2", BlueTwoPieceDirty);
+        autoChooser.addOption("BlueDirty2", BlueTwoPieceDirty); // TODO: rename with no balance
         autoChooser.addOption("RedDirty2", RedTwoPieceDirty);
+        // autoChooser.addOption("Clean2Balance", buildAuto(PathPlanner.loadPathGroup("2PieceHighBalanceClean", new PathConstraints(4.5, 3))));
+        // autoChooser.addOption("Clean3Hybrid", buildAuto(PathPlanner.loadPathGroup("3PieceHybridClean", new PathConstraints(4.5, 3))));
+        // autoChooser.addOption("PPTestBalance", buildAuto(PathPlanner.loadPathGroup("PPTestBalance", new PathConstraints(2, 2))));
+        // autoChooser.addOption("Center1.5Balance", buildAuto(PathPlanner.loadPathGroup("1.5CenterBalance", new PathConstraints(3.5, 3.0))));
         autoChooser.addOption("Center1Balance", OneCenterBalance);
         autoChooser.addOption("Center2Balance", CenterTwoBalance);
         autoChooser.addOption("HolyTrinity", ThreePieceDirty);
         autoChooser.addOption("Center2Balance", TwoPieceCenterBalance);
+        // autoChooser.addOption("2CleanHighConeBalance", buildAuto(PathPlanner.loadPathGroup("2CleanHighConeBalance", new PathConstraints(3.0, 3.0))));
+        // autoChooser.addOption("PathPlanner Test w/ Events", new SequentialCommandGroup(Swerve.followTrajectoryCommand(PathPlanner.loadPath("New Path", new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)), true)));
+        // autoChooser.addOption("charge station", chargestation);
         SmartDashboard.putData(autoChooser);
     }
     
@@ -336,13 +361,7 @@ public class RobotContainer {
         // Configure the button bindings
         // CameraServer.startAutomaticCapture(0);
         setUpEventMap();
-        NoMove1HighCone = new SequentialCommandGroup(
-            // new InstantCommand(m_Wrist::wristSolenoidON),
-            new ParallelRaceGroup(new ScoreHigh(m_Elevator, m_Arm, m_Intake, m_Wrist), new WaitCommand(2)), 
-            new WaitCommand(0.25),
-            new IntakeOut(m_Intake), 
-            new StartingConfig(m_Elevator, m_Arm, m_Wrist)
-        );
+        NoMove1HighCone = buildAuto(PathPlanner.loadPathGroup("NoMoveScore1HighCone", new PathConstraints(0, 0)));
         OneCenterBalance = buildAuto(PathPlanner.loadPathGroup("1CenterBalance", new PathConstraints(2, 2)));
         RedClean2Path = buildAuto(PathPlanner.loadPathGroup("RedClean2", new PathConstraints(2.0, 2.0)));
         BlueClean2Path = buildAuto(PathPlanner.loadPathGroup("BlueClean2", new PathConstraints(2.0, 2.0)));
