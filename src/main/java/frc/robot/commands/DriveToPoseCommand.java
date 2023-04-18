@@ -71,7 +71,7 @@ public class DriveToPoseCommand extends CommandBase {
     Pose2d pose = goalPoseSupplier.get();
     if (useAllianceColor && DriverStation.getAlliance() == DriverStation.Alliance.Red) {
       Translation2d transformedTranslation = new Translation2d(pose.getX(), FieldConstants.width - pose.getY());
-      Rotation2d transformedHeading = pose.getRotation();
+      Rotation2d transformedHeading = pose.getRotation().times(-1);
       pose = new Pose2d(transformedTranslation, transformedHeading);
     }
     xController.setGoal(pose.getX());
@@ -93,7 +93,7 @@ public class DriveToPoseCommand extends CommandBase {
   private void setGoals(Pose2d goal) {
     if (useAllianceColor && DriverStation.getAlliance() == DriverStation.Alliance.Red) {
       Translation2d transformedTranslation = new Translation2d(goal.getX(), FieldConstants.width - goal.getY());
-      Rotation2d transformedHeading = goal.getRotation();
+      Rotation2d transformedHeading = goal.getRotation().times(-1);
       goal = new Pose2d(transformedTranslation, transformedHeading);
     }
     xController.setGoal(goal.getX());
@@ -109,7 +109,7 @@ public class DriveToPoseCommand extends CommandBase {
 
     for (Pose2d edge : Constants.PoseEstimation.chargeStation) {
       if (DriverStation.getAlliance() == Alliance.Red) {
-        chargeStation.add(new Pose2d(edge.getX(), Constants.FieldConstants.width - edge.getY(), edge.getRotation()));
+        chargeStation.add(new Pose2d(edge.getX(), Constants.FieldConstants.width - edge.getY(), edge.getRotation().times(-1)));
       } else {
         chargeStation.add(new Pose2d(edge.getX(), edge.getY(), edge.getRotation()));
       }
