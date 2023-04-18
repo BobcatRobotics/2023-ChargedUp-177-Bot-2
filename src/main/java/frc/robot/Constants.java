@@ -73,6 +73,14 @@ public final class Constants {
             scoringPositions.get(7),
             scoringPositions.get(8)
         };
+
+        public static final Pose2d[] chargeStation = // add 0.4*sqrt2 for robot corner when turning in worst position
+        {
+            new Pose2d(), // towards midfield dirty
+            new Pose2d(), // towards midfield clean
+            new Pose2d(), // towards grid dirty
+            new Pose2d() // towards grid clean
+        };
         
         public static final double kPXController = 3; // 3
         public static final double kPYController = 3; // 3

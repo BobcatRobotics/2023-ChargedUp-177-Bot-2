@@ -18,6 +18,7 @@ import frc.robot.subsystems.Wrist;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.commands.DriveToPoseCommand;
+import frc.robot.commands.Presets.Procedures.ScoreAndStow;
 import frc.robot.commands.Presets.Procedures.ScoreHigh;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
@@ -43,7 +44,8 @@ public class TopRight extends SequentialCommandGroup {
     
     addCommands(
       new DriveToPoseCommand(s, this::getGrid, sPose::getCurrentPose, true),
-      new ScoreHigh(e, a, i, w)
+      new ScoreHigh(e, a, i, w),
+      new ScoreAndStow(e, a, w, i)
     );
   }
   

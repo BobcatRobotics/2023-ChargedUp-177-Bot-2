@@ -18,6 +18,7 @@ import frc.robot.subsystems.Wrist;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.commands.DriveToPoseCommand;
+import frc.robot.commands.Presets.Procedures.ScoreAndStow;
 import frc.robot.commands.Presets.Procedures.ScoreHigh;
 import frc.robot.commands.Presets.Procedures.ScoreMid;
 
@@ -38,7 +39,8 @@ public class MidMid extends SequentialCommandGroup {
     
     addCommands(
       new DriveToPoseCommand(s, this::getGrid, sPose::getCurrentPose, true),
-      new ScoreMid(e, a, w)
+      new ScoreMid(e, a, w),
+      new ScoreAndStow(e, a, w, i)
     );
   }
   

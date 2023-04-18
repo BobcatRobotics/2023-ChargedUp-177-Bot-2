@@ -4,6 +4,7 @@
 
 package frc.robot.commands;
 
+import java.util.ArrayList;
 import java.util.function.Supplier;
 
 import edu.wpi.first.math.controller.ProfiledPIDController;
@@ -14,6 +15,7 @@ import edu.wpi.first.math.kinematics.ChassisSpeeds;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.Constants.FieldConstants;
@@ -88,10 +90,41 @@ public class DriveToPoseCommand extends CommandBase {
     thetaController.reset(robotPose.getRotation().getRadians());
   }
 
+  private void setGoals(Pose2d goal) {
+    if (useAllianceColor && DriverStation.getAlliance() == DriverStation.Alliance.Red) {
+      Translation2d transformedTranslation = new Translation2d(goal.getX(), FieldConstants.width - goal.getY());
+      Rotation2d transformedHeading = goal.getRotation();
+      goal = new Pose2d(transformedTranslation, transformedHeading);
+    }
+    xController.setGoal(goal.getX());
+    yController.setGoal(goal.getY());
+    thetaController.setGoal(goal.getRotation().getRadians());
+  }
+
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     Pose2d robotPose = poseProvider.get();
+    ArrayList<Pose2d> chargeStation = new ArrayList<>();
+
+    for (Pose2d edge : Constants.PoseEstimation.chargeStation) {
+      if (DriverStation.getAlliance() == Alliance.Red) {
+        chargeStation.add(new Pose2d(edge.getX(), Constants.FieldConstants.width - edge.getY(), edge.getRotation()));
+      } else {
+        chargeStation.add(new Pose2d(edge.getX(), edge.getY(), edge.getRotation()));
+      }
+    }
+    
+    if (robotPose.getX() >= chargeStation.get(2).getX()) {
+      yController.setGoal(poseProvider.get().getY());
+      // if (robotPose.getY() <= chargeStation.get(1).getY()) {
+      //   yController.setGoal(chargeStation.get(1).getY());
+      // } else if (robotPose.getY() >= chargeStation.get(0).getY()) {
+      //   yController.setGoal(chargeStation.get(0).getY());
+      // }
+    } else {
+      this.setGoals(goalPoseSupplier.get());
+    }
 
     double xSpeed = xController.calculate(robotPose.getX());
     if (xController.atGoal()) {
