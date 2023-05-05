@@ -5,11 +5,10 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.commands.Presets.SetArm;
 import frc.robot.commands.Presets.SetElevator;
-//import frc.robot.commands.Presets.RunWrist;
-import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.Elevator;
-import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Wrist;
+import frc.robot.subsystems.arm.Arm;
+import frc.robot.subsystems.elevator.Elevator;
+import frc.robot.subsystems.intake.Intake;
+import frc.robot.subsystems.wrist.Wrist;
 
 // ONLY FOR SCORECUBEHIGH DURING AUTOS
 public class ScoreCubeHighAutos extends SequentialCommandGroup {

@@ -7,7 +7,7 @@ package frc.robot.commands.Presets;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.subsystems.Wrist;
+import frc.robot.subsystems.wrist.Wrist;
 
 public class RunWrist extends CommandBase {
   /** Creates a new RunWrist. */

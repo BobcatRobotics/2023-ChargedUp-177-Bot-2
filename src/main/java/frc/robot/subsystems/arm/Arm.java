@@ -1,4 +1,4 @@
-package frc.robot.subsystems;
+package frc.robot.subsystems.arm;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
@@ -26,78 +26,29 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.Constants.ArmConstants;
+import frc.robot.subsystems.arm.ArmIO.ArmInputs;
 
 public class Arm extends SubsystemBase {
-    private WPI_TalonFX armMotor;
-    private CANCoder armEncoder;
-    private CANCoderConfiguration encoderConfig;
-    //private TalonFXSensorCollection absoluteEncoder;
-    //private DigitalInput armLimit;
-
-    private PIDController pid;
-
-    // private double holdPosValue;
+    private final ArmIO io;
+    private final ArmInputsAutoLogged inputs = new ArmInputsAutoLogged();
     
-    public Arm() {
-        armMotor = new WPI_TalonFX(Constants.ArmConstants.armMotorPort);
-        armEncoder = new CANCoder(Constants.armCanCoderID);
-        encoderConfig = new CANCoderConfiguration();
-        //armLimit = new DigitalInput(Constants.ArmConstants.stowedLimitSwitch);
-        //absoluteEncoder = new TalonFXSensorCollection(armMotor);
-        armEncoder.configFactoryDefault();
-        armEncoder.configAllSettings(encoderConfig);
-        armEncoder.configMagnetOffset(-ArmConstants.armOffset);
-        //armEncoder.configFeedbackCoefficient(4096/360, "falcons", SensorTimeBase.Per100Ms_Legacy);
-        armEncoder.setPositionToAbsolute();
-
-        armMotor.configFactoryDefault();
-        armMotor.configRemoteFeedbackFilter(armEncoder.getDeviceID(), RemoteSensorSource.CANCoder, 0, 20);
-        armMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.RemoteSensor0, 0, 20);
-        armMotor.configIntegratedSensorInitializationStrategy(SensorInitializationStrategy.BootToAbsolutePosition);
-        armMotor.setSensorPhase(true);
-        armMotor.configNominalOutputForward(0, 20);
-        armMotor.configNominalOutputReverse(0, 20);
-        armMotor.configPeakOutputForward(0.5, 20);
-        armMotor.configPeakOutputReverse(-0.5, 20);
-        armMotor.configAllowableClosedloopError(0, 0, 20);
-        armMotor.config_kF(0, 0, 20);
-        armMotor.config_kP(0, 0.1, 20); // 0.275
-        armMotor.config_kI(0, 0, 20);
-        armMotor.config_kD(0, 0, 20);
-        armMotor.setInverted(true);
-        armMotor.setNeutralMode(NeutralMode.Brake);
-        armMotor.configNeutralDeadband(0.001, 20);
-        armMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 20, 20);
-        armMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 20, 20);
-        armMotor.configMotionCruiseVelocity(30000, 20); //needs to be tuned to robot
-        armMotor.configMotionAcceleration(24000, 20);
-        armMotor.configAllowableClosedloopError(0, 200, 20);
-
-        pid = new PIDController(0.0375, 0, 0);
-        pid.setTolerance(4);
-        // holdPosValue = armMotor.getSelectedSensorPosition();
-        Timer.delay(1);
-        //resetToAbsolutePosition();
-    }
-
-    public void resetToAbsolutePosition() {
-        armMotor.setSelectedSensorPosition(armEncoder.getAbsolutePosition());
-        
+    public Arm(ArmIO io) {
+        this.io = io;
     }
 
     public void setSpeed(double speed) {
-        armMotor.set(ControlMode.PercentOutput, speed);
+        io.setArmPercentOutput(speed);
     }
 
     public void setSpeed0ArbitraryFeedForward() {
-        armMotor.set(ControlMode.PercentOutput, 0, DemandType.ArbitraryFeedForward, -0.02);
+        io.setArmPercentOutputArbitraryFeedForward(0, -0.02);
     }
 
     public void runArmOutSlow() {
-        armMotor.set(ControlMode.PercentOutput, 0.2);
+        io.setArmPercentOutput(0.2);
     }
     public void stop() {
-        armMotor.set(0);
+        io.setArmPercentOutput(0);
     }
 
     // public void holdPosition() {
@@ -126,20 +77,12 @@ public class Arm extends SubsystemBase {
         // }
     }
     public void setPos(int pos) {
-        armMotor.set(ControlMode.PercentOutput, pid.calculate(getEncoderPos(), pos));
-        //SmartDashboard.putString("arm error", "State: " + pos + ", Error: " + getArmPIDError());
+        io.setArmPosition(pos);
     }
-    public double getArmPIDError(){
-        return armMotor.getClosedLoopError();
-        //return pid.getPositionError();
-    }
+
     public boolean isAtStowedLimit() {
         //return !armLimit.get();
         return isAtMaxTuck();
-    }
-
-    public void setClosedLoopSpeed(int speed) {
-        armMotor.set(ControlMode.Velocity, speed);
     }
 
     // public int getState() {
@@ -147,10 +90,6 @@ public class Arm extends SubsystemBase {
     //     if (pos <= 256) pos = 0;
     //     return (int) Math.ceil(pos/4096);
     // }
-
-    public double getPos() {
-        return armMotor.getSelectedSensorPosition();
-    }
 
     // public boolean isAtTopLimit() {
     //     return armMotor.getSelectedSensorPosition() >= Constants.ArmConstants.topLimit;
@@ -169,7 +108,7 @@ public class Arm extends SubsystemBase {
     // }
     
     public boolean isAtSetpoint() {
-        return pid.atSetpoint();
+        return inputs.armIsAtSetpoint;
         //return armMotor.isMotionProfileFinished();
     }
 
@@ -186,33 +125,28 @@ public class Arm extends SubsystemBase {
     // }
     
     public boolean isAtCurrentLimit() {
-        return armMotor.getStatorCurrent() >= 50.0;
+        return inputs.armCurrent >= 50.0;
     }
 
-    public void resetEncoder() {
-        armMotor.setSelectedSensorPosition(0);
-    }
 
     public double getAbsEncoderPos() {
-        return armEncoder.getAbsolutePosition();
+        return inputs.armAbsolutePosition;
     }
 
     public double getEncoderPos() {
-        return armEncoder.getPosition();
+        return inputs.armPosition;
     }
 
     @Override
     public void periodic() {
+        io.updateInputs(inputs);
         // This method will be called once per scheduler run
-        if (armEncoder.getPosition() >= ArmConstants.trueArmMaxExtension) {
-            armEncoder.setPosition(360 - armEncoder.getPosition());
+        if (inputs.armPosition >= ArmConstants.trueArmMaxExtension) {
+            io.resetToPosition(360 - inputs.armPosition);
         }
         //armMotor.setSelectedSensorPosition(getEncoderPos());
-        if (isAtStowedLimit()) {
-            resetEncoder();
-        }
         SmartDashboard.putNumber("arm absolute", getAbsEncoderPos());
         SmartDashboard.putNumber("arm encoder", getEncoderPos());
-        SmartDashboard.putNumber("arm pos", getPos());
+        SmartDashboard.putNumber("arm pos", inputs.armPosition);
     }
 }

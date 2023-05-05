@@ -6,7 +6,7 @@ package frc.robot.commands.LEDs;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.BlinkinLEDs;
+import frc.robot.subsystems.leds.BlinkinLEDs;
 
 public class Blink extends CommandBase {
   /** Creates a new Blink. */

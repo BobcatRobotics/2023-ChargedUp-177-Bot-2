@@ -6,7 +6,7 @@ package frc.robot.commands.LEDs;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.PWMLEDs;
+import frc.robot.subsystems.leds.PWMLEDs;
 
 public class BlinkPWM extends CommandBase {
   PWMLEDs leds;

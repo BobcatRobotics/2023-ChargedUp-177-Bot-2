@@ -11,8 +11,8 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import frc.robot.Constants;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.ElevatorConstants;
-import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.arm.Arm;
+import frc.robot.subsystems.elevator.Elevator;
 
 public class ElevatorControls extends CommandBase {
   private Elevator elevator;

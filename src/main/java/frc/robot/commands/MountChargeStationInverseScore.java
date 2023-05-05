@@ -10,11 +10,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
 import frc.robot.commands.Presets.Procedures.GrabFromHPChute;
-import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.Elevator;
-import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.Swerve;
-import frc.robot.subsystems.Wrist;
+import frc.robot.subsystems.arm.Arm;
+import frc.robot.subsystems.drive.Swerve;
+import frc.robot.subsystems.elevator.Elevator;
+import frc.robot.subsystems.intake.Intake;
+import frc.robot.subsystems.wrist.Wrist;
 
 public class MountChargeStationInverseScore extends CommandBase {
 

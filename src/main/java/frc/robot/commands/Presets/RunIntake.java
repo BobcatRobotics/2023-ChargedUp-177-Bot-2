@@ -8,8 +8,8 @@ import java.util.function.BooleanSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
-import frc.robot.subsystems.BlinkinLEDs;
-import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.intake.Intake;
+import frc.robot.subsystems.leds.BlinkinLEDs;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;

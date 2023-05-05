@@ -11,9 +11,9 @@ import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.Constants;
 import frc.robot.Constants.ArmConstants;
 import frc.robot.Constants.WristConstants;
-import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.Elevator;
-import frc.robot.subsystems.Wrist;
+import frc.robot.subsystems.arm.Arm;
+import frc.robot.subsystems.elevator.Elevator;
+import frc.robot.subsystems.wrist.Wrist;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:

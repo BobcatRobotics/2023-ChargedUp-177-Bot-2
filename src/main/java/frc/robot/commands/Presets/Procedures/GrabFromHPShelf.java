@@ -11,9 +11,9 @@ import frc.robot.Constants.WristConstants;
 import frc.robot.commands.Presets.SetArm;
 import frc.robot.commands.Presets.SetElevator;
 import frc.robot.commands.Presets.SetWrist;
-import frc.robot.subsystems.Arm;
-import frc.robot.subsystems.Elevator;
-import frc.robot.subsystems.Wrist;
+import frc.robot.subsystems.arm.Arm;
+import frc.robot.subsystems.elevator.Elevator;
+import frc.robot.subsystems.wrist.Wrist;
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:

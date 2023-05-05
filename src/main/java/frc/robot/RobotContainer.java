@@ -53,7 +53,6 @@ import frc.robot.commands.LEDs.Blink;
 import frc.robot.commands.LEDs.BlinkPWM;
 import frc.robot.commands.Presets.IntakeIn;
 import frc.robot.commands.Presets.IntakeInConstantly;
-import frc.robot.commands.Presets.RetractArm;
 import frc.robot.commands.Presets.RunIntake;
 import frc.robot.commands.Presets.RunWrist;
 import frc.robot.commands.Presets.SetArm;
@@ -69,10 +68,16 @@ import frc.robot.commands.Presets.Procedures.TopSuck;
 import frc.robot.commands.Presets.Procedures.VerticalCone;
 import frc.robot.commands.Presets.Procedures.autoCarry;
 import frc.robot.commands.Presets.Procedures.falcon5;
-import frc.robot.subsystems.*;
 //import frc.robot.autos.RedHighCone6PickupBalance;
-import frc.robot.subsystems.Limelight;
-import frc.robot.subsystems.Swerve;
+import frc.robot.subsystems.arm.Arm;
+import frc.robot.subsystems.arm.ArmIOTalonFX;
+import frc.robot.subsystems.drive.Swerve;
+import frc.robot.subsystems.elevator.Elevator;
+import frc.robot.subsystems.intake.Intake;
+import frc.robot.subsystems.leds.BlinkinLEDs;
+import frc.robot.subsystems.pose_estimator.PoseEstimator;
+import frc.robot.subsystems.vision.Limelight;
+import frc.robot.subsystems.wrist.Wrist;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -149,7 +154,7 @@ public class RobotContainer {
 
     private final Elevator m_Elevator = new Elevator();
     private final Intake m_Intake = new Intake();
-    private final Arm m_Arm = new Arm();
+    private final Arm m_Arm = new Arm(new ArmIOTalonFX());
     private final Wrist m_Wrist = new Wrist();
     private final BlinkinLEDs m_LEDs = new BlinkinLEDs();
     // private final PWMLEDs m_LEDs = new PWMLEDs();

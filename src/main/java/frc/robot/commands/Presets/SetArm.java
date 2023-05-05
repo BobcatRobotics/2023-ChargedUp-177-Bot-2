@@ -9,7 +9,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.Constants.ArmConstants;
-import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.arm.Arm;
 
 public class SetArm extends CommandBase {
   /** Creates a new SetArm. */

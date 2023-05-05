@@ -1,7 +1,7 @@
 package frc.robot.commands.Presets;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.intake.Intake;
 
 public class IntakeInConstantly extends CommandBase {
     private Intake intake;
