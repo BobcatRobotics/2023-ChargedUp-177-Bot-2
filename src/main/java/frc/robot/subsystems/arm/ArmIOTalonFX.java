@@ -72,8 +72,9 @@ public class ArmIOTalonFX extends ArmIO {
         inputs.armPercentOutput = armMotor.getMotorOutputPercent();
         inputs.armTemp = armMotor.getTemperature();
         inputs.armVelocity = armEncoder.getVelocity();
-        inputs.armVoltage = armMotor.getBusVoltage();
+        inputs.armVoltage = armMotor.getMotorOutputVoltage();
         inputs.armIsAtSetpoint = pid.atSetpoint();
+        inputs.armPositionError = pid.getPositionError();
     }
 
     @Override

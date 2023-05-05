@@ -1,5 +1,7 @@
 package frc.robot.subsystems.elevator;
 
+import org.littletonrobotics.junction.Logger;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -20,60 +22,31 @@ import frc.robot.Constants;
 import frc.robot.Constants.ElevatorConstants;
 
 public class Elevator extends SubsystemBase {
-  private WPI_TalonFX elevatorMotor;
-
-  private DigitalInput topLimit;
-  private DigitalInput bottomLimit;
-  
-
-  private double holdPosValue;
+  private final ElevatorIO io;
+  private final ElevatorInputsAutoLogged inputs = new ElevatorInputsAutoLogged();
 
   /** Creates a new Elevator. */
-  public Elevator() {
-    elevatorMotor = new WPI_TalonFX(ElevatorConstants.elevatorMotorPort);
-    topLimit = new DigitalInput(ElevatorConstants.topLimitPort);
-    bottomLimit = new DigitalInput(ElevatorConstants.bottomLimitPort);
-
-    elevatorMotor.configFactoryDefault();
-    elevatorMotor.configSelectedFeedbackSensor(TalonFXFeedbackDevice.IntegratedSensor, 0, 20);
-    elevatorMotor.setSensorPhase(true);
-    elevatorMotor.configNominalOutputForward(0, 20);
-    elevatorMotor.configNominalOutputReverse(0, 20);
-    elevatorMotor.configPeakOutputForward(1, 20);
-    elevatorMotor.configPeakOutputReverse(-1, 20);//TODO: needs to be changes for comp
-    elevatorMotor.configAllowableClosedloopError(0, 0, 20);
-    //elevatorMotor.config_kF(0, 0, 20);
-    elevatorMotor.config_kP(0, 0.25, 20);
-    elevatorMotor.config_kI(0, 0, 20);
-    elevatorMotor.config_kD(0, 0, 20);
-    elevatorMotor.setInverted(false); // used to be true but we flipped motor direction 2/25/23
-    elevatorMotor.setNeutralMode(NeutralMode.Brake);
-    elevatorMotor.configNeutralDeadband(0.001, 20);
-    elevatorMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_13_Base_PIDF0, 10, 20);
-    elevatorMotor.setStatusFramePeriod(StatusFrameEnhanced.Status_10_MotionMagic, 10, 20);
-    elevatorMotor.configAllowableClosedloopError(0, 400, 20);
-    // motion magic trapezoid configuration
-    //elevatorMotor.configAllowableClosedloopError()
-    elevatorMotor.configMotionCruiseVelocity(100000, 20); //needs to be tuned to robot
-    elevatorMotor.configMotionAcceleration(75000, 20);
-    //elevatorMotor.configMotionSCurveStrength(-20);
-
-    holdPosValue = elevatorMotor.getSelectedSensorPosition();
+  public Elevator(ElevatorIO io) {
+    this.io = io;
   }
 
   public void elevate(double speed) {
     if(speed == 0 && !getBottomLimits()) {
-      elevatorMotor.set(ControlMode.PercentOutput, speed, DemandType.ArbitraryFeedForward, -0.03);
+      //elevatorMotor.set(ControlMode.PercentOutput, speed, DemandType.ArbitraryFeedForward, -0.03);
       // elevatorMotor.set(ControlMode.PercentOutput, 0);
+      io.setElevatorPercentOutputWithArbitraryFeedforward(speed, -0.03);
     } else if(speed == 0 && getBottomLimits()) {
-      elevatorMotor.set(ControlMode.PercentOutput, 0);
+      //elevatorMotor.set(ControlMode.PercentOutput, 0);
+      io.setElevatorPercentOutput(0);
     } else{
-      elevatorMotor.set(ControlMode.PercentOutput, speed);
+      //elevatorMotor.set(ControlMode.PercentOutput, speed);
+      io.setElevatorPercentOutput(speed);
     }
     
   }
   public double getSpeed(){
-    return elevatorMotor.getSelectedSensorVelocity();
+    //return elevatorMotor.getSelectedSensorVelocity();
+    return inputs.elevatorVelocity;
   } 
   public boolean getStopped(){
     return getSpeed() == 0;
@@ -87,7 +60,8 @@ public class Elevator extends SubsystemBase {
   // }
 
   public double getPIDError(){
-    return elevatorMotor.getClosedLoopError();
+    return inputs.elevatorPositionError;
+    //return elevatorMotor.getClosedLoopError();
   }
 
   // public void setHoldPos() {
@@ -95,46 +69,51 @@ public class Elevator extends SubsystemBase {
   // }
 
   public void resetEncoderPos() {
-    elevatorMotor.setSelectedSensorPosition(0);
+    //elevatorMotor.setSelectedSensorPosition(0);
+    io.resetToPosition(0);
   }
 
-  public boolean isAtSetpoint() {
-    return elevatorMotor.isMotionProfileFinished();
-  }
+  // public boolean isAtSetpoint() {
+  //   return elevatorMotor.isMotionProfileFinished();
+  // }
 
   // public boolean getTopLimits() {
   //   return !topLimit.get();
   // }
 
   public boolean getBottomLimits() {
-    return !bottomLimit.get();
+    return inputs.bottomLimitSwitchHit;
   }
   public double getEncoderPos() {
-    return elevatorMotor.getSelectedSensorPosition();
+    return inputs.elevatorPosition;
   }
 
   public boolean topLimitSwitch() {
-    return !topLimit.get();
+    return inputs.topLimitSwitchHit;
   }
 
   public void setState(int state) {
     if (state == 0) {
-      elevatorMotor.set(ControlMode.MotionMagic, ElevatorConstants.bottomPos);
+      io.setElevatorPosition(ElevatorConstants.bottomPos);
+      //elevatorMotor.set(ControlMode.MotionMagic, ElevatorConstants.bottomPos);
       // holdPosValue = ElevatorConstants.pos0;
       // holdPosition();
       // SmartDashboard.putString("elevator error", "State: " + state + ", Error: " + getPIDError());
     } else if (state == 1) {
-      elevatorMotor.set(ControlMode.MotionMagic, ElevatorConstants.midPos);
+      io.setElevatorPosition(ElevatorConstants.midPos);
+      //elevatorMotor.set(ControlMode.MotionMagic, ElevatorConstants.midPos);
       // holdPosValue = ElevatorConstants.pos1;
       // holdPosition();
       // SmartDashboard.putString("elevator error", "State: " + state + ", Error: " + getPIDError());
     } else if (state == 2) {
-      elevatorMotor.set(ControlMode.MotionMagic, ElevatorConstants.highPos);
+      io.setElevatorPosition(ElevatorConstants.highPos);
+      //elevatorMotor.set(ControlMode.MotionMagic, ElevatorConstants.highPos);
       // holdPosValue = ElevatorConstants.pos2;
       // holdPosition();
       // SmartDashboard.putString("elevator error", "State: " + state + ", Error: " + getPIDError());
     } else if (state == 3) {
-      elevatorMotor.set(ControlMode.MotionMagic, ElevatorConstants.shelfPos);
+      io.setElevatorPosition(ElevatorConstants.shelfPos);
+      //elevatorMotor.set(ControlMode.MotionMagic, ElevatorConstants.shelfPos);
       // holdPosValue = ElevatorConstants.pos2;
       // holdPosition();
       // SmartDashboard.putString("elevator error", "State: " + state + ", Error: " + getPIDError());
@@ -147,9 +126,9 @@ public class Elevator extends SubsystemBase {
   //   return (int) Math.ceil(pos/4096);
   // }
 
-  public double getEncoder() {
-    return elevatorMotor.getSelectedSensorPosition();
-  }
+  // public double getEncoder() {
+  //   return elevatorMotor.getSelectedSensorPosition();
+  // }
 
   public boolean isAtCurrentLimit() {
     //return elevatorMotor.getStatorCurrent() >= 80.0;
@@ -157,11 +136,15 @@ public class Elevator extends SubsystemBase {
   }
 
   public void resetEncoderPosTop() {
-    elevatorMotor.setSelectedSensorPosition(-236710);
+    //elevatorMotor.setSelectedSensorPosition(-236710);
+    io.resetToPosition(-236710);
   }
 
   @Override
   public void periodic() {
+    io.updateInputs(inputs);
+    Logger.getInstance().processInputs("Elevator", inputs);
+
     if (getBottomLimits()){
       resetEncoderPos();
     //   holdPosValue = 0;
@@ -171,7 +154,7 @@ public class Elevator extends SubsystemBase {
     // This method will be called once per scheduler run
     SmartDashboard.putBoolean("bottom limits", getBottomLimits());
     SmartDashboard.putBoolean("top limits", topLimitSwitch());
-    SmartDashboard.putNumber("elevator encoder", getEncoder());
+    SmartDashboard.putNumber("elevator encoder", getEncoderPos());
     //SmartDashboard.putBoolean("top limits", topLimitSwitch());
   }
 }

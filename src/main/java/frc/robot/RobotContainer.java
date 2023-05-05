@@ -73,7 +73,9 @@ import frc.robot.subsystems.arm.Arm;
 import frc.robot.subsystems.arm.ArmIOTalonFX;
 import frc.robot.subsystems.drive.Swerve;
 import frc.robot.subsystems.elevator.Elevator;
+import frc.robot.subsystems.elevator.ElevatorIOTalonFX;
 import frc.robot.subsystems.intake.Intake;
+import frc.robot.subsystems.intake.IntakeIOTalonFX;
 import frc.robot.subsystems.leds.BlinkinLEDs;
 import frc.robot.subsystems.pose_estimator.PoseEstimator;
 import frc.robot.subsystems.vision.Limelight;
@@ -152,8 +154,8 @@ public class RobotContainer {
     public static Swerve s_Swerve = new Swerve();
     public static PoseEstimator swervePoseEstimator = new PoseEstimator(s_Swerve::getYaw, s_Swerve::getModulePositions, m_LimelightFront, m_LimelightBack);
 
-    private final Elevator m_Elevator = new Elevator();
-    private final Intake m_Intake = new Intake();
+    private final Elevator m_Elevator = new Elevator(new ElevatorIOTalonFX());
+    private final Intake m_Intake = new Intake(new IntakeIOTalonFX());
     private final Arm m_Arm = new Arm(new ArmIOTalonFX());
     private final Wrist m_Wrist = new Wrist();
     private final BlinkinLEDs m_LEDs = new BlinkinLEDs();

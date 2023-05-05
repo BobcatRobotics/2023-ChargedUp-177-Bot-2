@@ -13,6 +13,7 @@ public abstract class ArmIO {
         double armVoltage = 0.0;
         double armPercentOutput = 0.0;
         boolean armIsAtSetpoint = false;
+        double armPositionError = 0.0;
     }
 
     public void updateInputs(ArmInputsAutoLogged inputs) {}

@@ -1,5 +1,7 @@
 package frc.robot.subsystems.arm;
 
+import org.littletonrobotics.junction.Logger;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.DemandType;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
@@ -140,6 +142,7 @@ public class Arm extends SubsystemBase {
     @Override
     public void periodic() {
         io.updateInputs(inputs);
+        Logger.getInstance().processInputs("Arm", inputs);
         // This method will be called once per scheduler run
         if (inputs.armPosition >= ArmConstants.trueArmMaxExtension) {
             io.resetToPosition(360 - inputs.armPosition);

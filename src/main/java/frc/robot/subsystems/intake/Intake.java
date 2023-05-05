@@ -4,6 +4,8 @@
 
 package frc.robot.subsystems.intake;
 
+import org.littletonrobotics.junction.Logger;
+
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
@@ -18,58 +20,64 @@ public class Intake extends SubsystemBase {
   private final double cubeThreshold = 20.0;
   private final double coneThreshold = 20.0;
 
-  private WPI_TalonFX motor; 
+  private final IntakeIO io;
+  private final IntakeInputsAutoLogged inputs = new IntakeInputsAutoLogged();
 
   /** Creates a new Intake. */
-  public Intake() {
-   motor = new WPI_TalonFX(Constants.intakeMotorID);
-   motor.setNeutralMode(NeutralMode.Brake);
-   motor.setInverted(true);
+  public Intake(IntakeIO io) {
+    this.io = io;
   }
   
   public void runIntakeIn(){
-    motor.set(ControlMode.PercentOutput, -0.9);
+    //motor.set(ControlMode.PercentOutput, -0.9);
+    io.setIntakePercentOutput(-0.9);
   }
 
   public void runIntakeOut(){
-    motor.set(ControlMode.PercentOutput, 0.4);
+    //motor.set(ControlMode.PercentOutput, 0.4);
+    io.setIntakePercentOutput(0.4);
   } 
 
   public void runIntakeOutFull(){
-    motor.set(ControlMode.PercentOutput, 1);
+    //motor.set(ControlMode.PercentOutput, 1);
+    io.setIntakePercentOutput(1);
   }
   public void runIntakeInSlow(){
-    motor.set(ControlMode.PercentOutput, -0.06);
+    //motor.set(ControlMode.PercentOutput, -0.06);
+    io.setIntakePercentOutput(-0.06);
   }
 
   public boolean isAtCurrentLimit() {
-    return motor.getStatorCurrent() >= 20.0;
+    return inputs.intakeCurrent >= 20.0;
   }
 
   public boolean cubeSecured() {
-    return motor.getStatorCurrent() >= cubeThreshold;
+    return inputs.intakeCurrent >= cubeThreshold;
   }
 
   public boolean coneSecured() {
-    return motor.getStatorCurrent() >= coneThreshold;
+    return inputs.intakeCurrent >= coneThreshold;
   }
 
   public double getCurrent() {
-    return motor.getStatorCurrent();
+    return inputs.intakeCurrent;
   }
 
   public void runIntakePercent(double speed){
     speed = MathUtils.throttlePercent(speed);
-    motor.set(ControlMode.PercentOutput, speed);
+    //motor.set(ControlMode.PercentOutput, speed);
+    io.setIntakePercentOutput(speed);
   }
 
   public void stop(){
-   motor.set(ControlMode.PercentOutput, 0); 
+   //motor.set(ControlMode.PercentOutput, 0); 
+    io.setIntakePercentOutput(0);
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    
+    io.updateInputs(inputs);
+    Logger.getInstance().processInputs("Intake", inputs);
   }
 }
