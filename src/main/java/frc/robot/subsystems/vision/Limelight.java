@@ -6,6 +6,8 @@ package frc.robot.subsystems.vision;
 
 import java.sql.Driver;
 
+import org.littletonrobotics.junction.Logger;
+
 import edu.wpi.first.math.geometry.Pose3d;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.geometry.Transform3d;
@@ -63,6 +65,14 @@ public class Limelight extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    Logger.getInstance().recordOutput("tx", x());
+    Logger.getInstance().recordOutput("ty", y());
+    Logger.getInstance().recordOutput("tx", x());
+    Logger.getInstance().recordOutput("targetDistance", targetDist());
+    Logger.getInstance().recordOutput("ta", targetArea());
+    Logger.getInstance().recordOutput("tv", tv());
+    Logger.getInstance().recordOutput("botpose", botPose());
+
     NetworkTable table = NetworkTableInstance.getDefault().getTable(limeLightName);
     try {
       tTarget = table.getEntry("tv");

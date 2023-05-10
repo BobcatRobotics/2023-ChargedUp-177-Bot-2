@@ -7,6 +7,8 @@ package frc.robot.subsystems.pose_estimator;
 import java.sql.Driver;
 import java.util.function.Supplier;
 
+import org.littletonrobotics.junction.Logger;
+
 import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
 
@@ -24,6 +26,7 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotContainer;
 import frc.robot.Constants.FieldConstants;
+import frc.robot.subsystems.pose_estimator.PoseEstimatorIO.PoseEstimatorInputs;
 import frc.robot.subsystems.vision.Limelight;
 import edu.wpi.first.math.numbers.N3;
 import edu.wpi.first.math.util.Units;
@@ -35,37 +38,23 @@ import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class PoseEstimator extends SubsystemBase {
-  private static final Vector<N3> stateStdDevs = VecBuilder.fill(0.1, 0.1, 0.1);
-  private static final Vector<N3> visionMeasurementStdDevs = VecBuilder.fill(0.9, 0.9, Units.degreesToRadians(0.9));
-
-  private final Supplier<Rotation2d> rotationSupplier;
-  private final Supplier<SwerveModulePosition[]> modulePositionSupplier;
-  private final SwerveDrivePoseEstimator poseEstimator;
-  //private PhotonVision photon = new PhotonVision();
-  private Limelight limelightFront;
-  private Limelight limelightBack;
+  private final PoseEstimatorIO io;
+  private final PoseEstimatorInputsAutoLogged inputs = new PoseEstimatorInputsAutoLogged();
 
   //private OriginPosition originPosition = OriginPosition.kBlueAllianceWallRightSide;
   private boolean sawTag = false;
 
   private final double FIELD_LENGTH_METERS = 16.54175;
   private final double FIELD_WIDTH_METERS = 8.0137;
+
+  private Limelight limelightFront;
+  private Limelight limelightBack;
   
   //private Alliance alliance = Alliance.Blue;
 
   /** Creates a new PoseEstimatorSubsystem. */
-  public PoseEstimator(Supplier<Rotation2d> rotationSupplier, Supplier<SwerveModulePosition[]> modulePositionSupplier, Limelight limelightFront, Limelight limelightBack) {
-    this.rotationSupplier = rotationSupplier;
-    this.modulePositionSupplier = modulePositionSupplier;
-
-    poseEstimator = new SwerveDrivePoseEstimator(
-      Constants.Swerve.swerveKinematics, 
-      this.rotationSupplier.get(), 
-      this.modulePositionSupplier.get(), 
-      new Pose2d(),
-      stateStdDevs,
-      visionMeasurementStdDevs
-    );
+  public PoseEstimator(PoseEstimatorIO io, Limelight limelightFront, Limelight limelightBack) {
+    this.io = io;
     this.limelightFront = limelightFront;
     this.limelightBack = limelightBack;
   }
@@ -134,7 +123,7 @@ public class PoseEstimator extends SubsystemBase {
       );
   }
   
-  private void addVisionMeasurement(Limelight limelight) {
+  private void addVisionMeasurement(Limelight limelight, boolean isBackCamera) {
     
     Pose3d visionPose = null;
     try {
@@ -149,7 +138,7 @@ public class PoseEstimator extends SubsystemBase {
       ///System.out.println("vision pose found!");
       sawTag = true;
       
-      Pose2d pose2d = new Pose2d(visionPose.getTranslation().toTranslation2d(), rotationSupplier.get());
+      Pose2d pose2d = new Pose2d(visionPose.getTranslation().toTranslation2d(), inputs.rotation);
       
       //4.5.23 DCMP Load-In bus fix, TODO: needs to be checkd! 
       // if(DriverStation.getAlliance().equals(Alliance.Red)){
@@ -161,9 +150,9 @@ public class PoseEstimator extends SubsystemBase {
       // double poseDist = distanceFormula(pose2d.getX(),pose2d.getY(),visionPose.getX(),visionPose.getY());
       //SmartDashboard.putBoolean("vision measurement valid", distanceFormula(pose2d.getX(), pose2d.getY(), getCurrentPose().getX(), getCurrentPose().getY()) < 0.5);
       if (distanceFormula(pose2d.getX(), pose2d.getY(), getCurrentPose().getX(), getCurrentPose().getY()) < 0.5 && DriverStation.isAutonomous()) {
-        poseEstimator.addVisionMeasurement(pose2d, timeStampSeconds, VecBuilder.fill(distance/2, distance/2, 100));
+        io.addVisionMeasurement(pose2d, timeStampSeconds, VecBuilder.fill(distance/2, distance/2, 100), isBackCamera);
       } else if (DriverStation.isTeleop()) {
-        poseEstimator.addVisionMeasurement(pose2d, timeStampSeconds, VecBuilder.fill(distance/2, distance/2, 100));
+        io.addVisionMeasurement(pose2d, timeStampSeconds, VecBuilder.fill(distance/2, distance/2, 100), isBackCamera);
       }
       //setCurrentPose(pose2d);
     }
@@ -172,9 +161,11 @@ public class PoseEstimator extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    poseEstimator.update(this.rotationSupplier.get(), this.modulePositionSupplier.get());
-    addVisionMeasurement(limelightFront);
-    addVisionMeasurement(limelightBack);
+    io.update();
+    Logger.getInstance().processInputs("PoseEstimator", inputs);
+
+    addVisionMeasurement(limelightFront, false);
+    addVisionMeasurement(limelightBack, true);
 
     SmartDashboard.putNumber("pose x", getCurrentPose().getX());
     SmartDashboard.putNumber("pose y", getCurrentPose().getY());
@@ -223,11 +214,11 @@ public class PoseEstimator extends SubsystemBase {
   }
 
   public Pose2d getCurrentPose() {
-    return poseEstimator.getEstimatedPosition();
+    return inputs.currentPose;
   }
 
   public void setCurrentPose(Pose2d newPose) {
-    poseEstimator.resetPosition(this.rotationSupplier.get(), this.modulePositionSupplier.get(), newPose);
+    io.setCurrentPose(newPose);
   }
 
   public void resetFieldPosition() {
