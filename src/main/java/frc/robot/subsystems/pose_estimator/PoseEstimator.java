@@ -166,8 +166,9 @@ public class PoseEstimator extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    io.update(this.rotationSupplier.get(), this.modulePositionSupplier.get());
+    io.updateInputs(inputs);
     Logger.getInstance().processInputs("PoseEstimator", inputs);
+    io.update(this.rotationSupplier.get(), this.modulePositionSupplier.get());
 
     addVisionMeasurement(limelightFront, false);
     addVisionMeasurement(limelightBack, true);
