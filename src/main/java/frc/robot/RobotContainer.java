@@ -72,6 +72,7 @@ import frc.robot.commands.Presets.Procedures.falcon5;
 import frc.robot.subsystems.arm.Arm;
 import frc.robot.subsystems.arm.ArmIOTalonFX;
 import frc.robot.subsystems.drive.Swerve;
+import frc.robot.subsystems.drive.SwerveIOTalonFX;
 import frc.robot.subsystems.elevator.Elevator;
 import frc.robot.subsystems.elevator.ElevatorIOTalonFX;
 import frc.robot.subsystems.intake.Intake;
@@ -152,7 +153,7 @@ public class RobotContainer {
 
     public static Limelight m_LimelightFront = new Limelight("limelight-front");
     public static Limelight m_LimelightBack = new Limelight("limelight-back");
-    public static Swerve s_Swerve = new Swerve();
+    public static Swerve s_Swerve = new Swerve(new SwerveIOTalonFX());
     public static PoseEstimator swervePoseEstimator = new PoseEstimator(new PoseEstimatorIOLimelight(s_Swerve.getYaw(), s_Swerve.getModulePositions()), m_LimelightFront, m_LimelightBack, s_Swerve::getYaw, s_Swerve::getModulePositions);
 
     private final Elevator m_Elevator = new Elevator(new ElevatorIOTalonFX());

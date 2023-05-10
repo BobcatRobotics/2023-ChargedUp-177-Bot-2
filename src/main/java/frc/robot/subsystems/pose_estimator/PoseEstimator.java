@@ -168,6 +168,8 @@ public class PoseEstimator extends SubsystemBase {
     // This method will be called once per scheduler run
     io.updateInputs(inputs);
     Logger.getInstance().processInputs("PoseEstimator", inputs);
+    Logger.getInstance().recordOutput("PoseEstimator/Estimated Pose", getCurrentPose());
+
     io.update(this.rotationSupplier.get(), this.modulePositionSupplier.get());
 
     addVisionMeasurement(limelightFront, false);
