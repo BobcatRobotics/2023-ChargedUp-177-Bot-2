@@ -49,14 +49,19 @@ public class PoseEstimator extends SubsystemBase {
 
   private Limelight limelightFront;
   private Limelight limelightBack;
+
+  private Supplier<Rotation2d> rotationSupplier;
+  private Supplier<SwerveModulePosition[]> modulePositionSupplier;
   
   //private Alliance alliance = Alliance.Blue;
 
   /** Creates a new PoseEstimatorSubsystem. */
-  public PoseEstimator(PoseEstimatorIO io, Limelight limelightFront, Limelight limelightBack) {
+  public PoseEstimator(PoseEstimatorIO io, Limelight limelightFront, Limelight limelightBack, Supplier<Rotation2d> rotSupp, Supplier<SwerveModulePosition[]> modPosSupp) {
     this.io = io;
     this.limelightFront = limelightFront;
     this.limelightBack = limelightBack;
+    this.rotationSupplier = rotSupp;
+    this.modulePositionSupplier = modPosSupp;
   }
   
   // public void setAlliance(Alliance alliance) {
@@ -138,7 +143,7 @@ public class PoseEstimator extends SubsystemBase {
       ///System.out.println("vision pose found!");
       sawTag = true;
       
-      Pose2d pose2d = new Pose2d(visionPose.getTranslation().toTranslation2d(), inputs.rotation);
+      Pose2d pose2d = new Pose2d(visionPose.getTranslation().toTranslation2d(), visionPose.getRotation().toRotation2d()); // TODO: test gyro vision pose for FOC
       
       //4.5.23 DCMP Load-In bus fix, TODO: needs to be checkd! 
       // if(DriverStation.getAlliance().equals(Alliance.Red)){
@@ -161,7 +166,7 @@ public class PoseEstimator extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    io.update();
+    io.update(this.rotationSupplier.get(), this.modulePositionSupplier.get());
     Logger.getInstance().processInputs("PoseEstimator", inputs);
 
     addVisionMeasurement(limelightFront, false);
@@ -214,11 +219,11 @@ public class PoseEstimator extends SubsystemBase {
   }
 
   public Pose2d getCurrentPose() {
-    return inputs.currentPose;
+    return new Pose2d(inputs.x, inputs.y, new Rotation2d(inputs.theta));
   }
 
   public void setCurrentPose(Pose2d newPose) {
-    io.setCurrentPose(newPose);
+    io.setCurrentPose(this.rotationSupplier.get(), this.modulePositionSupplier.get(), newPose);
   }
 
   public void resetFieldPosition() {

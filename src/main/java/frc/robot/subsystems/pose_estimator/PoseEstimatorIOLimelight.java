@@ -28,10 +28,6 @@ private static final Vector<N3> stateStdDevs = VecBuilder.fill(0.1, 0.1, 0.1);
   private double latencyCameraFront = 0.0;
   private Pose2d visionMeasurementCameraBack = new Pose2d();
   private double latencyCameraBack = 0.0;
-
-
-  private final Supplier<Rotation2d> rotationSupplier;
-  private final Supplier<SwerveModulePosition[]> modulePositionSupplier;
   
 
 
@@ -41,14 +37,11 @@ private static final Vector<N3> stateStdDevs = VecBuilder.fill(0.1, 0.1, 0.1);
   private final double FIELD_LENGTH_METERS = 16.54175;
   private final double FIELD_WIDTH_METERS = 8.0137;
 
-  public PoseEstimatorIOLimelight(Supplier<Rotation2d> rotationSupplier, Supplier<SwerveModulePosition[]> modulePositionSupplier) {
-    this.rotationSupplier = rotationSupplier;
-    this.modulePositionSupplier = modulePositionSupplier;
-
+  public PoseEstimatorIOLimelight(Rotation2d initialRot, SwerveModulePosition[] initialModulePositions) {
     poseEstimator = new SwerveDrivePoseEstimator(
       Constants.Swerve.swerveKinematics, 
-      this.rotationSupplier.get(),
-      this.modulePositionSupplier.get(), 
+      initialRot,
+      initialModulePositions, 
       new Pose2d(),
       stateStdDevs,
       visionMeasurementStdDevs
@@ -57,14 +50,17 @@ private static final Vector<N3> stateStdDevs = VecBuilder.fill(0.1, 0.1, 0.1);
 
   @Override
   public void updateInputs(PoseEstimatorInputsAutoLogged inputs) {
-    inputs.currentPose = poseEstimator.getEstimatedPosition();
-    inputs.visionMeasurementCameraFront = visionMeasurementCameraFront;
-    inputs.visionMeasurementCameraBack = visionMeasurementCameraBack;
+    // inputs.currentPose = poseEstimator.getEstimatedPosition();
+    // inputs.visionMeasurementCameraFront = visionMeasurementCameraFront;
+    // inputs.visionMeasurementCameraBack = visionMeasurementCameraBack;
     inputs.latencyCameraFront = latencyCameraFront;
     inputs.latencyCameraBack = latencyCameraBack;
-    inputs.visionMeasurementStdDevs = visionMeasurementStdDevs;
-    inputs.modulePositions = modulePositionSupplier.get();
-    inputs.rotation = rotationSupplier.get();
+    inputs.x = poseEstimator.getEstimatedPosition().getX();
+    inputs.y = poseEstimator.getEstimatedPosition().getY();
+    inputs.theta = poseEstimator.getEstimatedPosition().getRotation().getDegrees();
+    // inputs.visionMeasurementStdDevs = visionMeasurementStdDevs;
+    // inputs.modulePositions = modulePositionSupplier.get();
+    // inputs.rotation = rotationSupplier.get();
   }
 
   @Override
@@ -81,13 +77,13 @@ private static final Vector<N3> stateStdDevs = VecBuilder.fill(0.1, 0.1, 0.1);
   }
 
   @Override
-  public void setCurrentPose(Pose2d pose) {
-    poseEstimator.resetPosition(rotationSupplier.get(), modulePositionSupplier.get(), pose);
+  public void setCurrentPose(Rotation2d rot, SwerveModulePosition[] modPositions, Pose2d pose) {
+    poseEstimator.resetPosition(rot, modPositions, pose);
   }
 
   @Override
-  public void update() {
-    poseEstimator.update(rotationSupplier.get(), modulePositionSupplier.get());
+  public void update(Rotation2d rot, SwerveModulePosition[] modPositions) {
+    poseEstimator.update(rot, modPositions);
   }
 
 }

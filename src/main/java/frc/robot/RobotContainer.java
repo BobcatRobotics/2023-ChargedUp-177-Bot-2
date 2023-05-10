@@ -153,7 +153,7 @@ public class RobotContainer {
     public static Limelight m_LimelightFront = new Limelight("limelight-front");
     public static Limelight m_LimelightBack = new Limelight("limelight-back");
     public static Swerve s_Swerve = new Swerve();
-    public static PoseEstimator swervePoseEstimator = new PoseEstimator(new PoseEstimatorIOLimelight(s_Swerve::getYaw, s_Swerve::getModulePositions), m_LimelightFront, m_LimelightBack);
+    public static PoseEstimator swervePoseEstimator = new PoseEstimator(new PoseEstimatorIOLimelight(s_Swerve.getYaw(), s_Swerve.getModulePositions()), m_LimelightFront, m_LimelightBack, s_Swerve::getYaw, s_Swerve::getModulePositions);
 
     private final Elevator m_Elevator = new Elevator(new ElevatorIOTalonFX());
     private final Intake m_Intake = new Intake(new IntakeIOTalonFX());
