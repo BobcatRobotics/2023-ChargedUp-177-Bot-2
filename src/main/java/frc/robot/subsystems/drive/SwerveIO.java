@@ -16,8 +16,8 @@ public abstract class SwerveIO {
         double commandedXSpeed = 0.0;
         double commandedYSpeed = 0.0;
         double commandedRotationSpeed = 0.0;
-        SwerveModuleState[] modStates = {};
-        SwerveModulePosition[] modPositions = {};
+        SwerveModuleState[] modStates = {new SwerveModuleState(), new SwerveModuleState(), new SwerveModuleState(), new SwerveModuleState()};
+        SwerveModulePosition[] modPositions = {new SwerveModulePosition(), new SwerveModulePosition(), new SwerveModulePosition(), new SwerveModulePosition()};
     }
 
     public void updateInputs(SwerveInputsAutoLogged inputs) {}

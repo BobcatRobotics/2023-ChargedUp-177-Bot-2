@@ -231,9 +231,15 @@ public class SwerveModuleIOTalonFX extends SwerveModuleIO {
         inputs.angleVoltage = mAngleMotor.getMotorOutputVoltage();
         inputs.anglePercentOutput = mAngleMotor.getMotorOutputPercent();
         inputs.angleAbsolutePosition = Conversions.degreesToFalcon(makePositiveDegrees(angleEncoder.getAbsolutePosition() - angleOffset.getDegrees()), Constants.Swerve.angleGearRatio);
-        inputs.lastAngle = lastAngle.getDegrees();
-        inputs.newAngle = newAngle.getDegrees();
-        inputs.optimizedNewAngle = optimizedNewAngle.getDegrees();
+        if (lastAngle != null) {
+            inputs.lastAngle = lastAngle.getDegrees();
+        }
+        if (newAngle != null) {
+            inputs.newAngle = newAngle.getDegrees();
+        }
+        if (optimizedNewAngle != null) {
+            inputs.optimizedNewAngle = optimizedNewAngle.getDegrees();
+        }
         inputs.canCoderMeasurment = angleEncoder.getAbsolutePosition();
         inputs.driveSensorVelocity = mDriveMotor.getSelectedSensorVelocity();
         inputs.driveSensorPosition = mDriveMotor.getSelectedSensorPosition();
