@@ -82,6 +82,7 @@ import frc.robot.subsystems.pose_estimator.PoseEstimator;
 import frc.robot.subsystems.pose_estimator.PoseEstimatorIOLimelight;
 import frc.robot.subsystems.vision.Limelight;
 import frc.robot.subsystems.wrist.Wrist;
+import frc.robot.subsystems.wrist.WristIOTalonFX;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -159,7 +160,7 @@ public class RobotContainer {
     private final Elevator m_Elevator = new Elevator(new ElevatorIOTalonFX());
     private final Intake m_Intake = new Intake(new IntakeIOTalonFX());
     private final Arm m_Arm = new Arm(new ArmIOTalonFX());
-    private final Wrist m_Wrist = new Wrist();
+    private final Wrist m_Wrist = new Wrist(new WristIOTalonFX());
     private final BlinkinLEDs m_LEDs = new BlinkinLEDs();
     // private final PWMLEDs m_LEDs = new PWMLEDs();
     
