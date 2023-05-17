@@ -52,6 +52,8 @@ public class PoseEstimator extends SubsystemBase {
 
   private Supplier<Rotation2d> rotationSupplier;
   private Supplier<SwerveModulePosition[]> modulePositionSupplier;
+
+  private Pose3d pose3d = new Pose3d();
   
   //private Alliance alliance = Alliance.Blue;
 
@@ -161,6 +163,7 @@ public class PoseEstimator extends SubsystemBase {
       }
       //setCurrentPose(pose2d);
     }
+    pose3d = visionPose;
   }
 
   @Override
@@ -169,6 +172,7 @@ public class PoseEstimator extends SubsystemBase {
     io.updateInputs(inputs);
     Logger.getInstance().processInputs("PoseEstimator", inputs);
     Logger.getInstance().recordOutput("PoseEstimator/Estimated Pose", getCurrentPose());
+    Logger.getInstance().recordOutput("PoseEstimator/Vision Pose", pose3d);
 
     io.update(this.rotationSupplier.get(), this.modulePositionSupplier.get());
 
