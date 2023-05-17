@@ -36,6 +36,7 @@ public class Swerve extends SubsystemBase {
     //public PoseEstimator poseEstimator;
     private SwerveIO io;
     private SwerveInputsAutoLogged inputs = new SwerveInputsAutoLogged();
+    private SwerveModuleState[] desStates = {};
 
 
     public Swerve(SwerveIO io) {
@@ -83,6 +84,7 @@ public class Swerve extends SubsystemBase {
 
     /* Used by SwerveControllerCommand in Auto */
     public void setModuleStates(SwerveModuleState[] desiredStates) {
+        desStates = desiredStates;
         io.setModuleStates(desiredStates);
     }    
 
@@ -156,6 +158,7 @@ public class Swerve extends SubsystemBase {
         io.updateInputs(inputs);
         Logger.getInstance().processInputs("Swerve", inputs);
         Logger.getInstance().recordOutput("Swerve/Swerve Module States", getModuleStates());
+        Logger.getInstance().recordOutput("Swerve/Desired Swerve Module States", desStates);
         // double[] botpose = limelight.botPose(); 
         // if (limelight.tv() == 1.0) {
         //     resetOdometry(new Pose2d(botpose[0], botpose[1], getYaw()));

@@ -19,6 +19,9 @@ public abstract class SwerveIO {
         double[] angleDegrees = {0.0, 0.0, 0.0, 0.0};
         double[] velocityMPS = {0.0, 0.0, 0.0, 0.0};
         double[] distanceMeters = {0.0, 0.0, 0.0, 0.0};
+        // double[] desiredVelocityMPS = {0.0, 0.0, 0.0, 0.0};
+        // double[] desiredAngleDegrees = {0.0, 0.0, 0.0, 0.0};
+
     }
 
     public void updateInputs(SwerveInputsAutoLogged inputs) {}
