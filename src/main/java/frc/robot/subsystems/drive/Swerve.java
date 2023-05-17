@@ -97,12 +97,11 @@ public class Swerve extends SubsystemBase {
     // }
 
     public SwerveModuleState[] getModuleStates(){
-        // SwerveModuleState[] states = new SwerveModuleState[4];
-        // for(SwerveModule mod : mSwerveMods){
-        //     states[mod.moduleNumber] = mod.getState();
-        // }
-        // return states;
-        return inputs.modStates;
+        SwerveModuleState[] states = new SwerveModuleState[4];
+        for(int i=0; i<4; i++) {
+            states[i] = new SwerveModuleState(inputs.velocityMPS[i], Rotation2d.fromDegrees(inputs.angleDegrees[i]));
+        }
+        return states;
     }
 
     public SwerveModulePosition[] getModulePositions(){
@@ -111,7 +110,12 @@ public class Swerve extends SubsystemBase {
         //     positions[mod.moduleNumber] = mod.getPosition();
         // }
         // return positions;
-        return inputs.modPositions;
+        //return inputs.modPositions;
+        SwerveModulePosition[] positions = new SwerveModulePosition[4];
+        for(int i=0; i<4; i++) {
+            positions[i] = new SwerveModulePosition(inputs.distanceMeters[i], Rotation2d.fromDegrees(inputs.angleDegrees[i]));
+        }
+        return positions;
     }
 
     public void resetModulesToAbsolute() {

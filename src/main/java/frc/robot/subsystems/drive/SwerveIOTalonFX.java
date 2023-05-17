@@ -153,8 +153,9 @@ public class SwerveIOTalonFX extends SwerveIO {
         inputs.commandedYSpeed = ySpeed;
         inputs.commandedRotationSpeed = rotationSpeed;
         for(SwerveModule mod : mSwerveMods){
-            inputs.modStates[mod.moduleNumber] = mod.getState();
-            inputs.modPositions[mod.moduleNumber] = mod.getPosition();
+            inputs.velocityMPS[mod.moduleNumber] = mod.getState().speedMetersPerSecond;
+            inputs.distanceMeters[mod.moduleNumber] = mod.getPosition().distanceMeters;
+            inputs.angleDegrees[mod.moduleNumber] = mod.getState().angle.getDegrees();
         }
     }
 }
