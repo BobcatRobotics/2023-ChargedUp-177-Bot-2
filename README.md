@@ -5,7 +5,7 @@
 - update and create new autos for use at battlecry (likely 3 pieces from both of the wings and then just adjusting the balances if there's time)
 
 **Credits**
-Original 364 Base Code: https://github.com/Team364/BaseFalconSwerve
-Code Orange 2023 Code: https://github.com/FRC3476/FRC-2023
-Mechanical Advantage's 2023 Code: https://github.com/Mechanical-Advantage/RobotCode2023
-7028's 2023 Code: https://github.com/STMARobotics/frc-7028-2023
+- Original 364 Base Code: https://github.com/Team364/BaseFalconSwerve
+- Code Orange 2023 Code: https://github.com/FRC3476/FRC-2023
+- Mechanical Advantage's 2023 Code: https://github.com/Mechanical-Advantage/RobotCode2023
+- 7028's 2023 Code: https://github.com/STMARobotics/frc-7028-2023
