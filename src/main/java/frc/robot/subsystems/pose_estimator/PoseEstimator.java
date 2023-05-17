@@ -173,6 +173,7 @@ public class PoseEstimator extends SubsystemBase {
     Logger.getInstance().processInputs("PoseEstimator", inputs);
     Logger.getInstance().recordOutput("PoseEstimator/Estimated Pose", getCurrentPose());
     Logger.getInstance().recordOutput("PoseEstimator/Vision Pose", pose3d);
+    Logger.getInstance().recordOutput("PoseEstimator/2D Vision Pose", pose3d.toPose2d());
 
     io.update(this.rotationSupplier.get(), this.modulePositionSupplier.get());
 
