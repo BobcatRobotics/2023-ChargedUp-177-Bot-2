@@ -290,9 +290,9 @@ public final class Constants {
         public static final int stowedLimitSwitch = 2;
 
         public static final double armOffset = 205; // 5 degrees at start
-        public static final double startingArmPos = 10; // in box
+        public static final double startingArmPos = 16; // in box //was 10
         public static final double groundPickupArm = 82.5; // ground intake
-        public static final double chuteArmPos = 35; // pickup from hp chute
+        public static final double chuteArmPos = 41; // pickup from hp chute //was 35
         public static final double shelfArmPos = 17; // 13
         public static final double autoCarry = 38.5;
         public static final double trueArmMaxExtension = 200; // TODO: change!
