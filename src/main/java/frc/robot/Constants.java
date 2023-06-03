@@ -289,10 +289,10 @@ public final class Constants {
         public static final int armMotorPort = 10; 
         public static final int stowedLimitSwitch = 2;
 
-        public static final double armOffset = 205; // 5 degrees at start
-        public static final double startingArmPos = 16; // in box //was 10
+        public static final double armOffset = 217; // 5 degrees at start
+        public static final double startingArmPos = 10; // in box //was 10
         public static final double groundPickupArm = 82.5; // ground intake
-        public static final double chuteArmPos = 41; // pickup from hp chute //was 35
+        public static final double chuteArmPos = 35; // pickup from hp chute //was 35
         public static final double shelfArmPos = 17; // 13
         public static final double autoCarry = 38.5;
         public static final double trueArmMaxExtension = 200; // TODO: change!
@@ -334,7 +334,7 @@ public final class Constants {
     }
 
     public static final class WristConstants {
-        public static final double wristOffset = 160.66; // 5 degrees at start
+        public static final double wristOffset = 163.66; // 5 degrees at start
         public static final double globalWristMaxAngleUp = 250; // chute wrist position as well 260
         public static final double babyBirdPos = 255;
         public static final double globalWristMaxAngleDown = 352; 

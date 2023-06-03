@@ -12,6 +12,7 @@ import com.pathplanner.lib.PathConstraints;
 import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.server.PathPlannerServer;
 
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.Timer;
@@ -72,13 +73,13 @@ public class Robot extends TimedRobot {
     }
     
     SmartDashboard.putString("Deployed code:", branch + " " + commit);
+    SmartDashboard.putBoolean("Balanced", Math.abs(m_robotContainer.s_Swerve.getPitch()) < 2.5);
 
     m_robotContainer.setUpAutos();
     PathPlannerServer.startServer(5811); // 5811 = port number. adjust this according to your needs
 
-
+    CameraServer.startAutomaticCapture();
   }
-
   /**
    * This function is called every robot packet, no matter the mode. Use this for items like
    * diagnostics that you want ran during disabled, autonomous, teleoperated and test.
@@ -93,6 +94,8 @@ public class Robot extends TimedRobot {
     // and running subsystem periodic() methods.  This must be called from the robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
+    SmartDashboard.putBoolean("Balanced", Math.abs(m_robotContainer.s_Swerve.getPitch()) < 2.5);
+    SmartDashboard.putNumber("pitch", m_robotContainer.s_Swerve.getPitch());
     // SmartDashboard.putNumber("poseEstimatorX", RobotContainer.swervePoseEstimator.getCurrentPose().getX());
     // SmartDashboard.putNumber("poseEstimatorY", RobotContainer.swervePoseEstimator.getCurrentPose().getY());
     // SmartDashboard.putNumber("poseEstimatorRotation", RobotContainer.swervePoseEstimator.getCurrentPose().getRotation().getDegrees());

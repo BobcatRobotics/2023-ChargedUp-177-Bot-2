@@ -218,7 +218,7 @@ public class RobotContainer {
         // autoChooser.addOption("Center1.5Balance", buildAuto(PathPlanner.loadPathGroup("1.5CenterBalance", new PathConstraints(3.5, 3.0))));
         autoChooser.addOption("Center1Balance", OneCenterBalance);
         autoChooser.addOption("Center2Balance", CenterTwoBalance);
-        autoChooser.addOption("HolyTrinity", ThreePieceDirty);
+        autoChooser.addOption("Dirty3", ThreePieceDirty);
         autoChooser.addOption("Center2Balance", TwoPieceCenterBalance);
         // autoChooser.addOption("2CleanHighConeBalance", buildAuto(PathPlanner.loadPathGroup("2CleanHighConeBalance", new PathConstraints(3.0, 3.0))));
         // autoChooser.addOption("PathPlanner Test w/ Events", new SequentialCommandGroup(Swerve.followTrajectoryCommand(PathPlanner.loadPath("New Path", new PathConstraints(Constants.AutoConstants.kMaxSpeedMetersPerSecond, Constants.AutoConstants.kMaxAccelerationMetersPerSecondSquared)), true)));
@@ -421,8 +421,10 @@ public class RobotContainer {
         ruffy0.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
         ruffy1.onTrue(new InstantCommand(() -> s_Swerve.configToX()));
 
-        driverLeft.onTrue(new Blink(m_LEDs, false));
-        driverRight.onTrue(new Blink(m_LEDs, true));
+        // driverLeft.onTrue(new Blink(m_LEDs, false));
+        // driverRight.onTrue(new Blink(m_LEDs, true));
+        y.onTrue(new Blink(m_LEDs, false));
+        x.onTrue(new Blink(m_LEDs, true));
         // driverLeft.onTrue(new BlinkPWM(m_LEDs, false));
         // driverRight.onTrue(new BlinkPWM(m_LEDs, true));
 
@@ -456,7 +458,7 @@ public class RobotContainer {
 
         //a.onTrue(new ForwardSuck(m_Elevator, m_Arm, m_Wrist).until(this::operatorMoved));
         a.onTrue(new TopSuck(m_Elevator, m_Arm, m_Intake, m_Wrist).until(this::operatorMoved)); //TopSuck? This command should be named BottomSuck
-        y.onTrue(new GrabFromHPShelf(m_Elevator, m_Arm, m_Wrist).until(this::operatorMoved));
+        // y.onTrue(new GrabFromHPShelf(m_Elevator, m_Arm, m_Wrist).until(this::operatorMoved));
         // x.onTrue(new VerticalCone(m_Elevator, m_Arm, m_Wrist).until(this::operatorMoved));
 
         //x.onTrue(new InstantCommand(m_LEDs::setPurple));
@@ -515,8 +517,6 @@ public class RobotContainer {
     public void turnOffLeds() {
         m_LEDs.turnOff();
     }
-
-
 
   
     
