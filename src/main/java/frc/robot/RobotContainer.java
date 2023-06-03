@@ -421,10 +421,10 @@ public class RobotContainer {
         ruffy0.onTrue(new InstantCommand(() -> s_Swerve.zeroGyro()));
         ruffy1.onTrue(new InstantCommand(() -> s_Swerve.configToX()));
 
-        // driverLeft.onTrue(new Blink(m_LEDs, false));
-        // driverRight.onTrue(new Blink(m_LEDs, true));
-        y.onTrue(new Blink(m_LEDs, false));
-        x.onTrue(new Blink(m_LEDs, true));
+        driverLeft.onTrue(new Blink(m_LEDs, false));
+        driverRight.onTrue(new Blink(m_LEDs, true));
+        //y.onTrue(new Blink(m_LEDs, false));
+        //x.onTrue(new Blink(m_LEDs, true));
         // driverLeft.onTrue(new BlinkPWM(m_LEDs, false));
         // driverRight.onTrue(new BlinkPWM(m_LEDs, true));
 
