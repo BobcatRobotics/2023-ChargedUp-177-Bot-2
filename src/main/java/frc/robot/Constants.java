@@ -296,7 +296,7 @@ public final class Constants {
         public static final double shelfArmPos = 17; // 13
         public static final double autoCarry = 38.5;
         public static final double trueArmMaxExtension = 200; // TODO: change!
-        public static final double minNonCollidingExtention = 33; // limit for arm so it doesn't crash into the elevator
+        public static final double minNonCollidingExtention = 32; // limit for arm so it doesn't crash into the elevator
         public static final double midScoringPos = 28.65;
         public static final double highScoringPos = 57.21;
         public static final double topSuck = 70.9;
