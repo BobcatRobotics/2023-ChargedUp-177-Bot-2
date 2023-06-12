@@ -22,7 +22,7 @@ public class RunIntake extends CommandBase {
   double time;
   boolean isTimed = false;
   Joystick gp;
-  //BlinkinLEDs leds;
+  BlinkinLEDs leds;
 
   Timer timer;
 
@@ -37,11 +37,11 @@ public class RunIntake extends CommandBase {
     isTimed = true;
     addRequirements(i);
   }
-  public RunIntake(Intake i, Joystick gp){
+  public RunIntake(Intake i, Joystick gp, BlinkinLEDs leds){
     this.i = i;
-    this.in = in;
     this.gp = gp;
-    //this.leds = l;
+    this.leds = leds;
+
     timer = new Timer();
     addRequirements(i);
   }
@@ -59,9 +59,9 @@ public class RunIntake extends CommandBase {
     if(!isTimed) {
       if(gp.getRawButton(in)){
         i.runIntakeIn();
-        // if (i.cubeSecured()) {
-        //   leds.setGreen();
-        // }
+        if (i.hasPiece()) {
+          leds.setGreen();
+        }
       } else if(gp.getRawButton(out)){
         i.runIntakeOut();
       }else if(gp.getRawButton(back)) {

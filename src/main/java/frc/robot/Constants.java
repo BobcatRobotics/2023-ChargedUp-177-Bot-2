@@ -323,7 +323,7 @@ public final class Constants {
     }
     
     public static final class IntakeConstants {
-        public static final double gamepieceThreshold = 0.0;
+        public static final double gamepieceThreshold = 5.0; // placeholder value
     }
 
     public static final class LEDConstants {

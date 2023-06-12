@@ -23,10 +23,9 @@ public class BlinkinLEDs extends SubsystemBase {
     setBlack();
   }
 
-
   public void setYellow() {
     pdh.setSwitchableChannel(true);
-      leds.set(0.69);
+    leds.set(0.69);
   }
   public void blinkPurple(){
     pdh.setSwitchableChannel(true);
@@ -42,12 +41,9 @@ public class BlinkinLEDs extends SubsystemBase {
   }
 
   public void setPurple() {
-    
     pdh.setSwitchableChannel(true);
-      leds.set(0.91);
+    leds.set(0.91);
   }
-
-  
 
   public boolean getPurple() {
     return (leds.get() < 0.91+0.1) && (leds.get() > 0.91 - 0.1);

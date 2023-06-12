@@ -47,20 +47,12 @@ public class Intake extends SubsystemBase {
     return motor.getStatorCurrent() >= 20.0;
   }
 
-  public boolean cubeSecured() {
-    return motor.getStatorCurrent() >= cubeThreshold;
-  }
-
-  public boolean coneSecured() {
-    return motor.getStatorCurrent() >= coneThreshold;
-  }
-
   public double getCurrent() {
     return motor.getStatorCurrent();
   }
 
   public boolean hasPiece() {
-    return getCurrent() >= IntakeConstants.gamepieceThreshold;
+    return Math.abs(motor.getSelectedSensorVelocity()) < IntakeConstants.gamepieceThreshold;
   }
 
   public void runIntakePercent(double speed){
