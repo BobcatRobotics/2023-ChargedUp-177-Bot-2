@@ -10,69 +10,67 @@ import com.pathplanner.lib.PathPlannerTrajectory;
 import com.pathplanner.lib.auto.PIDConstants;
 import com.pathplanner.lib.auto.SwerveAutoBuilder;
 
-import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.PowerDistribution;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.Commands;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.ParallelCommandGroup;
 import edu.wpi.first.wpilibj2.command.ParallelDeadlineGroup;
 import edu.wpi.first.wpilibj2.command.ParallelRaceGroup;
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import edu.wpi.first.wpilibj2.command.WaitCommand;
-import edu.wpi.first.wpilibj2.command.Command.InterruptionBehavior;
-import edu.wpi.first.wpilibj2.command.RunCommand;
-import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.POVButton;
-import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.Constants.PoseEstimation;
-import frc.robot.commands.*;
+import frc.robot.commands.ArmControls;
+import frc.robot.commands.DriveBack;
+import frc.robot.commands.DriveBackInverse;
+import frc.robot.commands.DriveToPoseCommand;
+import frc.robot.commands.ElevatorControls;
+import frc.robot.commands.IntakeOut;
+import frc.robot.commands.IntakeOutFullSpeed;
+import frc.robot.commands.SmallDrive;
+import frc.robot.commands.SpinInPlace;
+import frc.robot.commands.TeleopSwerve;
+import frc.robot.commands.WaitUntilTime;
 import frc.robot.commands.AutoAlign.MidLeft;
 import frc.robot.commands.AutoAlign.MidMid;
 import frc.robot.commands.AutoAlign.MidRight;
 import frc.robot.commands.AutoAlign.TopLeft;
 import frc.robot.commands.AutoAlign.TopMid;
 import frc.robot.commands.AutoAlign.TopRight;
-import frc.robot.commands.Autos.AlignToTarget;
-import frc.robot.commands.Autos.AlignToTargetAutos;
 import frc.robot.commands.Autos.BalanceChargeStation;
 import frc.robot.commands.Autos.MountAndBalance;
 import frc.robot.commands.Autos.MountAndBalanceInverse;
 import frc.robot.commands.Autos.MountAndBalanceInverseScore;
-import frc.robot.commands.Autos.AutoPresets.ScoreCubeHighAutos;
 import frc.robot.commands.LEDs.Blink;
-import frc.robot.commands.LEDs.BlinkPWM;
-import frc.robot.commands.Presets.IntakeIn;
 import frc.robot.commands.Presets.IntakeInConstantly;
-import frc.robot.commands.Presets.RetractArm;
 import frc.robot.commands.Presets.RunIntake;
 import frc.robot.commands.Presets.RunWrist;
 import frc.robot.commands.Presets.SetArm;
 import frc.robot.commands.Presets.SetElevator;
 import frc.robot.commands.Presets.StartingConfig;
-import frc.robot.commands.Presets.ZeroElevator;
 import frc.robot.commands.Presets.intakeStop;
 import frc.robot.commands.Presets.Procedures.GrabFromHPChute;
-import frc.robot.commands.Presets.Procedures.GrabFromHPShelf;
 import frc.robot.commands.Presets.Procedures.ScoreHigh;
 import frc.robot.commands.Presets.Procedures.ScoreMid;
 import frc.robot.commands.Presets.Procedures.TopSuck;
-import frc.robot.commands.Presets.Procedures.VerticalCone;
 import frc.robot.commands.Presets.Procedures.autoCarry;
 import frc.robot.commands.Presets.Procedures.falcon5;
-import frc.robot.subsystems.*;
+import frc.robot.subsystems.Arm;
+import frc.robot.subsystems.BlinkinLEDs;
+import frc.robot.subsystems.Elevator;
+import frc.robot.subsystems.Intake;
 //import frc.robot.autos.RedHighCone6PickupBalance;
 import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.PoseEstimator;
 import frc.robot.subsystems.Swerve;
+import frc.robot.subsystems.Wrist;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -518,7 +516,9 @@ public class RobotContainer {
         m_LEDs.turnOff();
     }
 
-  
+    public void setLedsBlack() {
+        m_LEDs.setBlack();
+    }
     
     public static Command buildAuto(List<PathPlannerTrajectory> trajs) {
         swerveAutoBuilder = new SwerveAutoBuilder(

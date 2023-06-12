@@ -8,52 +8,45 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-import com.pathplanner.lib.PathConstraints;
-import com.pathplanner.lib.PathPlanner;
 import com.pathplanner.lib.server.PathPlannerServer;
 
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.Filesystem;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import frc.robot.commands.Autos.BalanceChargeStation;
-import frc.robot.subsystems.Swerve;
+
 //=talonfx(canid, "CANt_open_file")
 /**
- * The VM is configured to automatically run this class, and to call the functions corresponding to
- * each mode, as described in the TimedRobot documentation. If you change the name of this class or
- * the package after creating this project, you must also update the build.gradle file in the
+ * The VM is configured to automatically run this class, and to call the
+ * functions corresponding to
+ * each mode, as described in the TimedRobot documentation. If you change the
+ * name of this class or
+ * the package after creating this project, you must also update the
+ * build.gradle file in the
  * project.
  */
 public class Robot extends TimedRobot {
   public static CTREConfigs ctreConfigs;
 
   private Command m_autonomousCommand;
-  
 
   private RobotContainer m_robotContainer;
-  
-  private boolean firstExecute = true;
-
-  private Timer timer;
-
-  private int i = 0;
 
   /**
-   * This function is run when the robot is first started up and should be used for any
+   * This function is run when the robot is first started up and should be used
+   * for any
    * initialization code.
    */
   @Override
   public void robotInit() {
     ctreConfigs = new CTREConfigs();
-    // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
+    // Instantiate our RobotContainer. This will perform all our button bindings,
+    // and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-    //m_robotContainer.printHashMap();
-    timer = new Timer();
+    // m_robotContainer.printHashMap();
 
     File deployDir = Filesystem.getDeployDirectory();
     File branchFile = new File(deployDir, "branch.txt");
@@ -71,7 +64,7 @@ public class Robot extends TimedRobot {
     } catch (FileNotFoundException e) {
       e.printStackTrace();
     }
-    
+
     SmartDashboard.putString("Deployed code:", branch + " " + commit);
     SmartDashboard.putBoolean("Balanced", Math.abs(m_robotContainer.s_Swerve.getPitch()) < 2.5);
 
@@ -80,25 +73,36 @@ public class Robot extends TimedRobot {
 
     CameraServer.startAutomaticCapture();
   }
+
   /**
-   * This function is called every robot packet, no matter the mode. Use this for items like
-   * diagnostics that you want ran during disabled, autonomous, teleoperated and test.
+   * This function is called every robot packet, no matter the mode. Use this for
+   * items like
+   * diagnostics that you want ran during disabled, autonomous, teleoperated and
+   * test.
    *
-   * <p>This runs after the mode specific periodic functions, but before LiveWindow and
+   * <p>
+   * This runs after the mode specific periodic functions, but before LiveWindow
+   * and
    * SmartDashboard integrated updating.
    */
   @Override
   public void robotPeriodic() {
-    // Runs the Scheduler.  This is responsible for polling buttons, adding newly-scheduled
-    // commands, running already-scheduled commands, removing finished or interrupted commands,
-    // and running subsystem periodic() methods.  This must be called from the robot's periodic
+    // Runs the Scheduler. This is responsible for polling buttons, adding
+    // newly-scheduled
+    // commands, running already-scheduled commands, removing finished or
+    // interrupted commands,
+    // and running subsystem periodic() methods. This must be called from the
+    // robot's periodic
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
     SmartDashboard.putBoolean("Balanced", Math.abs(m_robotContainer.s_Swerve.getPitch()) < 2.5);
     SmartDashboard.putNumber("pitch", m_robotContainer.s_Swerve.getPitch());
-    // SmartDashboard.putNumber("poseEstimatorX", RobotContainer.swervePoseEstimator.getCurrentPose().getX());
-    // SmartDashboard.putNumber("poseEstimatorY", RobotContainer.swervePoseEstimator.getCurrentPose().getY());
-    // SmartDashboard.putNumber("poseEstimatorRotation", RobotContainer.swervePoseEstimator.getCurrentPose().getRotation().getDegrees());
+    // SmartDashboard.putNumber("poseEstimatorX",
+    // RobotContainer.swervePoseEstimator.getCurrentPose().getX());
+    // SmartDashboard.putNumber("poseEstimatorY",
+    // RobotContainer.swervePoseEstimator.getCurrentPose().getY());
+    // SmartDashboard.putNumber("poseEstimatorRotation",
+    // RobotContainer.swervePoseEstimator.getCurrentPose().getRotation().getDegrees());
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -106,7 +110,7 @@ public class Robot extends TimedRobot {
   public void disabledInit() {
 
     CommandScheduler.getInstance().cancelAll();
-    m_robotContainer.turnOffLeds();
+    m_robotContainer.setLedsBlack();
     for (int i = 0; i < 10; i++) {
       m_robotContainer.resetToAbsolute();
     }
@@ -116,15 +120,18 @@ public class Robot extends TimedRobot {
   public void disabledPeriodic() {
   }
 
-  /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
+  /**
+   * This autonomous runs the autonomous command selected by your
+   * {@link RobotContainer} class.
+   */
   @Override
   public void autonomousInit() {
-    //RobotContainer.s_Swerve.resetOdometryAutos();
-    
+    // RobotContainer.s_Swerve.resetOdometryAutos();
+
     m_autonomousCommand = m_robotContainer.getAutonomousCommand();
-    try{
-    m_robotContainer.cancelDefaultTeleop();
-    }catch(NullPointerException e){
+    try {
+      m_robotContainer.cancelDefaultTeleop();
+    } catch (NullPointerException e) {
 
     }
     for (int i = 0; i < 10; i++) {
@@ -139,7 +146,7 @@ public class Robot extends TimedRobot {
   /** This function is called periodically during autonomous. */
   @Override
   public void autonomousPeriodic() {
-    
+
   }
 
   @Override
@@ -153,29 +160,28 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
 
-    if (
-      RobotContainer.getAutoChooserResult() != null && (
-      RobotContainer.getAutoChooserResult().equals(RobotContainer.NoMove1HighCone) || 
-      RobotContainer.getAutoChooserResult().equals(RobotContainer.OneCenterBalance) ||
-      RobotContainer.getAutoChooserResult().equals(RobotContainer.RedClean2Path) ||
-      RobotContainer.getAutoChooserResult().equals(RobotContainer.RedTwoPieceDirty) ||
-      RobotContainer.getAutoChooserResult().equals(RobotContainer.BlueClean2Path) ||
-      RobotContainer.getAutoChooserResult().equals(RobotContainer.BlueTwoPieceDirty) ||
-      RobotContainer.getAutoChooserResult().equals(RobotContainer.ThreePieceDirty)
-    )) {
+    if (RobotContainer.getAutoChooserResult() != null
+        && (RobotContainer.getAutoChooserResult().equals(RobotContainer.NoMove1HighCone) ||
+            RobotContainer.getAutoChooserResult().equals(RobotContainer.OneCenterBalance) ||
+            RobotContainer.getAutoChooserResult().equals(RobotContainer.RedClean2Path) ||
+            RobotContainer.getAutoChooserResult().equals(RobotContainer.RedTwoPieceDirty) ||
+            RobotContainer.getAutoChooserResult().equals(RobotContainer.BlueClean2Path) ||
+            RobotContainer.getAutoChooserResult().equals(RobotContainer.BlueTwoPieceDirty) ||
+            RobotContainer.getAutoChooserResult().equals(RobotContainer.ThreePieceDirty))) {
       m_robotContainer.reverseZeroGyro();
     } else {
       m_robotContainer.zeroGyro();
     }
 
-    //SmartDashboard.putNumber("PID Value", 0);
+    // SmartDashboard.putNumber("PID Value", 0);
     // m_robotContainer.resetToAbsolute();
     m_robotContainer.scheduleDefaultTeleop();
   }
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+  }
 
   @Override
   public void testInit() {
@@ -185,5 +191,6 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during test mode. */
   @Override
-  public void testPeriodic() {}
+  public void testPeriodic() {
+  }
 }
