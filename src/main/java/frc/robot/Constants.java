@@ -289,16 +289,16 @@ public final class Constants {
         public static final int armMotorPort = 10; 
         public static final int stowedLimitSwitch = 2;
 
-        public static final double armOffset = 217; // 5 degrees at start
+        public static final double armOffset = 220; // 5 degrees at start
         public static final double startingArmPos = 10; // in box //was 10
-        public static final double groundPickupArm = 82.5; // ground intake
-        public static final double chuteArmPos = 35; // pickup from hp chute //was 35
+        public static final double groundPickupArm = 80; // ground intake // 82.5
+        public static final double chuteArmPos = 30; // pickup from hp chute //was 35
         public static final double shelfArmPos = 17; // 13
         public static final double autoCarry = 38.5;
         public static final double trueArmMaxExtension = 200; // TODO: change!
-        public static final double minNonCollidingExtention = 32; // limit for arm so it doesn't crash into the elevator
-        public static final double midScoringPos = 28.65;
-        public static final double highScoringPos = 57.21;
+        public static final double minNonCollidingExtention = 28; // limit for arm so it doesn't crash into the elevator // 32
+        public static final double midScoringPos = 25.65; // 28.65
+        public static final double highScoringPos = 50.21; // 57.21
         public static final double topSuck = 70.9;
 
         public static int armState = 0;

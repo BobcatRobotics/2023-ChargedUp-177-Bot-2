@@ -109,8 +109,8 @@ public class Robot extends TimedRobot {
   @Override
   public void disabledInit() {
 
+    m_robotContainer.turnOffLeds();
     CommandScheduler.getInstance().cancelAll();
-    m_robotContainer.setLedsBlack();
     for (int i = 0; i < 10; i++) {
       m_robotContainer.resetToAbsolute();
     }
@@ -176,6 +176,7 @@ public class Robot extends TimedRobot {
     // SmartDashboard.putNumber("PID Value", 0);
     // m_robotContainer.resetToAbsolute();
     m_robotContainer.scheduleDefaultTeleop();
+    m_robotContainer.setLedsBlack();
   }
 
   /** This function is called periodically during operator control. */
