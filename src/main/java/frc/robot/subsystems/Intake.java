@@ -40,8 +40,8 @@ public class Intake extends SubsystemBase {
     motor.set(ControlMode.PercentOutput, 1);
   }
   public void runIntakeInSlow(){
-    // motor.set(ControlMode.PercentOutput, -0.10);
-    motor.set(ControlMode.PercentOutput, 0);
+    motor.set(ControlMode.PercentOutput, -0.10);
+    // motor.set(ControlMode.PercentOutput, 0);
   }
 
   public boolean isAtCurrentLimit() {
