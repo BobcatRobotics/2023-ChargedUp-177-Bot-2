@@ -14,6 +14,8 @@ import frc.robot.Constants.LEDConstants;
 public class BlinkinLEDs extends SubsystemBase {
   private Spark leds;
   private PowerDistribution pdh;
+  private boolean isPurple;
+
 
   /** Creates a new BlinkinLEDs. */
   public BlinkinLEDs() {
@@ -26,23 +28,31 @@ public class BlinkinLEDs extends SubsystemBase {
   public void setYellow() {
     pdh.setSwitchableChannel(true);
     leds.set(0.69);
+    isPurple = false;
   }
   public void blinkPurple(){
     pdh.setSwitchableChannel(true);
     leds.set(0.15);
+    isPurple = true;
   }
   public void blinkYellow(){
     pdh.setSwitchableChannel(true);
     leds.set(-0.07);
+    isPurple = false;
   }
 
   public boolean getYellow() {
     return leds.get() < 0.69+0.1 && leds.get() > 0.69 + 0.1;
   }
 
+  public boolean isPurple() {
+    return isPurple;
+  }
+
   public void setPurple() {
     pdh.setSwitchableChannel(true);
     leds.set(0.91);
+    isPurple = true;
   }
 
   public boolean getPurple() {
@@ -51,7 +61,7 @@ public class BlinkinLEDs extends SubsystemBase {
 
   public void setGreen() {
     pdh.setSwitchableChannel(true);
-    leds.set(-0.05);
+    leds.set(0.61);
   }
 
   public void setBlack() {

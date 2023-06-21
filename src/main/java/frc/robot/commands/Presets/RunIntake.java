@@ -59,9 +59,7 @@ public class RunIntake extends CommandBase {
     if(!isTimed) {
       if(gp.getRawButton(in)){
         i.runIntakeIn();
-        if (i.hasPiece()) {
-          leds.setGreen();
-        }
+        
       } else if(gp.getRawButton(out)){
         i.runIntakeOut();
       }else if(gp.getRawButton(back)) {
@@ -79,6 +77,13 @@ public class RunIntake extends CommandBase {
           i.runIntakeOut();
         }
       }
+    }
+    if (i.hasPiece()) {
+      leds.setGreen();
+    } else if(leds.isPurple()) {
+      leds.setPurple();
+    } else if(!leds.isPurple()) {
+      leds.setYellow();
     }
   }
 

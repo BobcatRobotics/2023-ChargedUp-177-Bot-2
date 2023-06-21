@@ -291,7 +291,7 @@ public final class Constants {
 
         public static final double armOffset = 220; // 5 degrees at start
         public static final double startingArmPos = 10; // in box //was 10
-        public static final double groundPickupArm = 80; // ground intake // 82.5
+        public static final double groundPickupArm = 75; // ground intake // 82.5
         public static final double chuteArmPos = 30; // pickup from hp chute //was 35
         public static final double shelfArmPos = 17; // 13
         public static final double autoCarry = 38.5;
@@ -323,7 +323,7 @@ public final class Constants {
     }
     
     public static final class IntakeConstants {
-        public static final double gamepieceThreshold = 5.0; // placeholder value
+        public static final double gamepieceThreshold = 100.0; // placeholder value
     }
 
     public static final class LEDConstants {

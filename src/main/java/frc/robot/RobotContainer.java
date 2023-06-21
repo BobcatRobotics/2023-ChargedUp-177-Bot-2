@@ -496,8 +496,8 @@ public class RobotContainer {
         OpBottomRight.onTrue(new MidRight(s_Swerve, swervePoseEstimator, m_Elevator, m_Arm, m_Wrist, m_Intake)
                 .until(this::baseDriverControlsMoved));
 
-        lefttrigger.whileTrue(new InstantCommand(m_Intake::runIntakeOut));
-        leftBumper.whileTrue(new InstantCommand(m_Intake::runIntakeIn));
+        // lefttrigger.whileTrue(new InstantCommand(m_Intake::runIntakeOut));
+        // leftBumper.whileTrue(new InstantCommand(m_Intake::runIntakeIn));
 
         // righttrigger.whileTrue(new InstantCommand(m_Wrist::down));
         // rightBumper.whileTrue(new InstantCommand(m_Wrist::up));
