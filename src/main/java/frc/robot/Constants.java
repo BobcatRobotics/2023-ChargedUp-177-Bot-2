@@ -238,7 +238,7 @@ public final class Constants {
     }
     
     public class BalancingConstants{
-        public static final double kP = 0.225;//TODO: tune
+        public static final double kP = 0.2275;//TODO: tune // .225
         public static final double kI = 0;
         public static final double kD = 0.025;
         public static final double InversekP = 0.225;//TODO: tune
@@ -289,9 +289,9 @@ public final class Constants {
         public static final int armMotorPort = 10; 
         public static final int stowedLimitSwitch = 2;
 
-        public static final double armOffset = 220; // 5 degrees at start
+        public static final double armOffset = 209; // 5 degrees at start // 220
         public static final double startingArmPos = 10; // in box //was 10
-        public static final double groundPickupArm = 75; // ground intake // 82.5
+        public static final double groundPickupArm = 80; // ground intake // 82.5
         public static final double chuteArmPos = 30; // pickup from hp chute //was 35
         public static final double shelfArmPos = 17; // 13
         public static final double autoCarry = 38.5;
